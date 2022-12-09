@@ -18,11 +18,21 @@
 }
 
 /* 나에게 맞는 학과 css*/
+
 #mainContent {
   
   grid-area:mainContent;
 
 }
+.textarea {
+  font-size: 1rem;
+
+  padding: 50px 50px;
+
+  line-height: 50px;
+
+}
+
 #login {
   border-collapse: collapse;
 
@@ -30,33 +40,30 @@
 }
 
 #login td{
-  height: 100px;
+  height: 50px;
 }
 
-#login h2{
-  font-size: 1.3rem;
-
-  font-weight: bold; 
-}
 
 .textleft{
   text-align: left;
   padding-left: 60px;
 }
 
-#login input{
-  width: 300px;
 
-  height: 50px;
+#login input{
+  /* width: 100px; */
+
+  height: 20px;
 
   font-size: 1rem;
 
   text-align: center;
 
-  border-radius: 10px;
+  border-radius: 5px;
 
   border: solid 1px rgb(170, 170, 170);
 }
+
 
 
 
@@ -78,10 +85,10 @@
   background-color:rgb(76, 111, 219);
   border-style: none;
   border-radius: 20px;
-  width: 120px;
-  line-height: 50px;
+  width: 100px;
+  line-height: 30px;
   color: white;
-  font-size: 1.3rem;
+  font-size: 1.125rem;
   font-weight: bold;
 }
 .button a {
@@ -96,35 +103,3 @@ button:hover {
 
 
 /* 메인 레이아웃 끝 */
-
-/* 푸터  */
-#footer {
-  border-top: 2px solid  gray;
-}
-#footer > p{
-  margin-top: 5px;
-  margin-left: 20px;
-  font-size: 1rem;
-  color: #aaa;    
-}
-
-#bottommenu {
-    margin-top: 15px;
-  
-    font-size: 1rem;
-    
-}
-#bottommenu li{
-    display: inline-block;
-    padding: 5px 20px;
-    border-right: 1px solid #ddd;/*항목오른쪽에 세로선*/
-    
-}
-#bottommenu li:last-child{
-    border-right: none;
-}
-#bottommenu li a{
-    font-size: 1rem;
-    color: #666;
-}
-

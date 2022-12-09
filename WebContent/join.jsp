@@ -11,6 +11,7 @@
   <title>회원가입 페이지</title>
 </head>
 <body>
+<script src="js/JoinCheck.js"></script>
    <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -102,55 +103,54 @@
     </nav>
 <!-- 네비2끝 -->
   </header>
-  <!-- 헤더 끝 -->
-
+   <!-- 헤더 끝 -->
 
   <!-- 메인 부분 -->
 <main>
-<script type="text/javascript">
-	 
-</script>
   <div id="mainStyle">
     <div id="mainContent">
-      <h1 class="subtitle">회원가입</h1>
+      <p class="subtitle">회원가입</p>
       
 
-        <form action="insert.join" method="post" >
-          <table id="login">
+        <form action="insert.join" method="post" name="joinForm">
+          <table id="login" border="1">
             <tr>
-              <td class="textleft"><h2>아이디</h2></td>
+              <td class="textleft">아이디</td>
               <td><input type="text" name="userId" placeholder="5글자 이상 입력" autofocus required></td>
-              <td ><button class="button" type="submit" value="idCheck">중복체크</button></td>
+              <td >사용가능한 아이디 입니다.</td>
             </tr>
             <tr>
-              <td class="textleft"><h2>비밀번호</h2></td>
+              <td class="textleft">비밀번호</td>
               <td><input type="password" name="pw" placeholder="8글자 이상 입력" required></td>
+    		   <td></td>
             </tr>
             <tr>
-              <td class="textleft"><h2>비밀번호 확인</h2></td>
+              <td class="textleft">비밀번호 확인</td>
               <td>
-              	<input type="password" name="pwCheck" placeholder="비밀번호 재입력" required onclick="pwCheck()">
+              	<input type="password" name="pwCheck" placeholder="비밀번호 재입력" required >
               </td>
+                 <td></td>
             </tr>
             <tr>
-              <td class="textleft"><h2>닉네임</h2></td>
+              <td class="textleft">닉네임</td>
               <td><input type="text" name="nickName" placeholder="사이트에서 보여질 이름" required></td>
               <td ><button class="button" type="submit" value="idCheck">중복체크</button></td>
             </tr>
             <tr>
-              <td class="textleft"><h2>이름</h2></td>
+              <td class="textleft">이름</td>
               <td><input type="text" name="userName" placeholder="이름 입력" required></td>
             </tr>
             <tr>
-              <td class="textleft"><h2>이메일주소</h2></td>
+              <td class="textleft">이메일주소</td>
               <td><input type="text" name="eMail" placeholder="이메일@.com" required></td>
             </tr>
             <tr>
-              <td class="textleft"><h2>전화번호</h2></td>
-              <td><input type="tell" name="telNumber" placeholder="01X-1234-5678" required></td>
+              <td class="textleft">전화번호</td>
+              <td><input type="tel" name="telNumber" placeholder="01X-1234-5678" required></td>
             </tr>
             <tr>
-              <td colspan="3"><button class="button" type="submit">완료</button></td>
+              <td colspan="3"><button class="button" 
+               type="submit" >완료</button></td>
             </tr>
           </table>
         </form>
