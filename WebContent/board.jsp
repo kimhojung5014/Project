@@ -54,7 +54,7 @@
     <!--3번째 메뉴 끝  -->
 
     <!-- 4번째 메뉴 시작 -->
-            <LI><a id="main" href="#">온라인 학위 정보</a>
+            <li><a id="main" href="#">온라인 학위 정보</a>
               <ul class="main2">
     
                 <li><a href=""> 원격대학교</a>
@@ -74,7 +74,7 @@
                   
                       <li><a href="TestDate.jsp" >시험일정</a></li>
                     </ul>
-                
+                </li>
                   <li><a href="">학점은행제</a>
                     <ul class="main3">
                       <li><a href="bank.html">학점은행제 개요</a></li>
@@ -83,11 +83,9 @@
                     </ul>
                   </li>
 
-                </li>
-
-              </ul>
-
-            </LI>
+           	 </ul>
+          </li>       
+          
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
@@ -258,7 +256,7 @@
               </form>
             </td>
             <td>
-              <button class="submitbutton"><a href="">글 작성</a></button>
+              <button class="submitbutton"><a href="#">글 작성</a></button>
             </td>
           
         </table>

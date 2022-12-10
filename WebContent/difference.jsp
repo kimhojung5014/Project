@@ -8,10 +8,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/header_footer.css">
   <link rel="stylesheet" href="css/difference.css"> 
+  
   <title>사이버,방송통신대학교 차이점</title>
+  
 </head>
 <body>
     <!-- 헤더 부분 -->
+   
   <header id="headerstyle">
     <div id="titleHome">
       <a href="newindex.jsp" >나의 진로 추천 서비스</a>

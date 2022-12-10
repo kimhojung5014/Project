@@ -13,6 +13,7 @@
 <body>
 <script src="js/JoinCheck.js"></script>
    <!-- 헤더 부분 -->
+   <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
       <a href="newindex.jsp" >나의 진로 추천 서비스</a>
@@ -55,7 +56,7 @@
     <!--3번째 메뉴 끝  -->
 
     <!-- 4번째 메뉴 시작 -->
-            <LI><a id="main" href="#">온라인 학위 정보</a>
+            <li><a id="main" href="#">온라인 학위 정보</a>
               <ul class="main2">
     
                 <li><a href=""> 원격대학교</a>
@@ -75,7 +76,7 @@
                   
                       <li><a href="TestDate.jsp" >시험일정</a></li>
                     </ul>
-                
+                </li>
                   <li><a href="">학점은행제</a>
                     <ul class="main3">
                       <li><a href="bank.html">학점은행제 개요</a></li>
@@ -84,11 +85,9 @@
                     </ul>
                   </li>
 
-                </li>
-
-              </ul>
-
-            </LI>
+           	 </ul>
+          </li>       
+          
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
@@ -103,7 +102,7 @@
     </nav>
 <!-- 네비2끝 -->
   </header>
-   <!-- 헤더 끝 -->
+  <!-- 헤더 끝 -->
 
   <!-- 메인 부분 -->
 <main>
@@ -112,7 +111,7 @@
       <p class="subtitle">회원가입</p>
       
 
-        <form action="insert.join" method="post" name="joinForm">
+        <form action="joinOk.jsp" method="post" name="joinForm">
           <table id="login" border="1">
             <tr>
               <td class="textleft">아이디</td>
@@ -126,10 +125,13 @@
             </tr>
             <tr>
               <td class="textleft">비밀번호 확인</td>
-              <td>
-              	<input type="password" name="pwCheck" placeholder="비밀번호 재입력" required >
-              </td>
-                 <td></td>
+<!--               <td> -->
+<!--               	<input type="password" name="pwCheck" placeholder="비밀번호 재입력" required > -->
+<!--               </td> -->
+<!-- 					여기서부터 퍼온 거 -->
+				 <td><input type="password" name="pwCheck" id="pwCheck" placeholder="비밀번호 입력" onkeyup="passConfirm()"> </td>
+                 <td><span id ="confirmMsg"></span></td>
+<!--                  퍼온거끝 -->
             </tr>
             <tr>
               <td class="textleft">닉네임</td>
@@ -149,8 +151,7 @@
               <td><input type="tel" name="telNumber" placeholder="01X-1234-5678" required></td>
             </tr>
             <tr>
-              <td colspan="3"><button class="button" 
-               type="submit" >완료</button></td>
+              <td colspan="3"><button class="button" type="button" onclick="pw_Check()" >완료</button></td>
             </tr>
           </table>
         </form>
