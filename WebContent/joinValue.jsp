@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8" %>
-    <%		request.setCharacterEncoding("utf-8");
- %>
+    pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -119,12 +118,14 @@
             <tr>
               <td class="textleft">아이디</td>
               <td>
-              	<input type="text" name="userId" id="userId" placeholder="5글자 이상 입력" autofocus required onkeyup="id_Check()"><br>
+              	<input type="text" name="userId" id="userId" placeholder="5글자 이상 입력" autofocus required onkeyup="id_Check()"
+              	value="<%=(String)request.getAttribute("userid")%>"
+              	 ><br>
             	<span id ="idMsg"></span>
               		
              
               </td>
-              <td><a onclick="id_overlap()">중복체크</a></td>
+              <td><p><a href="idCheck.join">중복체크</a></td>
             </tr>
             <tr>
               <td class="textleft">비밀번호</td>

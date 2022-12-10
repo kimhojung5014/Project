@@ -1,17 +1,22 @@
 package join.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.naming.Context;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
 import javax.websocket.Session;
 
 import join.model.JoinDto;
+import join.service.IdCheckImpl;
+import join.service.IdCheckService;
 import join.service.JoinService;
 import join.service.JoinServiceImpl;
 
@@ -44,27 +49,47 @@ public class JoinController extends HttpServlet {
 	protected void actionJoin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		
 		request.setCharacterEncoding("utf-8");
-		
+		response.setContentType("text/html; charset=utf-8");
+		PrintWriter out = response.getWriter();
 		String uri = request.getRequestURI();
 		String conPath = request.getContextPath();
 		String commend = uri.substring(conPath.length());
 		
 		if (commend.equals("/insert.join")) {
 			System.out.println("insert 시작");
-			JoinDto joinDto = new JoinDto((String)request.getParameter("pw"), 
+			JoinDto joinDto = new JoinDto((String)request.getParameter("userId"),
+										  (String)request.getParameter("pw"), 
 										  (String)request.getParameter("nickName"),
 										  (String)request.getParameter("userName"),
 										  (String)request.getParameter("eMail"),
 										  (String)request.getParameter("telNumber"));
-			
+	
 			request.setAttribute("joinData", joinDto);
 			JoinService joinService = new JoinServiceImpl();
 			joinService.excute(request, response);
-			HttpSession session = request.getSession();
-			//세션에 유저 이름을 띄우면 회원가입시 모든 화면에서 했다면 볼수있게 테스트
-			session.setAttribute("userData", joinDto.getUserName());
-			response.sendRedirect("newindex.jsp");
+			response.sendRedirect("login.jsp");
 			
+		}
+		if (commend.equals("/idCheck.join")) {
+			System.out.println("idCheck 시작");
+			System.out.println("컨트롤러에서 받는 아이디 "+request.getParameter("id"));
+			String userId =  request.getParameter("id");
+			request.setAttribute("userId", userId);
+			IdCheckService  idCheckService = new IdCheckImpl();
+			
+			if (idCheckService.execute(request, response)) {
+				System.out.println("사용가능한 아이디");
+				System.out.println("중복된 아이디");
+				out.println("<html><head><title>확인창</title>");
+				out.println("<script>alert('사용가능한 ID입니다.');history.go(-1);</script>");
+				out.println("</head><body></body><html>");
+			
+			}else {
+				System.out.println("중복된 아이디");
+				out.println("<html><head><title>확인창</title>");
+				out.println("<script>alert('이미 존재하는 ID입니다.');history.go(-1);</script>");
+				out.println("</head><body></body><html>");
+			}
 		}
 	}
 

@@ -2,9 +2,11 @@ package join.model;
 
 public class JoinDto {
 	
-	private int userId;
+	private int numId;
 
-	private String pw,
+
+	private String userId,
+				   pw,
 				   nickName,
 				   userName,
 				   eMail,
@@ -12,8 +14,8 @@ public class JoinDto {
 	
 	public JoinDto() {}
 	
-	public JoinDto(String pw, String nickName, String userName, String eMail, String telNumber) {
-
+	public JoinDto(String userId, String pw, String nickName, String userName, String eMail, String telNumber) {
+		this.userId = userId;
 		this.pw = pw;
 		this.nickName = nickName;
 		this.userName = userName;
@@ -21,7 +23,19 @@ public class JoinDto {
 		this.telNumber = telNumber;
 		
 	}
-	
+	public int getNumId() {
+		return numId;
+	}
+
+	public void setNumId(int numId) {
+		this.numId = numId;
+	}
+	public String getUserId() {
+		return userId;
+	}
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
 	public String getPw() {
 		return pw;
 	}
@@ -52,11 +66,6 @@ public class JoinDto {
 	public void setTelNumber(String telNumber) {
 		this.telNumber = telNumber;
 	}
-	public int getUserId() {
-		return userId;
-	}
-	public void setUserId(int userId) {
-		this.userId = userId;
-	}
+
 	
 }

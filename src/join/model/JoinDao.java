@@ -2,7 +2,9 @@ package join.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -44,16 +46,17 @@ public class JoinDao {
 	
 		
 		
-		String sql = "INSERT into join(userId,pw,nickName,userName,eMail,telNumber)"
-				+ " values(ADDR_SEQ.nextval,?,?,?,?,?)";
+		String sql = "INSERT into join(numId,userId,pw,nickName,userName,eMail,telNumber)"
+				+ " values(ADDR_SEQ.nextval,?,?,?,?,?,?)";
 		try {
 				conn = getConnection();
-				pstmt = conn.prepareStatement(sql);				
-				pstmt.setString(1, joinDto.getPw());
-				pstmt.setString(2, joinDto.getNickName());
-				pstmt.setString(3, joinDto.getUserName());
-				pstmt.setString(4, joinDto.geteMail());
-				pstmt.setString(5, joinDto.getTelNumber());
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, joinDto.getUserId());
+				pstmt.setString(2, joinDto.getPw());
+				pstmt.setString(3, joinDto.getNickName());
+				pstmt.setString(4, joinDto.getUserName());
+				pstmt.setString(5, joinDto.geteMail());
+				pstmt.setString(6, joinDto.getTelNumber());
 				pstmt.executeUpdate();
 			} catch (SQLException e) {
 				System.out.println("insertJoin()예외 발생");
@@ -67,5 +70,45 @@ public class JoinDao {
 				}
 			
 			}
+	}
+	
+	public boolean idCheck(String id) {
+		Connection conn = null;
+		Statement stmt = null;
+		ResultSet rs = null;
+		String userId = null;
+//		String sql = "select userId from join where userId ="+id;
+		System.out.println("idcheck에 들어온 id "+id);
+		try {
+			conn = getConnection();
+			stmt = conn.createStatement();
+			rs = stmt.executeQuery("select userId from join where userId ="+id);
+			
+			if (rs.next()) {
+				userId = rs.getString("userId");
+				System.out.println(userId);
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("idCheck()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				stmt.close();
+				conn.close();
+				rs.close();
+		    } catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}if (userId != null) {
+			System.out.println("아이디 중복 값 있음");
+			return false;
+		}
+		else {
+			System.out.println("중복 값 없음");
+			return true;
+		}	
 	}
 }
