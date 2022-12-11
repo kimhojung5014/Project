@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -28,12 +29,7 @@
     </div> 
     <nav id ="nav1">                
       <ul id="loginmenu">
-        <li ><a href ="join.jsp"> 
-        				<%if(session.getAttribute("userData") != null){
-        					out.print((String)session.getAttribute("userData") );
-        				}else{ out.print("회원가입");}
-        					
-        				%></a></li>
+        <li ><a href ="join.jsp">${userData.getNickName() }</a></li>
         
         <li><a href ="login.jsp">로그인</a></li>
         <li><a href ="mypage.jsp">마이페이지</a></li>

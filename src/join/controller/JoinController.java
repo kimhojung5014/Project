@@ -2,23 +2,21 @@ package join.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-
-import javax.naming.Context;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.jsp.PageContext;
-import javax.websocket.Session;
+
 
 import join.model.JoinDto;
-import join.service.IdCheckImpl;
+import join.service.IdCheckServiceImpl;
 import join.service.IdCheckService;
 import join.service.JoinService;
 import join.service.JoinServiceImpl;
+import join.service.LoginService;
+import join.service.LoginServiceImpl;
 
 /**
  * Servlet implementation class Join_Controller
@@ -70,16 +68,16 @@ public class JoinController extends HttpServlet {
 			response.sendRedirect("login.jsp");
 			
 		}
+		//아이디 중복 체크
 		if (commend.equals("/idCheck.join")) {
 			System.out.println("idCheck 시작");
 			System.out.println("컨트롤러에서 받는 아이디 "+request.getParameter("id"));
 			String userId =  request.getParameter("id");
 			request.setAttribute("userId", userId);
-			IdCheckService  idCheckService = new IdCheckImpl();
+			IdCheckService  idCheckService = new IdCheckServiceImpl();
 			
 			if (idCheckService.execute(request, response)) {
 				System.out.println("사용가능한 아이디");
-				System.out.println("중복된 아이디");
 				out.println("<html><head><title>확인창</title>");
 				out.println("<script>alert('사용가능한 ID입니다.');history.go(-1);</script>");
 				out.println("</head><body></body><html>");
@@ -90,6 +88,50 @@ public class JoinController extends HttpServlet {
 				out.println("<script>alert('이미 존재하는 ID입니다.');history.go(-1);</script>");
 				out.println("</head><body></body><html>");
 			}
+		}
+		//닉네임 중복 체크
+		if (commend.equals("/nickNameCheck.join")) {
+			System.out.println("nickNameCheck 시작");
+			System.out.println("컨트롤러에서 받는 닉네임 "+request.getParameter("nickName"));
+			String nickName =  request.getParameter("nickName");
+			request.setAttribute("nickName", nickName);
+			IdCheckService  idCheckService = new IdCheckServiceImpl();
+			
+			if (idCheckService.execute(request, response)) {
+				System.out.println("사용가능한 닉네임");
+				out.println("<html><head><title>확인창</title>");
+				out.println("<script>alert('사용가능한 닉네임입니다.');history.go(-1);</script>");
+				out.println("</head><body></body><html>");
+			
+			}else {
+				System.out.println("중복된 닉네임");
+				out.println("<html><head><title>확인창</title>");
+				out.println("<script>alert('이미 존재하는 닉네임입니다.');history.go(-1);</script>");
+				out.println("</head><body></body><html>");
+			}
+		}
+		//로그인 
+		if (commend.equals("/login.join")) {
+			System.out.println("로그인 시작");
+		    String userId = request.getParameter("userId");
+			String pw = request.getParameter("pw");
+			
+			request.setAttribute("userId", userId);
+			request.setAttribute("pw", pw);
+			
+			LoginService loginService = new LoginServiceImpl();
+			JoinDto joinDto = loginService.execute(request, response);
+			if (joinDto != null) {
+				HttpSession session = request.getSession();
+				session.setAttribute("userData", joinDto);
+				response.sendRedirect("newindex.jsp");
+			}else {
+				System.out.println("정보없음");
+				out.println("<html><head><title>확인창</title>");
+				out.println("<script>alert('아이디 비밀번호를 확인해주세요');history.go(-1);</script>");
+				out.println("</head><body</body><html>");
+			}
+			
 		}
 	}
 

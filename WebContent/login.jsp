@@ -28,15 +28,15 @@
 
           <p class="subtitle">나의 진로 추천 사이트 로그인</p>
       
-          <form action="">
+          <form action="login.join">
             <table id="login">
               <tr>
-                <td class="textleft"><h2>아이디</h2></td>
+                <td class="textleft"><p>아이디</p></td>
                 <td><input type="text" name="userId" placeholder="아이디 입력" autofocus required></td>
                 <td rowspan="2"><button class="button" type="submit" value="login">로그인</button></td>
               </tr>
               <tr>
-                <td class="textleft"><h2>비밀번호</h2></td>
+                <td class="textleft"><p>비밀번호</p></td>
                 <td><input type="password" name="pw" placeholder="비밀번호 입력" required></td>
               </tr>
               <tr>

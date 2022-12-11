@@ -23,6 +23,7 @@ public class JoinDto {
 		this.telNumber = telNumber;
 		
 	}
+	
 	public int getNumId() {
 		return numId;
 	}

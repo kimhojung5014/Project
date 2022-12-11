@@ -74,21 +74,22 @@ public class JoinDao {
 	
 	public boolean idCheck(String id) {
 		Connection conn = null;
-		Statement stmt = null;
+		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		String userId = null;
-//		String sql = "select userId from join where userId ="+id;
-		System.out.println("idcheck에 들어온 id "+id);
+		String sql = "SELECT USERID FROM JOIN WHERE USERID =  ?";
+		
+		System.out.println("idcheck에 들어온 id = "+id);
 		try {
 			conn = getConnection();
-			stmt = conn.createStatement();
-			rs = stmt.executeQuery("select userId from join where userId ="+id);
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-				userId = rs.getString("userId");
-				System.out.println(userId);
+				userId = rs.getString("USERID");
+				System.out.println("rs.next에 userId 는 "+userId);
 			}
-			
 			
 			
 		} catch (SQLException e) {
@@ -96,19 +97,63 @@ public class JoinDao {
 			e.printStackTrace();
 		} finally {
 			try {
-				stmt.close();
+				pstmt.close();
 				conn.close();
 				rs.close();
 		    } catch (Exception e2) {
 				e2.printStackTrace();
 			}
-		}if (userId != null) {
-			System.out.println("아이디 중복 값 있음");
+		} if (userId != null) {
+			System.out.println("id체크() 존재하는 id");
 			return false;
-		}
-		else {
-			System.out.println("중복 값 없음");
+		}else {
+			System.out.println("id체크() 중복없는 id");
 			return true;
-		}	
+		}
 	}
+	
+	public JoinDto login(String id, String pw) {
+		
+		JoinDto joinDto = new JoinDto();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = "select * from join where userId=? and pw=?";
+		System.out.println("로그인에 들어온 아이디: "+id+"비밀번호: "+pw);
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, id);
+			pstmt.setString(2, pw);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				joinDto.setNumId(rs.getInt("numId"));
+				joinDto.setUserId(rs.getString("userId"));
+				joinDto.setPw(rs.getString("pw"));
+				joinDto.setNickName(rs.getString("nickName"));
+				joinDto.seteMail(rs.getString("eMail"));
+				joinDto.setUserName(rs.getString("userName"));
+				joinDto.setTelNumber(rs.getString("telNumber"));
+			}
+			
+			
+			
+		} catch (SQLException e) {
+			System.out.println("login()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+				rs.close();
+		    } catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		return joinDto;
+	}
+		
+	
 }
