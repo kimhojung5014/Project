@@ -142,6 +142,7 @@ public class JoinController extends HttpServlet {
 			}
 			
 		}
+		//마이페이지 수정화면
 		if (commend.equals("/edit.join")) {
 			System.out.println("마이페이지 업데이트 시작");
 			JoinDto joinDto = new JoinDto((String)request.getParameter("userId"),
@@ -157,6 +158,17 @@ public class JoinController extends HttpServlet {
 			editService.execute(request, response);
 			request.getSession().setAttribute("userData", joinDto);
 			response.sendRedirect("newindex.jsp");
+		}
+		//아이디 찾기 이름 이메일
+		if (commend.equals("/search_Name_Email.join")) {
+			System.out.println("아이디 찾기: 이름, 이메일");
+			String userId = request.getParameter("userName");
+			String eMail = request.getParameter("eMail");
+			
+			request.setAttribute("userId", userId);
+			request.setAttribute("eMail", eMail);
+			
+			
 		}
 		
 		

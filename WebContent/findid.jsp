@@ -1,12 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/findid.css"> 
+    <link rel="stylesheet" href="css/header_footer.css?1">
+  <link rel="stylesheet" href="css/findid.css?1"> 
   <title>아이디 찾기 페이지</title>
 </head>
 <body>
@@ -119,58 +121,51 @@
   </header>
   <!-- 헤더 끝 -->
 
-
-  <!-- 메인 부분 -->
+ <!-- 메인 부분 -->
   <div id="mainStyle">
 
-    <div class="box1">
-      <h1 class="h2style">이메일로 찾기</h1>
-        <form action="">
-          <table id="login">
-            <tr>
-              <td class="textleft"><h2>이름</h2></td>
-              <td><input type="text" name="userName" placeholder="이름" autofocus></td>
-            </tr>
-            <tr>
-              <td class="textleft"><h2>이메일 주소</h2></td>
-              <td><input type="eMail" name="eMail" placeholder="이메일"></td>
-            </tr>
-            <tr>
-              <td colspan="2"><button class="button"><a href=""></a>완료</button></td>
-            </tr>
-          </table>
-        </form>
-        <h1 class="h2style">전화번호로 찾기</h1>
-        <form action="">
-          <table id="login">
-            <tr>
-              <td class="textleft"><h2>이름</h2></td>
-              <td><input type="text" name="userName" placeholder="이름" autofocus></td>
-            </tr>
-            <tr>
-              <td class="textleft"><h2>전화번호</h2></td>
-              <td><input type="tel" name="pw" placeholder="전화번호"></td>
-            </tr>
-            <tr>
-              <td colspan="2"><button class="button"><a href=""></a>완료</button></td>
-            </tr>
-          </table>
-        </form>
-      
-    </div>
+    <div id="mainContent">
 
-    <!-- <div class="box2 box">
-     
+      <p class="subtitle">이메일로 찾기</p>
+      <div class="textarea">
+          <form action="search_Name_Email.join" method="post">
+            <table id=search>
+              <tr>
+                <td class="textleft"><p class="subsubtitle">이름</p></td>
+                <td><input type="text" name="userName" placeholder="이름" required></td>
+              </tr>
+              <tr>
+                <td class="textleft"><p class="subsubtitle">이메일 주소</p></td>
+                <td><input type="eMail" name="eMail" placeholder="이메일" required></td>
+              </tr>
+              <tr>
+                <td colspan="2"><button class="submitbutton" type="button">완료</button></td>
+              </tr>
+            </table>
+          </form>
+        </div>
+        <!-- <br> -->
+        <p class="subtitle">전화번호로 찾기</p>
+      <div class="textarea">
+          <form action="">
+            <table id="login">
+              <tr>
+                <td class="textleft"><p class="subsubtitle">이름</p></td>
+                <td><input type="text" name="userName" placeholder="이름" required></td>
+              </tr>
+              <tr>
+                <td class="textleft"><p class="subsubtitle">전화번호</p></td>
+                <td><input type="tel" name="pw" placeholder="전화번호" required></td>
+              </tr>
+              <tr>
+                <td colspan="2"><button class="submitbutton">완료</button></td>
+              </tr>
+            </table>
+          </form>
+        </div>
     </div>
-    
-    <div class="box3 box">
-      
-    </div> -->
+  </div>
    
-
-<!-- 메인  끝-->
-  <!-- 푸터 -->
-</div>
   <footer id = "footer"> 
     
       <ul id="bottommenu">

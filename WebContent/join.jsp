@@ -8,11 +8,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/header_footer.css">
-  <link rel="stylesheet" href="css/join.css?2"> 
+  <link rel="stylesheet" href="css/join.css?aa"> 
   <title>회원가입 페이지</title>
 </head>
 <body>
-<script src="js/Join_Check.js?2"></script>
+<script src="js/Join_Check.js?12"></script>
    <!-- 헤더 부분 -->
    <!-- 헤더 부분 -->
   <header id="headerstyle">
@@ -106,7 +106,7 @@
   <!-- 헤더 끝 -->
 
   <!-- 메인 부분 -->
-<main>
+
   <div id="mainStyle">
     <div id="mainContent">
       <p class="subtitle">회원가입</p>
@@ -114,23 +114,23 @@
 
         <form action="insert.join" method="post" name="joinForm" id ="joinForm">
         <div class="textarea">
-         <table id="join">
-      
-            
-              
+         <table id="join"> 
               	
 				<c:choose>
 					<c:when test="${ userId ne null }">
 					<tr>
              			<td class="textleft">아이디</td>
 						<td>
-							<input type="text" name="userId" id="userId" value = "${userId}"  readonly="readonly" onkeyup="id_Check()">
+							<input type="text" name="userId" id="userId" value = "${userId}"  readonly="readonly">
 						</td>
+		             	<td>
+		             	 	<input class="button" id="editIdBbutton" type="button" onclick="id_edit()" value="수정">
+		             	</td>
 				    </tr>
 			        <tr>
 		            	<td></td>
 		            	<td>
-		            		<p>정해진 아이디는 변경할 수 없습니다.</p>
+		            		<p id="idMsg">아이디 변경 시 수정 버튼을 눌러주세요.</p>
 		            	</td>
 		            </tr>
 					</c:when>
@@ -141,7 +141,7 @@
 							<input type="text" name="userId" id="userId" placeholder="5글자 이상 입력" autofocus required onkeyup="id_Check()">
 						</td>						
 		             	<td>
-		             	 	<button class="button" type="button" onclick="id_overlap() ">중복체크</button>
+		             	 	<input class="button" type="button" onclick="id_overlap() " value="중복체크">
 		             	</td>
 					</tr>
 			        <tr>
@@ -158,11 +158,13 @@
 		             	<td>
 		             		<input type="text" id = "nickName" name="nickName" value="${nickName}" readonly="readonly" onkeyup="nick_Check()">
 		             	</td>
-		             	
+		             	<td>
+		             	 	<input class="button" id="editNickNameBbutton" type="button" onclick="nickName_edit()" value="수정">
+		             	</td>
 		            </tr>
 		            <tr>
 		            	<td></td>
-		            	<td><p>정해진 닉네임은 수정할 수 없습니다.</p></td>
+		            	<td><p id="nickNameMsg">닉네임 변경 시 수정 버튼을 눌러주세요.</p></td>
 		            </tr>
 					</c:when>
 					<c:otherwise>
@@ -172,7 +174,7 @@
 		             		<input type="text" id = "nickName" name="nickName" value="${nickName}" placeholder="사이트에서 보여질 이름" required onkeyup="nick_Check()">
 		             	</td>
 		             	<td>
-		             		<button class="button" type="button" onclick="nickName_overlap()">중복체크</button>
+		             		<input class="button" type="button" onclick="nickName_overlap()" value="중복체크">
 		             	</td>
 		            </tr>
 		            <tr>
@@ -247,21 +249,22 @@
         </form>
     </div>
   </div>
-</main>
+
 
 <!-- 메인  끝-->
   <!-- 푸터 -->
-  <footer id = "footer"> 
+<footer id = "footer" > 
     
-      <ul id="bottommenu">
-        <li><a href="#">사이트 제작자</a></li>
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">API 정보</a></li>
-        <li><a href="#">사이트맵</a></li>
-      </ul>
-      
-      <p>서울특별시 마포구 신촌로 176 4층 402호 제작자 번호 010-5375-4131</p>
-  </footer>
+    <ul  id="bottomenu">
+      <li><a href="">사이트제작자</a></li>
+      <li><a href="">개인정보처리방침</a></li>
+      <li><a href="">API 정보</a></li>
+      <li><a href="">사이트맵</a></li>
+    </ul>
+
+    <p>서울특별시 마포구 신촌로 176 4층 401호 제작자 번호 010-5375-4131</p>
+    
+</footer>
 
 </body>
 </html>

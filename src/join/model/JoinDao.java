@@ -21,7 +21,7 @@ public class JoinDao {
 	public static JoinDao getInstance() { 
 		return instance;
 	}
-	
+	//커넥션 연결 메소드
 	public Connection getConnection() {
 			System.out.println("커넥션 시작");
 			Context context = null;
@@ -40,7 +40,7 @@ public class JoinDao {
 			}
 			return connection;
 		}
-	
+	//회원가입 인서트 메소드
 	public void insertJoin(JoinDto joinDto) {
 		
 		Connection conn = null;
@@ -73,7 +73,7 @@ public class JoinDao {
 			
 			}
 	}
-	
+	//아이디 체크 메소드
 	public boolean idCheck(String id) {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -198,7 +198,7 @@ public class JoinDao {
 		}
 		return joinDto;
 	}
-	
+	//마이 페이지 수정 메소드
 	public void edit(int id, JoinDto joinDto) {
 		
 		Connection conn = null;
@@ -233,4 +233,40 @@ public class JoinDao {
 		}
 		
 	}
+	
+	public String searchNameEmail(String userId, String eMail) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String pw = null;
+		String sql = "SELECT USERID from join WHERE USERNAME = ? AND EMAIL = ?";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, eMail);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				pw = rs.getString("pw");
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		
+		}return pw;
+		
+	}
+	
+	
 }

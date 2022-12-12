@@ -78,6 +78,55 @@ function id_overlap() {
 	}
 	
 }
+
+//아이디 중복 체크 후 수정 버튼 누르면 readOnly 속성 지우고 id값도 초기화 
+function id_edit() {
+	
+	const sure = confirm("아이디를 수정하시겠습니까?");
+	const button = document.getElementById("editIdBbutton");
+	const idMsg = document.getElementById("idMsg");
+	if (sure) {
+		// 리드 온리 속성 해제
+		const id = document.getElementById("userId");
+		id.readOnly = false;
+		// 세션에서 불러온 id 값 초기화
+		id.value = "";
+		// 아이디 required 선언
+		id.required = true;
+		//버튼 텍스트 수정에서 중복체크로 변경
+		button.value = "중복체크";
+		//기존 클릭 이벤트 메소드 삭제
+		button.onclick = null;
+		//새로운 클릭 이벤트 메소드(아이디 중복체크) 설정   
+		button.addEventListener("click",id_overlap);
+		//키입력시 실시간 아이디 글자수 체크
+		id.addEventListener("keyup",id_Check);
+	}
+}
+
+//아이디 중복 체크 후 수정 버튼 누르면 readOnly 속성 지우고 id값도 초기화 
+function nickName_edit() {
+	
+	const sure = confirm("아이디를 수정하시겠습니까?");
+	const button = document.getElementById("editNickNameBbutton");
+	if (sure) {
+		// 리드 온리 속성 해제
+		const nickName = document.getElementById("nickName");
+		nickName.readOnly = false;
+		// 세션에서 불러온 닉네임 값 초기화
+		nickName.value = "";		
+		// 아이디 required 선언
+		nickName.required = true;
+		//버튼 텍스트 수정에서 중복체크로 변경
+		button.value = "중복체크";
+		//기존 클릭 이벤트 메소드 삭제
+		button.onclick = null;
+		//새로운 클릭 이벤트 메소드(닉네임 중복체크) 설정  
+		button.addEventListener("click",nickName_overlap);
+		//키입력시 실시간 닉네임 글자수 체크
+		nickName.addEventListener("keyup",nick_Check);
+	}
+}
 //닉네임 2글자 이상 확인
 function nick_Check(){
 
@@ -181,6 +230,10 @@ function final_Check() {
 		idCheck.readOnly  == true && nickCheck.readOnly  ==  true ) {
 		alert("회원가입에 성공하였습니다.");
 		document.getElementById('joinForm').submit();
+	}else if(idCheck.readOnly  != true ){
+		alert("아이디 중복체크를 해주세요");
+	}else if(nickCheck.readOnly  != true ){
+		alert("닉네임 중복체크를 해주세요");
 	}else {
 		alert("모든 항목을 입력해주세요");
 	}
