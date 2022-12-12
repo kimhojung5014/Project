@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+   <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -146,16 +147,22 @@
             <td></td>
             <td><p id ="pwCheckMsg"></p></td>
             </tr>
-            <tr>
-              <td class="textleft">닉네임</td>
-              <td>
-              	<input type="text" id = "nickName" name="nickName" style="color: gray;"  value="${userData.nickName}"  readonly="readonly" onkeyup="nick_Check()">
-              </td>
-<!--               <td><button class="button" type="button" onclick="nickName_overlap()">중복체크</button></td> -->
+			 <tr>
+             	<td class="textleft">닉네임</td>
+<!--              	xz -->
+
+             	<td><input type="text" id = "nickName" name="nickName" value="${userData.nickName}" readonly></td>
+
+<!-- zx -->
+             	<td><input type="text" id = "nickName" name="nickName" value="${userData.nickName}" readonly></td>
+             	
+             	<td>
+             	 	<input class="button" id="editNickNameBbutton" type="button" onclick="nickName_MyPage()" value="수정">
+             	</td>
             </tr>
             <tr>
             	<td></td>
-            	<td><p>닉네임은 수정할 수 없습니다.</p></td>
+            	<td><p id="nickNameMsg">닉네임 변경 시 수정 버튼을 눌러주세요.</p></td>
             </tr>
             
             <tr>

@@ -84,7 +84,9 @@ public class JoinController extends HttpServlet {
 			
 			if (idCheckService.execute(request, response)) {
 				System.out.println("사용가능한 아이디");
-				request.setAttribute("idCheck", "1");
+				request.setAttribute("idCheck", "ok");
+				
+				//세션으로 값 띄우는 건 수정 하기
 				request.getSession().setAttribute("userId", userId);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("idCheck.jsp");
 				dispatcher.forward(request, response);
@@ -104,13 +106,17 @@ public class JoinController extends HttpServlet {
 			
 			if (nickNameCheckService.execute(request, response)) {
 				System.out.println("사용가능한 닉네임");
-				request.setAttribute("nickCheck", "1");
-				request.getSession().setAttribute("nickName",nickName );
-				RequestDispatcher dispatcher = request.getRequestDispatcher("nickCheck.jsp");
-				dispatcher.forward(request, response);
-
+				request.setAttribute("nickCheck", "ok");
 				
-			
+				if (request.getParameter("page") != null) {
+					request.getSession().setAttribute("nickName",nickName );
+					RequestDispatcher dispatcher = request.getRequestDispatcher("nickCheckMyPage.jsp");
+					dispatcher.forward(request, response);	
+				} else {
+					request.getSession().setAttribute("nickName",nickName );
+					RequestDispatcher dispatcher = request.getRequestDispatcher("nickCheck.jsp");
+					dispatcher.forward(request, response);			
+				}
 			}else {
 				System.out.println("중복된 닉네임");
 

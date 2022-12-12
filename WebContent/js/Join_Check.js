@@ -43,27 +43,23 @@ function pw_Regular_Check(){
 	      
 	}
 	}
-//아이디 5글자 이상인지 체크하는 메소드
+//아이디 정규식
 function id_Check(){
 
 	const id =  document.getElementById("userId");
 	const idMsg = document.getElementById("idMsg");
 	const correctColor = "#00ff00";	//맞았을 때 출력되는 색깔.
 	const wrongColor ="#ff0000";	//틀렸을 때 출력되는 색깔
-
-	  if(id.value.length < 5){
+	const pattern =/^[A-Za-z]{1}[A-Za-z0-9]{5,20}$/; // 첫글자는 문자만 가능 뒤는 상관 없고 글자수는 5-20
+	  if(pattern.test(id.value)){
+		  	idMsg.style.color = correctColor;
+			idMsg.innerHTML = "OK!";
+			return true;
+	  }else{
 		  	idMsg.style.color = wrongColor;
-			idMsg.innerHTML = "5~12글자 이상 입력바랍니다.";
-			return false;
-	  }else if (id.value.length > 12) {
-		  	idMsg.style.color = wrongColor;
-			idMsg.innerHTML = "12글자까지  입력바랍니다.";
+			idMsg.innerHTML = "첫글자는 영어로 하고 , 2 ~ 20 글자 특수문자 제외 입력";
 			return false;
 			
-	  }else{
-		  	idMsg.style.color = correctColor;
-		  	idMsg.innerHTML = "OK";
-		  	return true;
 	  }
 	}
 //아이디 중복체크 누르면 id를 컨트롤러로 보내서 확인함
@@ -135,27 +131,35 @@ function nick_Check(){
 	const correctColor = "#00ff00";	//맞았을 때 출력되는 색깔.
 	const wrongColor ="#ff0000";	//틀렸을 때 출력되는 색깔
 
-	  if(nickName.value.length < 2){
-		  nickNameMsg.style.color = wrongColor;
-		  nickNameMsg.innerHTML = "2글자 이상 입력바랍니다.";
-		  return false;
-	  }else if (nickName.value.length > 12) {
-		  nickNameMsg.style.color = wrongColor;
-		  nickNameMsg.innerHTML = "12글자까지  입력바랍니다.";
-		  return false;
-			
-	  }else {
+	const pattern =/^[A-Za-z]{1}[A-Za-z0-9]{1,20}$/; // 첫글자는 문자만 가능 뒤는 상관 없고 글자수는 5-20
+	  if(pattern.test(nickName.value)){
 		  nickNameMsg.style.color = correctColor;
-		  nickNameMsg.innerHTML = "OK";
-		  return true;
+		  nickNameMsg.innerHTML = "OK!";
+			return true;
+	  }else{
+		  nickNameMsg.style.color = wrongColor;
+		  nickNameMsg.innerHTML = "첫글자는 영어로 하고 , 2 ~ 20 글자 특수문자 제외 입력";
+			return false;
+			
 	  }
 	}
-
+//회원가입용
 function nickName_overlap() {
 	
 	if (nick_Check()) {
 		const nickName =  document.getElementById("nickName");
 		document.location.href = "nickNameCheck.join?nickName="+nickName.value;
+
+	}else {
+		alert("닉네임 글자수를 확인해주세요.");
+	}
+}
+//마이페이지용
+function nickName_MyPage() {
+	
+	if (nick_Check()) {
+		const nickName =  document.getElementById("nickName");
+		document.location.href = "nickNameCheck.join?nickName="+nickName.value+"page=mypage";
 
 	}else {
 		alert("닉네임 글자수를 확인해주세요.");
@@ -169,20 +173,22 @@ function name_Check(){
 	const userNameMsg = document.getElementById("userNameMsg");
 	const correctColor = "#00ff00";	//맞았을 때 출력되는 색깔.
 	const wrongColor ="#ff0000";	//틀렸을 때 출력되는 색깔
-
-	  if(userName.value.length < 1){
-		  userNameMsg.style.color = wrongColor;
-		  userNameMsg.innerHTML = "1글자 이상 입력바랍니다.";
-		  return false;
-	  }else if (userName.value.length > 12) {
-		  userNameMsg.style.color = wrongColor;
-		  userNameMsg.innerHTML = "12글자까지  입력바랍니다.";
-		  return false;
-			
-	  }else {
+	const regKor = /^[가-힣]{2,20}$/;//한글이름 2~10글자
+	const regEng = /^[a-zA-Z]{2,20}$/;//영어이름 2~20글자
+	
+	  if(regKor.test(userName.value)){ //한글이름 체크
 		  userNameMsg.style.color = correctColor;
-		  userNameMsg.innerHTML = "OK";
+		  userNameMsg.innerHTML = "Ok!";
 		  return true;
+		  
+	  }else if (regEng.test(userName.value)) { // 영어 이름 체크
+		  userNameMsg.style.color = correctColor;
+		  userNameMsg.innerHTML = "Ok!";
+		  return true;			
+	  }else {
+		  userNameMsg.style.color = wrongColor;
+		  userNameMsg.innerHTML = "영어, 한글 중 택해서 2~20글자 이내로 입력해주세요.";
+		  return false;
 	  }
 	}
 //이메일 주소 정규식 
@@ -195,7 +201,7 @@ function eMail_Check() {
 	
 	if (regExp.test(eMail.value)) {
 		eMailMsg.style.color = correctColor;
-		eMailMsg.innerHTML = "OK";
+		eMailMsg.innerHTML = "OK!";
 		return true;
 	}else {
 		eMailMsg.style.color = wrongColor;
@@ -209,10 +215,10 @@ function tel_Check() {
 	const wrongColor ="#ff0000";	//틀렸을 때 출력되는 색깔
 	const telNumber = document.getElementById("telNumber");
 	const telMsg = document.getElementById("telMsg");
-	const regExp = /^\d{3}-\d{3,4}-\d{4}$/;
+	const regExp = /01[016789]-?[0-9]{4}-?[0-9]{4}/; // 전화번호 정규식 
 	if (regExp.test(telNumber.value)) {
 		telMsg.style.color = correctColor;
-		telMsg.innerHTML = "OK";
+		telMsg.innerHTML = "OK!";
 		return true;
 	}else {
 		telMsg.style.color = wrongColor;
@@ -226,27 +232,25 @@ function final_Check() {
 	const nickCheck =document.getElementById("nickName");
 	
 
-	if (pw_Check() && pw_Regular_Check()&& eMail_Check() && tel_Check() && name_Check() &&
-		idCheck.readOnly  == true && nickCheck.readOnly  ==  true ) {
+	if (idCheck.readOnly  != true ) {
 		alert("회원가입에 성공하였습니다.");
 		document.getElementById('joinForm').submit();
-	}else if(idCheck.readOnly  != true ){
-		alert("아이디 중복체크를 해주세요");
 	}else if(nickCheck.readOnly  != true ){
+		alert("아이디 중복체크를 해주세요");
+	}else if(pw_Check() && pw_Regular_Check()&& eMail_Check() && tel_Check() && name_Check() &&
+			idCheck.readOnly  == true && nickCheck.readOnly  ==  true ){
 		alert("닉네임 중복체크를 해주세요");
 	}else {
 		alert("모든 항목을 입력해주세요");
 	}
 }
 
-//아이디, 닉네임 중복 체크가 안되어 있을 시 
-function reTry() {
-	alert("아이디, 닉네임 중복체크를 확인해주세요.")
-}
 //마이페이지에서 수정 시 쓰는 메소드
 function myPage_final_Check() {
 	
-	if (pw_Check() && pw_Regular_Check()  && name_Check() && eMail_Check() && tel_Check()) {
+	if (pw_Check() && pw_Regular_Check()  && name_Check() && eMail_Check() && tel_Check()
+		&& nickCheck.readOnly  ==  true) {
+		
 		alert("정보수정이 완료되었습니다.");
 		document.getElementById('editForm').submit();
 	}else {
