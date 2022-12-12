@@ -7,10 +7,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/header_footer.css">
-  <link rel="stylesheet" href="css/join.css"> 
+  <link rel="stylesheet" href="css/join.css?1"> 
   <title>마이 페이지</title>
 </head>
 <body>
+<script src="js/Join_Check.js?1"></script>
    <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -53,8 +54,8 @@
             </li>
     <!--3번째 메뉴 끝  -->
 
-    <!-- 4번째 메뉴 시작 -->
-            <LI><a id="main" href="#">온라인 학위 정보</a>
+  <!-- 4번째 메뉴 시작 -->
+            <li><a id="main" href="#">온라인 학위 정보</a>
               <ul class="main2">
     
                 <li><a href=""> 원격대학교</a>
@@ -74,7 +75,7 @@
                   
                       <li><a href="TestDate.jsp" >시험일정</a></li>
                     </ul>
-                
+                </li>
                   <li><a href="">학점은행제</a>
                     <ul class="main3">
                       <li><a href="bank.html">학점은행제 개요</a></li>
@@ -83,13 +84,10 @@
                     </ul>
                   </li>
 
-                </li>
-
-              </ul>
-
-            </LI>
+           	 </ul>
+          </li>       
+          
     <!-- 4번째 메뉴 끝 -->
-    
     <!-- 5번째 메뉴 -->
             <li><a href="board.jsp">커뮤니티</a>
             
@@ -106,66 +104,115 @@
 
 
   <!-- 메인 부분 -->
-<main>
   <div id="mainStyle">
     <div id="mainContent">
       <h1 class="subtitle">개인정보수정</h1>
       
 
-      <form action="">
-        <table id="login">
-
-          <tr>
-            <td class="textleft"><h2>비밀번호 변경</h2></td>
-            <td><input type="password" name="pw" placeholder="변경할 비밀번호"></td>
-          </tr>
-          <tr>
-            <td class="textleft"><h2>비밀번호 확인</h2></td>
-            <td><input type="password" name="pwCheck" placeholder="비밀번호 재입력"></td>
-          </tr>
-          <tr>
-            <td class="textleft"><h2>닉네임 변경</h2></td>
-            <td><input type="text" name="nickName" placeholder="사이트에서 보여질 이름"></td>
-            <td ><button class="button" type="submit" value="idCheck">중복체크</button></td>
-          </tr>
-          <tr>
-            <td class="textleft"><h2>이름</h2></td>
-            <td><input type="text" name="userName" placeholder="이름 입력"></td>
-          </tr>
-          <tr>
-            <td class="textleft"><h2>이메일주소</h2></td>
-            <td><input type="email" name="eMail" placeholder="이메일@.com"></td>
-          </tr>
-          <tr>
-            <td class="textleft"><h2>전화번호</h2></td>
-            <td><input type="tell" name="pwCheck" placeholder="01X-1234-5678"></td>
-          </tr>
-        </table>
-        <div>
-          <button class="button" type="submit"><a href="http://"></a>수정완료</button>
-            &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;
-          <button class="button"><a href="http://"></a>회원탈퇴</button>
+      <form action="edit.join" method="post" name="joinForm" id ="editForm">
+      <input type="hidden" name ="numId" id="numId" value="${userData.numId }">
+        <div class="textarea">
+         <table id="join">
+      
+            <tr>
+              <td class="textleft">아이디</td>
+              <td>
+              	<input type="text" name="userId" id="userId" style="color: gray;" readonly value="${userData.userId}">
+              </td>
+            </tr>
+            <tr>
+            <td></td>
+            	<td><p>아이디는 수정할 수 없습니다.</p></td>
+            </tr>
+            <tr>
+              <td class="textleft">비밀번호</td>
+              <td><input type="text" id="pw" name="pw" value="${userData.pw}" required onkeyup="pw_Regular_Check()">
+    		   </td>
+            </tr>
+            <tr>
+            <td></td>
+            	<td>
+            	<p id="pwMsg"></p>
+            	</td>
+            </tr>
+            <tr>
+              <td class="textleft">비밀번호 확인</td>
+<!-- 					여기서부터 퍼온 거 -->
+				 <td><input type="text" name="pwCheck" id="pwCheck"  value="${userData.pw}" placeholder="비밀번호 재입력" required onkeyup="pw_Check()">
+                 </td>
+<!--                  퍼온거끝 -->
+            </tr>
+            <tr>
+            <td></td>
+            <td><p id ="pwCheckMsg"></p></td>
+            </tr>
+            <tr>
+              <td class="textleft">닉네임</td>
+              <td>
+              	<input type="text" id = "nickName" name="nickName" style="color: gray;"  value="${userData.nickName}"  readonly="readonly" onkeyup="nick_Check()">
+              </td>
+<!--               <td><button class="button" type="button" onclick="nickName_overlap()">중복체크</button></td> -->
+            </tr>
+            <tr>
+            	<td></td>
+            	<td><p>닉네임은 수정할 수 없습니다.</p></td>
+            </tr>
+            
+            <tr>
+              <td class="textleft">이름</td>
+              <td><input type="text" id="userName" name="userName" value="${userData.userName}"  required onkeyup="name_Check()"></td>
+            </tr>
+            <tr>
+            	<td></td>
+            	<td><p id ="userNameMsg"></p></td>
+            </tr>
+            <tr>
+              <td class="textleft">이메일주소</td>
+              <td>
+              	<input type="text" id ="eMail" name="eMail" value="${userData.eMail}" required onkeyup="eMail_Check()">
+              </td>
+            </tr>
+            <tr>
+            	<td></td>
+            	<td><p id="eMailMsg"></p></td>
+            </tr>
+            <tr>
+              <td class="textleft">전화번호</td>
+              <td>
+              	<input type="tel" id = "telNumber" name="telNumber" value="${userData.telNumber}"  required onkeyup="tel_Check()">
+              </td>
+            </tr>
+            <tr>
+            	<td></td>
+            	<td><p id="telMsg"></p></td>
+            </tr>
+            
+            
+            <tr>
+              <td colspan="3"><button class="button" type="button" onclick=" myPage_final_Check()" >완료</button></td>
+            </tr>
+          </table>
         </div>
-      </form>
+        </form>
     </div>
   </div>
-</main>
 
    
 
 <!-- 메인  끝-->
   <!-- 푸터 -->
-  <footer id = "footer"> 
+  <footer id = "footer" > 
     
-      <ul id="bottommenu">
-        <li><a href="#">사이트 제작자</a></li>
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">API 정보</a></li>
-        <li><a href="#">사이트맵</a></li>
-      </ul>
-      
-      <p>서울특별시 마포구 신촌로 176 4층 402호 제작자 번호 010-5375-4131</p>
-  </footer>
+    <ul  id="bottomenu">
+      <li><a href="">사이트제작자</a></li>
+      <li><a href="">개인정보처리방침</a></li>
+      <li><a href="">API 정보</a></li>
+      <li><a href="">사이트맵</a></li>
+    </ul>
+
+    <p>서울특별시 마포구 신촌로 176 4층 402호 제작자 번호 010-5375-4131</p>
+    
+</footer>
 
 </body>
 </html>

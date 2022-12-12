@@ -2,6 +2,8 @@ package join.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +19,10 @@ import join.service.JoinService;
 import join.service.JoinServiceImpl;
 import join.service.LoginService;
 import join.service.LoginServiceImpl;
+import join.service.NickNameCheckService;
+import join.service.NickNameCheckServiceImpl;
+import join.service.editService;
+import join.service.editServiceImpl;
 
 /**
  * Servlet implementation class Join_Controller
@@ -78,15 +84,14 @@ public class JoinController extends HttpServlet {
 			
 			if (idCheckService.execute(request, response)) {
 				System.out.println("사용가능한 아이디");
-				out.println("<html><head><title>확인창</title>");
-				out.println("<script>alert('사용가능한 ID입니다.');history.go(-1);</script>");
-				out.println("</head><body></body><html>");
-			
+				request.setAttribute("idCheck", "1");
+				request.getSession().setAttribute("userId", userId);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("idCheck.jsp");
+				dispatcher.forward(request, response);
 			}else {
 				System.out.println("중복된 아이디");
-				out.println("<html><head><title>확인창</title>");
-				out.println("<script>alert('이미 존재하는 ID입니다.');history.go(-1);</script>");
-				out.println("</head><body></body><html>");
+				
+				response.sendRedirect("idCheck.jsp");
 			}
 		}
 		//닉네임 중복 체크
@@ -95,19 +100,22 @@ public class JoinController extends HttpServlet {
 			System.out.println("컨트롤러에서 받는 닉네임 "+request.getParameter("nickName"));
 			String nickName =  request.getParameter("nickName");
 			request.setAttribute("nickName", nickName);
-			IdCheckService  idCheckService = new IdCheckServiceImpl();
+			NickNameCheckService  nickNameCheckService = new NickNameCheckServiceImpl();		
 			
-			if (idCheckService.execute(request, response)) {
+			if (nickNameCheckService.execute(request, response)) {
 				System.out.println("사용가능한 닉네임");
-				out.println("<html><head><title>확인창</title>");
-				out.println("<script>alert('사용가능한 닉네임입니다.');history.go(-1);</script>");
-				out.println("</head><body></body><html>");
+				request.setAttribute("nickCheck", "1");
+				request.getSession().setAttribute("nickName",nickName );
+				RequestDispatcher dispatcher = request.getRequestDispatcher("nickCheck.jsp");
+				dispatcher.forward(request, response);
+
+				
 			
 			}else {
 				System.out.println("중복된 닉네임");
-				out.println("<html><head><title>확인창</title>");
-				out.println("<script>alert('이미 존재하는 닉네임입니다.');history.go(-1);</script>");
-				out.println("</head><body></body><html>");
+
+				response.sendRedirect("nickCheck.jsp");
+
 			}
 		}
 		//로그인 
@@ -127,12 +135,31 @@ public class JoinController extends HttpServlet {
 				response.sendRedirect("newindex.jsp");
 			}else {
 				System.out.println("정보없음");
+				//out 객체 사용하지 말고 서블릿에서 뷰를 구현하면 안된다.
 				out.println("<html><head><title>확인창</title>");
 				out.println("<script>alert('아이디 비밀번호를 확인해주세요');history.go(-1);</script>");
 				out.println("</head><body</body><html>");
 			}
 			
 		}
+		if (commend.equals("/edit.join")) {
+			System.out.println("마이페이지 업데이트 시작");
+			JoinDto joinDto = new JoinDto((String)request.getParameter("userId"),
+										  (String)request.getParameter("pw"), 
+										  (String)request.getParameter("nickName"),
+										  (String)request.getParameter("userName"),
+										  (String)request.getParameter("eMail"),
+										  (String)request.getParameter("telNumber"));
+			int numId = Integer.parseInt(request.getParameter("numId"));
+			request.setAttribute("numId", numId);
+			request.setAttribute("joinDto", joinDto);
+			editService editService = new editServiceImpl();
+			editService.execute(request, response);
+			request.getSession().setAttribute("userData", joinDto);
+			response.sendRedirect("newindex.jsp");
+		}
+		
+		
 	}
 
 }

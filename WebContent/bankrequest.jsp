@@ -11,7 +11,7 @@
   <title>학점은행제 신청 페이지</title>
 </head>
 <body>
-    <!-- 헤더 부분 -->
+  <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
       <a href="newindex.jsp" >나의 진로 추천 서비스</a>
@@ -27,9 +27,27 @@
     </div> 
     <nav id ="nav1">                
       <ul id="loginmenu">
-        <li ><a href ="join.jsp">회원가입</a></li>
-        <li><a href ="login.jsp">로그인</a></li>
-        <li><a href ="mypage.jsp">마이페이지</a></li>
+	      <li>
+	        <c:choose>
+	        	
+		        <c:when test="${userData ne null}"> ${userData.nickName}</c:when>
+		        <c:otherwise><a href ="join.jsp"> 회원가입 </a></c:otherwise>
+		      
+	        </c:choose>
+	      </li>
+        
+        <li>
+        	<c:choose>
+	        	<c:when  test="${userData ne null}"><a href ="logout.jsp">로그아웃</a></c:when>
+	        	<c:otherwise><a href ="login.jsp">로그인</a></c:otherwise>
+       		</c:choose>
+        </li>
+        <li>
+        	<c:choose>
+        		<c:when test="${userData ne null}"><a href ="mypage.jsp">마이페이지</a></c:when>
+    		    <c:otherwise></c:otherwise>
+        	</c:choose>
+        </li>
       </ul>
     </nav>
     <!--네비2 시작  -->

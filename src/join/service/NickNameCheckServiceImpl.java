@@ -16,6 +16,6 @@ public class NickNameCheckServiceImpl implements NickNameCheckService{
 	
 	@Override
 	public boolean execute(HttpServletRequest request, HttpServletResponse response) {
-		return joinDao.idCheck((String)request.getAttribute("userId"));
+		return joinDao.nickNameCheck((String)request.getAttribute("nickName"));
 }
 }

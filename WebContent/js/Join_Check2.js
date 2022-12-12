@@ -1,3 +1,6 @@
+var idCheck = 0;
+var nickCheck = 0;
+var nickEditCheck = 0;
 
 // 비밀번호 동일한지 체크하는 메소드
 function pw_Check() {
@@ -173,12 +176,7 @@ function tel_Check() {
 //회원가입에서 최종 확인시 쓰는 메소드 다른 메소드가 전부 참이면 인서트 컨트롤러로 값 넘김
 function final_Check() {
 	
-	const idCheck = document.getElementById("userId");
-	const nickCheck =document.getElementById("nickName");
-	
-
-	if (pw_Check() && pw_Regular_Check()&& eMail_Check() && tel_Check() && name_Check() &&
-		idCheck.readOnly  == true && nickCheck.readOnly  ==  true ) {
+	if (pw_Check() && pw_Regular_Check()&& eMail_Check() && tel_Check() && name_Check()) {
 		alert("회원가입에 성공하였습니다.");
 		document.getElementById('joinForm').submit();
 	}else {

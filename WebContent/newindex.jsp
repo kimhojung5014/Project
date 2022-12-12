@@ -1,6 +1,7 @@
 
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="en">
@@ -29,10 +30,27 @@
     </div> 
     <nav id ="nav1">                
       <ul id="loginmenu">
-        <li ><a href ="join.jsp">${userData.getNickName() }</a></li>
+	      <li>
+	        <c:choose>
+	        	
+		        <c:when test="${userData ne null}"> ${userData.nickName}</c:when>
+		        <c:otherwise><a href ="join.jsp"> 회원가입 </a></c:otherwise>
+		      
+	        </c:choose>
+	      </li>
         
-        <li><a href ="login.jsp">로그인</a></li>
-        <li><a href ="mypage.jsp">마이페이지</a></li>
+        <li>
+        	<c:choose>
+	        	<c:when  test="${userData ne null}"><a href ="logout.jsp">로그아웃</a></c:when>
+	        	<c:otherwise><a href ="login.jsp">로그인</a></c:otherwise>
+       		</c:choose>
+        </li>
+        <li>
+        	<c:choose>
+        		<c:when test="${userData ne null}"><a href ="mypage.jsp">마이페이지</a></c:when>
+    		    <c:otherwise></c:otherwise>
+        	</c:choose>
+        </li>
       </ul>
     </nav>
     <!--네비2 시작  -->
@@ -57,7 +75,7 @@
     <!--3번째 메뉴 끝  -->
 
     <!-- 4번째 메뉴 시작 -->
-            <LI><a id="main" href="#">온라인 학위 정보</a>
+            <li><a id="main" href="#">온라인 학위 정보</a>
               <ul class="main2">
     
                 <li><a href=""> 원격대학교</a>
@@ -77,7 +95,7 @@
                   
                       <li><a href="TestDate.jsp" >시험일정</a></li>
                     </ul>
-                
+                </li>
                   <li><a href="">학점은행제</a>
                     <ul class="main3">
                       <li><a href="bank.html">학점은행제 개요</a></li>
@@ -86,11 +104,9 @@
                     </ul>
                   </li>
 
-                </li>
-
-              </ul>
-
-            </LI>
+           	 </ul>
+          </li>       
+          
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
@@ -108,7 +124,7 @@
   <!-- 헤더 끝 -->
 
   <!-- 메인 부분 -->
-  <main>
+
   <div id="mainStyle">
 
     <!-- 증간에 사진 들어가는 부분 -->
@@ -162,8 +178,7 @@
           <p>자신의 진로에 대한 고민이 많은 당신을 위한<br> 직업 가치관 검사를 제공해드립니다.</p>
       </div>
     </div>
-
-  </main>
+</div>
 <!-- 메인  끝-->
 
   <!-- 푸터 -->

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-    <%		request.setCharacterEncoding("utf-8");
- %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,11 +8,11 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/header_footer.css">
-  <link rel="stylesheet" href="css/join.css"> 
+  <link rel="stylesheet" href="css/join.css?2"> 
   <title>회원가입 페이지</title>
 </head>
 <body>
-<script src="js/Join_Check.js?ver=1"></script>
+<script src="js/Join_Check.js?2"></script>
    <!-- 헤더 부분 -->
    <!-- 헤더 부분 -->
   <header id="headerstyle">
@@ -115,57 +114,133 @@
 
         <form action="insert.join" method="post" name="joinForm" id ="joinForm">
         <div class="textarea">
-         <table id="login" border="1">
-            <tr>
-              <td class="textleft">아이디</td>
-              <td>
-              	<input type="text" name="userId" id="userId" placeholder="5글자 이상 입력" autofocus required onkeyup="id_Check()"><br>
-            	<span id ="idMsg"></span>
-              		
+         <table id="join">
+      
+            
+              
+              	
+				<c:choose>
+					<c:when test="${ userId ne null }">
+					<tr>
+             			<td class="textleft">아이디</td>
+						<td>
+							<input type="text" name="userId" id="userId" value = "${userId}"  readonly="readonly" onkeyup="id_Check()">
+						</td>
+				    </tr>
+			        <tr>
+		            	<td></td>
+		            	<td>
+		            		<p>정해진 아이디는 변경할 수 없습니다.</p>
+		            	</td>
+		            </tr>
+					</c:when>
+					<c:otherwise>
+					<tr>
+             			<td class="textleft">아이디</td>
+						<td>
+							<input type="text" name="userId" id="userId" placeholder="5글자 이상 입력" autofocus required onkeyup="id_Check()">
+						</td>						
+		             	<td>
+		             	 	<button class="button" type="button" onclick="id_overlap() ">중복체크</button>
+		             	</td>
+					</tr>
+			        <tr>
+		            	<td></td>
+		            	<td><p id="idMsg"></p></td>
+		            </tr>
+					</c:otherwise>
+				</c:choose>
+              
+             <c:choose>
+					<c:when test="${ nickName ne null }">
+					 <tr>
+		             	<td class="textleft">닉네임</td>
+		             	<td>
+		             		<input type="text" id = "nickName" name="nickName" value="${nickName}" readonly="readonly" onkeyup="nick_Check()">
+		             	</td>
+		             	
+		            </tr>
+		            <tr>
+		            	<td></td>
+		            	<td><p>정해진 닉네임은 수정할 수 없습니다.</p></td>
+		            </tr>
+					</c:when>
+					<c:otherwise>
+					 <tr>
+		             	<td class="textleft">닉네임</td>
+		             	<td>
+		             		<input type="text" id = "nickName" name="nickName" value="${nickName}" placeholder="사이트에서 보여질 이름" required onkeyup="nick_Check()">
+		             	</td>
+		             	<td>
+		             		<button class="button" type="button" onclick="nickName_overlap()">중복체크</button>
+		             	</td>
+		            </tr>
+		            <tr>
+		            	<td></td>
+		            	<td><p id ="nickNameMsg"></p></td>
+		            </tr>
+					</c:otherwise>
+				</c:choose>
              
-              </td>
-              <td><p onclick="id_overlap()">중복체크</p></td>
-            </tr>
+             
+
             <tr>
               <td class="textleft">비밀번호</td>
-              <td><input type="password" id="pw" name="pw" placeholder="8글자 이상 입력" required onkeyup="pw_Regular_Check()"><br>
-    		   <span id="pwMsg"></span></td>
+              <td><input type="password" id="pw" name="pw" placeholder="8글자 이상 입력" required onkeyup="pw_Regular_Check()">
+    		   </td>
+            </tr>
+            <tr>
+            <td></td>
+            	<td>
+            	<p id="pwMsg"></p>
+            	</td>
             </tr>
             <tr>
               <td class="textleft">비밀번호 확인</td>
 <!-- 					여기서부터 퍼온 거 -->
-				 <td><input type="password" name="pwCheck" id="pwCheck" placeholder="비밀번호 입력" required onkeyup="pw_Check()"><br>
-                 <span id ="pwCheckMsg"></span></td>
+				 <td><input type="password" name="pwCheck" id="pwCheck" placeholder="비밀번호 입력" required onkeyup="pw_Check()">
+                 </td>
 <!--                  퍼온거끝 -->
             </tr>
             <tr>
-              <td class="textleft">닉네임</td>
-              <td>
-              	<input type="text" id = "nickName" name="nickName" placeholder="사이트에서 보여질 이름" required onkeyup="nick_Check()"><br>
-              	<span id ="nickNameMsg"></span>
-              </td>
-              <td><p onclick="nickName_overlap()">중복체크</p></td>
+            <td></td>
+            <td><p id ="pwCheckMsg"></p></td>
             </tr>
+            
             <tr>
               <td class="textleft">이름</td>
-              <td><input type="text" name="userName" placeholder="이름 입력" required></td>
+              <td><input type="text" id="userName" name="userName"required onkeyup="name_Check()"></td>
+            </tr>
+            <tr>
+            	<td></td>
+            	<td><p id ="userNameMsg"></p></td>
             </tr>
             <tr>
               <td class="textleft">이메일주소</td>
               <td>
-              	<input type="text" id ="eMail" name="eMail" placeholder="이메일@.com" required onkeyup="eMail_Check()">
-              	<p id="eMailMsg"></p>
+              	<input type="text" id ="eMail" name="eMail"required onkeyup="eMail_Check()">
               </td>
+            </tr>
+            <tr>
+            	<td></td>
+            	<td><p id="eMailMsg"></p></td>
             </tr>
             <tr>
               <td class="textleft">전화번호</td>
               <td>
-              	<input type="tel" id = "telNumber" name="telNumber" placeholder="01X-1234-5678" required onkeyup="tel_Check()">
-              	<p id="telMsg"></p>
+              	<input type="tel" id = "telNumber" name="telNumber"  required onkeyup="tel_Check()">
               </td>
             </tr>
             <tr>
-              <td colspan="3"><button class="button" type="button" onclick="final_Check()" >완료</button></td>
+            	<td></td>
+            	<td><p id="telMsg"></p></td>
+            </tr>
+            
+            
+            <tr>
+              <td colspan="3">
+	              <button class="button" type="button" onclick="final_Check()">회원가입</button>
+	          </td>
             </tr>
           </table>
         </div>
@@ -173,8 +248,6 @@
     </div>
   </div>
 </main>
-
-   
 
 <!-- 메인  끝-->
   <!-- 푸터 -->

@@ -18,4 +18,6 @@ public class IdCheckServiceImpl implements IdCheckService{
 	public boolean execute(HttpServletRequest request, HttpServletResponse response) {
 		return joinDao.idCheck((String)request.getAttribute("userId"));
 }
+	  
+
 }

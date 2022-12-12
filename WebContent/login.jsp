@@ -40,9 +40,9 @@
                 <td><input type="password" name="pw" placeholder="비밀번호 입력" required></td>
               </tr>
               <tr>
-                <td><button class="button"><a href=""></a>ID 찾기</button></td>
-                <td><button class="button" ><a href="">PW 찾기</a></button></td>
-                <td><button class="button"><a href="">회원가입</a></button></td>
+                <td><button class="button" type="button" onclick="location.href = 'findid.jsp'">ID 찾기</button></td>
+                <td><button class="button" type="button" onclick="location.href = 'findpw.jsp'">PW 찾기</button></td>
+                <td><button class="button" type="button" onclick="location.href = 'join.jsp'">회원가입</button></td>
               </tr>
             </table>
           </form>

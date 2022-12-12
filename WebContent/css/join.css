@@ -29,18 +29,19 @@
 
   padding: 50px 50px;
 
-  line-height: 50px;
+/*   line-height: 50px; */
 
 }
 
-#login {
+#join {
   border-collapse: collapse;
 
   width: 100%;
 }
 
-#login td{
+#join td{
   height: 50px;
+  
 }
 
 
@@ -50,10 +51,10 @@
 }
 
 
-#login input{
+#join input{
   /* width: 100px; */
 
-  height: 20px;
+  height: 30px;
 
   font-size: 1rem;
 
@@ -63,9 +64,9 @@
 
   border: solid 1px rgb(170, 170, 170);
 }
-
-
-
+#join p {
+	font-size: 0.875rem;
+}
 
 /* 나에게 맞는 학과 칸에 제목 단 스타일 */
 .subtitle {

@@ -1,6 +1,7 @@
 package join.model;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,6 +10,7 @@ import java.sql.Statement;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
 
 public class JoinDao {
 
@@ -111,11 +113,52 @@ public class JoinDao {
 			return true;
 		}
 	}
+
+	//닉네임 중복 체크 메소드
+	public boolean nickNameCheck(String nick) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String nickName = null;
+		String sql = "SELECT NICKNAME FROM JOIN WHERE NICKNAME =  ?";
+		
+		System.out.println("nickNameCheck에 들어온 nickName = "+nick);
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, nick);
+			rs = pstmt.executeQuery();
+			
+			if (rs.next()) {
+				nickName = rs.getString("nickName");
+				System.out.println("rs.next에 NICKNAME 는 "+nickName);
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println("nickNameCheck()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+				rs.close();
+		    } catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		} if (nickName != null) {
+			System.out.println("nick 체크() 존재하는 nick");
+			return false;
+		}else {
+			System.out.println("nick 체크() 중복없는 nick");
+			return true;
+		}
+	}
 	
+	//로그인 메소드
 	public JoinDto login(String id, String pw) {
 		
-		JoinDto joinDto = new JoinDto();
-		
+		JoinDto joinDto = null;	
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
@@ -129,6 +172,7 @@ public class JoinDao {
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
+				joinDto = new JoinDto();
 				joinDto.setNumId(rs.getInt("numId"));
 				joinDto.setUserId(rs.getString("userId"));
 				joinDto.setPw(rs.getString("pw"));
@@ -154,6 +198,39 @@ public class JoinDao {
 		}
 		return joinDto;
 	}
-		
 	
+	public void edit(int id, JoinDto joinDto) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "UPDATE  JOIN SET numId ="+id +", userId = ?, pw = ?, nickName = ?, userName = ?, eMail = ?, telNumber = ?";
+				
+		try {
+
+			conn  = getConnection();
+			pstmt = conn.prepareStatement(sql);				
+			pstmt.setString(1, joinDto.getUserId());
+			pstmt.setString(2, joinDto.getPw());
+			pstmt.setString(3, joinDto.getNickName());
+			pstmt.setString(4, joinDto.getUserName());
+			pstmt.setString(5, joinDto.geteMail());
+			pstmt.setString(6, joinDto.getTelNumber());
+			
+			pstmt.executeUpdate();
+			System.out.println("수정완료");
+		} catch (SQLException e) {
+			System.out.println("edit()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		
+		}
+		
+	}
 }
