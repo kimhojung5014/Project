@@ -1,18 +1,9 @@
-/* 
-본문은 14~17px가 많이 쓰인다. 글씨 줄이자
-font-xs: 0.75rem  12px
-font-sm: 0.875rem 14px
-font-base: 1rem   16px
-font-lg: 1.125rem 18px
-font-xl: 1.25rem  20px  
-*/
-
-
+@charset "UTF-8";
 /* 메인 레이아웃 그리드  */
 #mainStyle {
 
   display:grid;
-  grid-template-columns: minmax(0px,1fr)  1000px minmax(0px,1fr);
+  grid-template-columns: minmax(0px,1fr)  700px minmax(0px,1fr);
   grid-template-rows: 1fr;
   /* text-align: center; */
   /* 양 옆 마진  */
@@ -32,7 +23,7 @@ font-xl: 1.25rem  20px
 
   /* border: solid 1px; */
 
-  font-size: 0.75rem;
+/*   font-size: 0.75rem; */
   padding-top: 50px;
 }
 /* 공통 css */
@@ -56,12 +47,12 @@ font-xl: 1.25rem  20px
   color: white;
   padding-left: 20px;
   border-radius: 20px;
-  /* width: 400px; */
+  text-align: center;
 }
 /* 부부제목 */
 .subsubtitle {
-  font-size: 1.125rem;
-  font-weight: bold;
+  font-size: 1.25rem;
+  /* font-weight: bold; */
 }
 /* 부부부제목 */
 .texttitle {
@@ -104,11 +95,29 @@ font-xl: 1.25rem  20px
 /* 결과보기 버튼 */
 .submitbutton {
   font-size: 1.25rem;
-  width: 150px;
+  width: 100px;
   height: 40px;
   border-radius: 20px;
   color: white;
   background-color: rgb(54, 82, 168);
   border: none;
   font-weight: bold;
+}
+
+/* 글작성 CSS */
+
+/* 카테고리 CSS */
+
+
+input ,select{
+  width: 100%;
+  height: 30px;
+  border: solid silver 1px;
+  border-radius: 5px;
+  padding-left: 10px;
+}
+
+textarea {
+
+  resize: none;
 }

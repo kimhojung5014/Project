@@ -99,11 +99,11 @@ function id_edit() {
 		id.addEventListener("keyup",id_Check);
 	}
 }
-
-//아이디 중복 체크 후 수정 버튼 누르면 readOnly 속성 지우고 id값도 초기화 
+//회원가입용 
+//닉네임 중복 체크 후 수정 버튼 누르면 readOnly 속성 지우고 id값도 초기화 
 function nickName_edit() {
 	
-	const sure = confirm("아이디를 수정하시겠습니까?");
+	const sure = confirm("닉네임을 수정하시겠습니까?");
 	const button = document.getElementById("editNickNameBbutton");
 	if (sure) {
 		// 리드 온리 속성 해제
@@ -119,6 +119,30 @@ function nickName_edit() {
 		button.onclick = null;
 		//새로운 클릭 이벤트 메소드(닉네임 중복체크) 설정  
 		button.addEventListener("click",nickName_overlap);
+		//키입력시 실시간 닉네임 글자수 체크
+		nickName.addEventListener("keyup",nick_Check);
+	}
+}
+//마이페이지용
+////닉네임 중복 체크 후 수정 버튼 누르면 readOnly 속성 지우고 id값도 초기화 
+function nickName_edit_MyPage() {
+	
+	const sure = confirm("닉네임을 수정하시겠습니까?");
+	const button = document.getElementById("editNickNameBbutton");
+	if (sure) {
+		// 리드 온리 속성 해제
+		const nickName = document.getElementById("nickName");
+		nickName.readOnly = false;
+		// 세션에서 불러온 닉네임 값 초기화
+		nickName.value = "";		
+		// 아이디 required 선언
+		nickName.required = true;
+		//버튼 텍스트 수정에서 중복체크로 변경
+		button.value = "중복체크";
+		//기존 클릭 이벤트 메소드 삭제
+		button.onclick = null;
+		//새로운 클릭 이벤트 메소드(닉네임 중복체크) 설정  
+		button.addEventListener("click",nickName_MyPage);
 		//키입력시 실시간 닉네임 글자수 체크
 		nickName.addEventListener("keyup",nick_Check);
 	}
@@ -159,7 +183,7 @@ function nickName_MyPage() {
 	
 	if (nick_Check()) {
 		const nickName =  document.getElementById("nickName");
-		document.location.href = "nickNameCheck.join?nickName="+nickName.value+"page=mypage";
+		document.location.href = "nickNameCheck.join?nickName="+nickName.value+"&page=mypage";
 
 	}else {
 		alert("닉네임 글자수를 확인해주세요.");
@@ -222,7 +246,7 @@ function tel_Check() {
 		return true;
 	}else {
 		telMsg.style.color = wrongColor;
-		telMsg.innerHTML = "전화번호 형식을 확인해주세요.";
+		telMsg.innerHTML = "전화번호를 확인해주세요.";
 	}
 }
 //회원가입에서 최종 확인시 쓰는 메소드 다른 메소드가 전부 참이면 인서트 컨트롤러로 값 넘김
@@ -233,13 +257,13 @@ function final_Check() {
 	
 
 	if (idCheck.readOnly  != true ) {
-		alert("회원가입에 성공하였습니다.");
-		document.getElementById('joinForm').submit();
-	}else if(nickCheck.readOnly  != true ){
 		alert("아이디 중복체크를 해주세요");
+	}else if(nickCheck.readOnly  != true ){
+		alert("닉네임 중복체크를 해주세요");
 	}else if(pw_Check() && pw_Regular_Check()&& eMail_Check() && tel_Check() && name_Check() &&
 			idCheck.readOnly  == true && nickCheck.readOnly  ==  true ){
-		alert("닉네임 중복체크를 해주세요");
+		alert("회원가입에 성공하였습니다.");
+		document.getElementById('joinForm').submit();
 	}else {
 		alert("모든 항목을 입력해주세요");
 	}
@@ -256,5 +280,33 @@ function myPage_final_Check() {
 	}else {
 		alert("모든 항목을 입력해주세요");
 	}
-	
+}
+
+//아이디 검색 메소드
+function searchId() {
+	if (name_Check() && eMail_Check()) {
+		document.getElementById('telNumber').value = "";
+		document.getElementById('searchIdForm').submit();
+	}else if (name_Check() && tel_Check()) {
+		document.getElementById('eMail').value = "";
+		document.getElementById('searchIdForm').submit();
+	}else {
+		alert("내용을 입력해주세요");
+	}
+}
+//비밀번호 검색 메소드
+function searchPw() {
+	if (id_Check() && eMail_Check()) {
+		document.getElementById('telNumber').value = "";
+		document.getElementById('searchPwForm').submit();
+	}else if (id_Check() && tel_Check()) {
+		document.getElementById('eMail').value = "";
+		document.getElementById('searchPwForm').submit();
+	}else {
+		alert("내용을 입력해주세요");
+	}
+}
+
+function test() {
+	alert("버튼 클릭 이벤트");
 }

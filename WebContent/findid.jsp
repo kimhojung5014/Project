@@ -8,10 +8,12 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/header_footer.css?1">
-  <link rel="stylesheet" href="css/findid.css?1"> 
+  <link rel="stylesheet" href="css/findid.css?12"> 
   <title>아이디 찾기 페이지</title>
 </head>
 <body>
+<script src="js/Join_Check.js"></script>
+
  <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -126,39 +128,42 @@
 
     <div id="mainContent">
 
-      <p class="subtitle">이메일로 찾기</p>
+      <p class="subtitle">아이디 찾기</p>
       <div class="textarea">
-          <form action="search_Name_Email.join" method="post">
+          <form action="search_Id.join" method="post" id="searchIdForm">
             <table id=search>
               <tr>
                 <td class="textleft"><p class="subsubtitle">이름</p></td>
-                <td><input type="text" name="userName" placeholder="이름" required></td>
+                <td><input type="text" id="userName" name="userName" placeholder="이름" required onkeyup="name_Check()"></td>
               </tr>
+		       <tr>
+            	<td></td>
+            		<td>
+            			<p id="userNameMsg"></p>
+            		</td>
+	           </tr>
+	           <tr>
+	           	<td colspan="2"><p style="color: gray"><b>*이메일, 전화번호중 하나만 입력하세요.</b><p></td>
+	           </tr>
+	           
               <tr>
                 <td class="textleft"><p class="subsubtitle">이메일 주소</p></td>
-                <td><input type="eMail" name="eMail" placeholder="이메일" required></td>
+                <td><input type="eMail" id="eMail" name="eMail" placeholder="이메일"  onkeyup="eMail_Check()"></td>
               </tr>
-              <tr>
-                <td colspan="2"><button class="submitbutton" type="button">완료</button></td>
-              </tr>
-            </table>
-          </form>
-        </div>
-        <!-- <br> -->
-        <p class="subtitle">전화번호로 찾기</p>
-      <div class="textarea">
-          <form action="">
-            <table id="login">
-              <tr>
-                <td class="textleft"><p class="subsubtitle">이름</p></td>
-                <td><input type="text" name="userName" placeholder="이름" required></td>
-              </tr>
+	           <tr>
+	             <td></td>
+	             <td><p id="eMailMsg"></p></td>
+	           </tr>
               <tr>
                 <td class="textleft"><p class="subsubtitle">전화번호</p></td>
-                <td><input type="tel" name="pw" placeholder="전화번호" required></td>
+                <td><input type="tel" id="telNumber" name="telNumber" placeholder="전화번호"  onkeyup="tel_Check()"></td>
               </tr>
               <tr>
-                <td colspan="2"><button class="submitbutton">완료</button></td>
+            	<td></td>
+            	<td><p id="telMsg"></p></td>
+              </tr>
+              <tr>
+                <td colspan="2"><input class="submitbutton" type="button" onclick="searchId()" value="완료"></td>
               </tr>
             </table>
           </form>
@@ -166,20 +171,18 @@
     </div>
   </div>
    
-  <footer id = "footer"> 
+<footer id = "footer" > 
     
-      <ul id="bottommenu">
-        <li><a href="#">사이트 제작자</a></li>
-        <li><a href="#">개인정보처리방침</a></li>
-        <li><a href="#">API 정보</a></li>
-        <li><a href="#">사이트맵</a></li>
-      </ul>
-      
-      <p>서울특별시 마포구 신촌로 176 4층 402호 제작자 번호 010-5375-4131</p>
-  </footer>
+    <ul  id="bottomenu">
+      <li><a href="">사이트제작자</a></li>
+      <li><a href="">개인정보처리방침</a></li>
+      <li><a href="">API 정보</a></li>
+      <li><a href="">사이트맵</a></li>
+    </ul>
 
-<script src="slide.js">
+    <p>서울특별시 마포구 신촌로 176 4층 401호 제작자 번호 010-5375-4131</p>
+    
+</footer>
 
-</script>
 </body>
 </html>

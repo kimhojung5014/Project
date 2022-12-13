@@ -2,19 +2,16 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/header_footer.css?1">
-  <link rel="stylesheet" href="css/findid.css?12"> 
-  <title>아이디 찾기 페이지</title>
+<meta charset="UTF-8">
+<title>글작성 화면</title>
+  <link rel="stylesheet" href="css/header_footer.css">
+  <link rel="stylesheet" href="css/boardwrite.css"> 
 </head>
 <body>
-<script src="js/Join_Check.js"></script>
 
- <!-- 헤더 부분 -->
+   <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
       <a href="newindex.jsp" >나의 진로 추천 서비스</a>
@@ -123,55 +120,40 @@
   </header>
   <!-- 헤더 끝 -->
 
- <!-- 메인 부분 -->
-  <div id="mainStyle">
+<div id="mainStyle">
 
     <div id="mainContent">
-
-      <p class="subtitle">비밀번호 찾기</p>
+      <p class="title">글작성하기</p>
       <div class="textarea">
-          <form action="search_Pw.join" method="post" id="searchPwForm">
-            <table id=search>
-              <tr>
-                <td class="textleft"><p class="subsubtitle">아이디</p></td>
-                <td><input type="text" id="userId" name="userId" placeholder="아이디" required onkeyup="id_Check()"></td>
-              </tr>
-		       <tr>
-            	<td></td>
-            		<td>
-            			<p id="idMsg"></p>
-            		</td>
-	           </tr>
-	           <tr>
-	           	<td colspan="2"><p style="color: gray"><b>*이메일, 전화번호중 하나만 입력하세요.</b><p></td>
-	           </tr>
-	           
-              <tr>
-                <td class="textleft"><p class="subsubtitle">이메일 주소</p></td>
-                <td><input type="eMail" id="eMail" name="eMail" placeholder="이메일"  onkeyup="eMail_Check()"></td>
-              </tr>
-	           <tr>
-	             <td></td>
-	             <td><p id="eMailMsg"></p></td>
-	           </tr>
-              <tr>
-                <td class="textleft"><p class="subsubtitle">전화번호</p></td>
-                <td><input type="tel" id="telNumber" name="telNumber" placeholder="전화번호" required onkeyup="tel_Check()"></td>
-              </tr>
-              <tr>
-            	<td></td>
-            	<td><p id="telMsg"></p></td>
-              </tr>
-              <tr>
-                <td colspan="2"><input class="submitbutton" type="button" onclick="searchPw()" value="완료"></td>
-              </tr>
-            </table>
-          </form>
-        </div>
+        <form action="write.board" method="post" id="writeForm">
+          <!-- 카테고리 드랍다운 -->
+          <label for="category" class="subsubtitle">카테고리 <span style="color: royalblue; font-size: 0.875rem;">*반드시 1개를 선택해주세요</span></label><br>
+          <select id="category">
+            <option value="job">직업정보</option>
+            <option value="major">학과정보</option>
+            <option value="consider">고민상담</option>
+          </select>
+          <br><br>
+          <!-- 제목 -->
+          <label for="title" class="subsubtitle">제목</label><br>
+          <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
+          <br><br>
+          <!-- 글 내용 적을 곳 -->
+          <p class="subsubtitle">본문</p>
+          <textarea name="write" id="write" cols="83" rows="30"></textarea>
+          <br>
+<!--           <input type="file"> -->
+          <div class="oncenter">										
+<!--           												버튼에서 유효성 검사 후 insertList.list로 보내야한다. -->
+            <button type="button" class="submitbutton" onclick="writeCheck()">등록</button>
+          </div>
+      </form>
+      </div>
     </div>
+    
   </div>
-   
-<footer id = "footer" > 
+  <!-- 푸터 -->
+  <footer id = "footer" > 
     
     <ul  id="bottomenu">
       <li><a href="">사이트제작자</a></li>
@@ -180,9 +162,8 @@
       <li><a href="">사이트맵</a></li>
     </ul>
 
-    <p>서울특별시 마포구 신촌로 176 4층 401호 제작자 번호 010-5375-4131</p>
+    <p>서울특별시 마포구 신촌로 176 4층 402호 제작자 번호 010-5375-4131</p>
     
 </footer>
-
 </body>
 </html>

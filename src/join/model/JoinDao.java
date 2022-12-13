@@ -234,39 +234,127 @@ public class JoinDao {
 		
 	}
 	
-	public String searchNameEmail(String userId, String eMail) {
+	public String searchId(String userName, String data) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		String pw = null;
-		String sql = "SELECT USERID from join WHERE USERNAME = ? AND EMAIL = ?";
-		
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, userId);
-			pstmt.setString(2, eMail);
-			
-			rs = pstmt.executeQuery();
-			
-			if(rs.next()) {
-				pw = rs.getString("pw");
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-		}finally {
+		System.out.println("들어온 이름: "+userName+" data :"+data);
+		String id = null;
+		String sqlMail = "SELECT USERID from join WHERE USERNAME = ? AND EMAIL = ?";
+		String sqlTel = "SELECT USERID from join WHERE USERNAME = ? AND TELNUMBER = ?";
+		if (data.indexOf("@") != -1) {
 			try {
-				rs.close();
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+				System.out.println("이메일 sql");
+				conn = getConnection();
+				pstmt = conn.prepareStatement(sqlMail);
+				pstmt.setString(1, userName);
+				pstmt.setString(2, data);
+				rs = pstmt.executeQuery();
+				
+					if(rs.next()) {
+						id = rs.getString("USERID");
+					}
+				}catch (Exception e) {
+					// TODO: handle exception
+				}finally {
+					try {
+						rs.close();
+						pstmt.close();
+						conn.close();
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				
+				}return id;
 		
-		}return pw;
+		}else {
+			try {
+				System.out.println("전화번호 sql");
+				conn = getConnection();
+				pstmt = conn.prepareStatement(sqlTel);
+				pstmt.setString(1, userName);
+				pstmt.setString(2, data);
+				rs = pstmt.executeQuery();
+				
+					if(rs.next()) {
+						id = rs.getString("USERID");
+					}
+				}catch (Exception e) {
+					// TODO: handle exception
+				}finally {
+					try {
+						rs.close();
+						pstmt.close();
+						conn.close();
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				
+				}return id;
 		
+		}
 	}
-	
+	public String searchPw(String userId, String data) {
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		System.out.println("들어온 아이디: "+userId+" data :"+data);
+		String pw = null;
+		String sqlMail = "SELECT PW from join WHERE USERID = ? AND EMAIL = ?";
+		String sqlTel = "SELECT PW from join WHERE USERID = ? AND TELNUMBER = ?";
+		if (data.indexOf("@") != -1) {
+			try {
+				System.out.println("이메일 sql");
+				conn = getConnection();
+				pstmt = conn.prepareStatement(sqlMail);
+				pstmt.setString(1, userId);
+				pstmt.setString(2, data);
+				rs = pstmt.executeQuery();
+				
+					if(rs.next()) {
+						pw = rs.getString("pw");
+					}
+				}catch (Exception e) {
+					// TODO: handle exception
+				}finally {
+					try {
+						rs.close();
+						pstmt.close();
+						conn.close();
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				
+				}return pw;
+		
+		}else {
+			try {
+				System.out.println("전화번호 sql");
+				conn = getConnection();
+				pstmt = conn.prepareStatement(sqlTel);
+				pstmt.setString(1, userId);
+				pstmt.setString(2, data);
+				rs = pstmt.executeQuery();
+				
+					if(rs.next()) {
+						pw = rs.getString("pw");
+					}
+				}catch (Exception e) {
+					// TODO: handle exception
+				}finally {
+					try {
+						rs.close();
+						pstmt.close();
+						conn.close();
+					} catch (Exception e2) {
+						e2.printStackTrace();
+					}
+				
+				}return pw;
+		
+		}
+	}
 	
 }

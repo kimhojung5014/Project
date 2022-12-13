@@ -110,7 +110,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="board.jsp">커뮤니티</a>
+            <li><a href="list.board">커뮤니티</a>
             
   
           </li>

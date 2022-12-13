@@ -12,8 +12,8 @@
   <title>마이 페이지</title>
 </head>
 <body>
-<script src="js/Join_Check.js?1"></script>
-   <!-- 헤더 부분 -->
+<script src="js/Join_Check.js?22ㄴ"></script>
+ <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
       <a href="newindex.jsp" >나의 진로 추천 서비스</a>
@@ -29,9 +29,27 @@
     </div> 
     <nav id ="nav1">                
       <ul id="loginmenu">
-        <li ><a href ="join.jsp">회원가입</a></li>
-        <li><a href ="login.jsp">로그인</a></li>
-        <li><a href ="mypage.jsp">마이페이지</a></li>
+	      <li>
+	        <c:choose>
+	        	
+		        <c:when test="${userData ne null}"> ${userData.nickName}</c:when>
+		        <c:otherwise><a href ="join.jsp"> 회원가입 </a></c:otherwise>
+		      
+	        </c:choose>
+	      </li>
+        
+        <li>
+        	<c:choose>
+	        	<c:when  test="${userData ne null}"><a href ="logout.jsp">로그아웃</a></c:when>
+	        	<c:otherwise><a href ="login.jsp">로그인</a></c:otherwise>
+       		</c:choose>
+        </li>
+        <li>
+        	<c:choose>
+        		<c:when test="${userData ne null}"><a href ="mypage.jsp">마이페이지</a></c:when>
+    		    <c:otherwise></c:otherwise>
+        	</c:choose>
+        </li>
       </ul>
     </nav>
     <!--네비2 시작  -->
@@ -55,7 +73,7 @@
             </li>
     <!--3번째 메뉴 끝  -->
 
-  <!-- 4번째 메뉴 시작 -->
+    <!-- 4번째 메뉴 시작 -->
             <li><a id="main" href="#">온라인 학위 정보</a>
               <ul class="main2">
     
@@ -89,6 +107,7 @@
           </li>       
           
     <!-- 4번째 메뉴 끝 -->
+    
     <!-- 5번째 메뉴 -->
             <li><a href="board.jsp">커뮤니티</a>
             
@@ -149,16 +168,19 @@
             </tr>
 			 <tr>
              	<td class="textleft">닉네임</td>
-<!--              	xz -->
-
-             	<td><input type="text" id = "nickName" name="nickName" value="${userData.nickName}" readonly></td>
-
-<!-- zx -->
-             	<td><input type="text" id = "nickName" name="nickName" value="${userData.nickName}" readonly></td>
+				<c:choose>
+				
+					<c:when test="${nickName ne null }">
+		             	<td><input type="text" id = "nickName" name="nickName" value="${nickName}" readonly></td>           	
+             			<td><input class="button" id="editNickNameBbutton" type="button" onclick="nickName_edit_MyPage()" value="수정"></td>
+					</c:when>
+					
+					<c:when test="${userData.nickName ne null}">
+						<td><input type="text" id = "nickName" name="nickName" value="${userData.nickName}" readonly></td>
+	             		<td><input class="button" id="editNickNameBbutton" type="button" onclick="nickName_edit_MyPage()" value="수정"></td>
+					</c:when>
+				</c:choose>
              	
-             	<td>
-             	 	<input class="button" id="editNickNameBbutton" type="button" onclick="nickName_MyPage()" value="수정">
-             	</td>
             </tr>
             <tr>
             	<td></td>

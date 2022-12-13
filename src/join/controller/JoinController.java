@@ -21,6 +21,10 @@ import join.service.LoginService;
 import join.service.LoginServiceImpl;
 import join.service.NickNameCheckService;
 import join.service.NickNameCheckServiceImpl;
+import join.service.SearchIdService;
+import join.service.SearchIdServiceImpl;
+import join.service.SearchPwService;
+import join.service.SearchPwServiceImpl;
 import join.service.editService;
 import join.service.editServiceImpl;
 
@@ -100,6 +104,8 @@ public class JoinController extends HttpServlet {
 		if (commend.equals("/nickNameCheck.join")) {
 			System.out.println("nickNameCheck 시작");
 			System.out.println("컨트롤러에서 받는 닉네임 "+request.getParameter("nickName"));
+			String page = request.getParameter("page");
+			System.out.println("컨트롤러에서 받은 페이지 정보 "+page);
 			String nickName =  request.getParameter("nickName");
 			request.setAttribute("nickName", nickName);
 			NickNameCheckService  nickNameCheckService = new NickNameCheckServiceImpl();		
@@ -108,11 +114,13 @@ public class JoinController extends HttpServlet {
 				System.out.println("사용가능한 닉네임");
 				request.setAttribute("nickCheck", "ok");
 				
-				if (request.getParameter("page") != null) {
+				if (page != null) {
+					System.out.println("닉네임 분기"+page);
 					request.getSession().setAttribute("nickName",nickName );
 					RequestDispatcher dispatcher = request.getRequestDispatcher("nickCheckMyPage.jsp");
 					dispatcher.forward(request, response);	
 				} else {
+					System.out.println("닉네임 분기 회원가입");
 					request.getSession().setAttribute("nickName",nickName );
 					RequestDispatcher dispatcher = request.getRequestDispatcher("nickCheck.jsp");
 					dispatcher.forward(request, response);			
@@ -141,7 +149,7 @@ public class JoinController extends HttpServlet {
 				response.sendRedirect("newindex.jsp");
 			}else {
 				System.out.println("정보없음");
-				//out 객체 사용하지 말고 서블릿에서 뷰를 구현하면 안된다.
+				//out 객체 사용하지 말고 서블릿에서 뷰를 구현하면 안된다. 요건 따로 창 만들기
 				out.println("<html><head><title>확인창</title>");
 				out.println("<script>alert('아이디 비밀번호를 확인해주세요');history.go(-1);</script>");
 				out.println("</head><body</body><html>");
@@ -165,16 +173,68 @@ public class JoinController extends HttpServlet {
 			request.getSession().setAttribute("userData", joinDto);
 			response.sendRedirect("newindex.jsp");
 		}
-		//아이디 찾기 이름 이메일
-		if (commend.equals("/search_Name_Email.join")) {
-			System.out.println("아이디 찾기: 이름, 이메일");
-			String userId = request.getParameter("userName");
+		//아이디 찾기 이름
+		if (commend.equals("/search_Id.join")) {
+			System.out.println("아이디 찾기 시작");
+			String userName = request.getParameter("userName");
 			String eMail = request.getParameter("eMail");
-			
-			request.setAttribute("userId", userId);
-			request.setAttribute("eMail", eMail);
-			
-			
+			String telNumber =request.getParameter("telNumber");
+			System.out.println("userName="+userName);
+			System.out.println("eMail="+eMail);
+			System.out.println("tel="+telNumber);
+			if(telNumber.equals("")) {
+				System.out.println("컨트롤러 이메일 세팅");
+				request.setAttribute("userName", userName);
+				request.setAttribute("data", eMail);
+			}
+			else {
+				System.out.println("컨트롤러 전화번호 세팅");
+				request.setAttribute("userName", userName);				
+				request.setAttribute("data", telNumber);
+			}
+			SearchIdService searchIdService = new SearchIdServiceImpl();
+			String search = searchIdService.execute(request, response);
+			System.out.println("반환된 id:"+search);
+			if(search != null) {
+				request.setAttribute("id", search);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("searchId.jsp");
+				dispatcher.forward(request, response);
+				
+			}else {
+				response.sendRedirect("searchId.jsp");				
+			}
+
+		}
+		if (commend.equals("/search_Pw.join")) {
+			System.out.println("비밀번호 찾기 시작");
+			String userId = request.getParameter("userId");
+			String eMail = request.getParameter("eMail");
+			String telNumber =request.getParameter("telNumber");
+			System.out.println("id="+userId);
+			System.out.println("eMail="+eMail);
+			System.out.println("tel="+telNumber);
+			if(telNumber.equals("")) {
+				System.out.println("컨트롤러 이메일로 찾기");
+				request.setAttribute("userId", userId);
+				request.setAttribute("data", eMail);
+			}
+				else if(telNumber != null) {
+				System.out.println("컨트롤러 폰 번호로 찾기");
+				request.setAttribute("userId", userId);				
+				request.setAttribute("data", telNumber);
+			}
+			SearchPwService searchPwService = new SearchPwServiceImpl();
+			String search = searchPwService.execute(request, response);	
+			System.out.println("반환된 pw:"+search);
+			if(search != null) {
+				request.setAttribute("pw", search);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("searchPw.jsp");
+				dispatcher.forward(request, response);
+				
+			}else {
+				response.sendRedirect("searchPw.jsp");				
+			}
+
 		}
 		
 		

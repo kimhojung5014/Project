@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/board.css"> 
+  <link rel="stylesheet" href="css/board.css?qww"> 
   <link rel="stylesheet" href="css/header_footer.css">
   <title>게시판</title>
 </head>
@@ -107,7 +108,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="board.jsp">커뮤니티</a>
+            <li><a href="list.board">커뮤니티</a>
             
   
           </li>
@@ -122,7 +123,7 @@
 
 
   <!-- 메인 부분 -->
-  <main>
+
   <div id="mainStyle">
 
     <div id="mainContent">
@@ -142,109 +143,27 @@
       <!-- 테이블로 만든 게시판 형식 -->
       <table id="board">
         <thead>
-          <th>카테고리</th>
-          <th>번호</th>
-          <th>제목</th>
-          <th>작성자</th>
-          <th>작성시간</th>
-          <th>조회수</th>
+        	<tr>
+	          <th>카테고리</th>
+	          <th>번호</th>
+	          <th>제목</th>
+	          <th>작성자</th>
+	          <th>작성시간</th>
+	          <th>조회수</th>
+         	</tr>
         </thead>
         <tbody>
+        <c:forEach var="list" items="${arrayList}">
+
           <tr>
-            <td>공지사항</td>
-            <td>4</td>
-            <td>게시판 공지사항</td>
-            <td>관리자</td>
-            <td>2022년11월4일15:43</td>
-            <td>8</td>
+            <td>${list.catagory }</td>
+            <td>${list.writeNum }</td>
+            <td>${list.title }</td>
+            <td>${list.writer }</td>
+            <td>${list.writingTime }</td>
+            <td>${list.views }</td>
           </tr>
-          <tr>
-            <td>공지사항</td>
-            <td>4</td>
-            <td>게시판 공지사항</td>
-            <td>관리자</td>
-            <td>2022년11월4일15:43</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>공지사항</td>
-            <td>4</td>
-            <td>게시판 공지사항</td>
-            <td>관리자</td>
-            <td>2022년11월4일15:43</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>공지사항</td>
-            <td>4</td>
-            <td>게시판 공지사항</td>
-            <td>관리자</td>
-            <td>2022년11월4일15:43</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>공지사항</td>
-            <td>4</td>
-            <td>게시판 공지사항</td>
-            <td>관리자</td>
-            <td>2022년11월4일15:43</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>공지사항</td>
-            <td>4</td>
-            <td>게시판 공지사항</td>
-            <td>관리자</td>
-            <td>2022년11월4일15:43</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>공지사항</td>
-            <td>4</td>
-            <td>게시판 공지사항</td>
-            <td>관리자</td>
-            <td>2022년11월4일15:43</td>
-            <td>8</td>
-          </tr>
-          <tr>
-            <td>공지사항</td>
-            <td>4</td>
-            <td>게시판 공지사항</td>
-            <td>관리자</td>
-            <td>2022년11월4일15:43</td>
-            <td>8</td>
-            <tr>
-              <td>공지사항</td>
-              <td>4</td>
-              <td>게시판 공지사항</td>
-              <td>관리자</td>
-              <td>2022년11월4일15:43</td>
-              <td>8</td>
-            </tr>
-            <tr>
-              <td>공지사항</td>
-              <td>4</td>
-              <td>게시판 공지사항</td>
-              <td>관리자</td>
-              <td>2022년11월4일15:43</td>
-              <td>8</td>
-            </tr>
-            <tr>
-              <td>공지사항</td>
-              <td>4</td>
-              <td>게시판 공지사항</td>
-              <td>관리자</td>
-              <td>2022년11월4일15:43</td>
-              <td>8</td>
-            </tr>
-            <tr>
-              <td>공지사항</td>
-              <td>4</td>
-              <td>게시판 공지사항</td>
-              <td>관리자</td>
-              <td>2022년11월4일15:43</td>
-              <td>8</td>
-          </tr>
+  		</c:forEach>
         </tbody>
       </table>
       <!-- 게시판 끝 -->
@@ -274,7 +193,14 @@
               </form>
             </td>
             <td>
-              <button class="submitbutton"><a href="#">글 작성</a></button>
+            <c:choose>
+            	<c:when test="${userData ne null }">
+	              <a class="submitbutton" href="boardwrite.jsp">글 작성</a>
+            	</c:when>
+            	<c:otherwise>
+            	</c:otherwise>
+            </c:choose>
+              
             </td>
           
         </table>
@@ -286,7 +212,6 @@
     
   </div>
 
-  </main>
 <!-- 메인  끝-->
 
   <!-- 푸터 -->
