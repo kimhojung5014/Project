@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/boardwrite.css"> 
 </head>
 <body>
-
+<script src="js/write.js?12"></script>
    <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -107,7 +107,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="board.jsp">커뮤니티</a>
+            <li><a href="list.board">커뮤니티</a>
             
   
           </li>
@@ -125,13 +125,14 @@
     <div id="mainContent">
       <p class="title">글작성하기</p>
       <div class="textarea">
-        <form action="write.board" method="post" id="writeForm">
+        <form action="insert.board" method="post" id="writeForm">
+        
           <!-- 카테고리 드랍다운 -->
           <label for="category" class="subsubtitle">카테고리 <span style="color: royalblue; font-size: 0.875rem;">*반드시 1개를 선택해주세요</span></label><br>
-          <select id="category">
-            <option value="job">직업정보</option>
-            <option value="major">학과정보</option>
-            <option value="consider">고민상담</option>
+          <select id="category" name="category">
+            <option value="직업정보" selected>직업정보</option>
+            <option value="학과정보">학과정보</option>
+            <option value="고민상담">고민상담</option>
           </select>
           <br><br>
           <!-- 제목 -->
@@ -140,7 +141,7 @@
           <br><br>
           <!-- 글 내용 적을 곳 -->
           <p class="subsubtitle">본문</p>
-          <textarea name="write" id="write" cols="83" rows="30"></textarea>
+          <textarea name="content" id="content" cols="83" rows="30"></textarea>
           <br>
 <!--           <input type="file"> -->
           <div class="oncenter">										

@@ -20,6 +20,8 @@ function pw_Check() {
 		
 		}
 	}
+
+
 //비밀번호 글자 수 체크
 //비밀번호 정규식 체크 ^[a-zA-Z\\d`~!@#$%^&*()-_=+]{8,24}$
 //비밀번호 안먹으니 나중에
@@ -271,6 +273,8 @@ function final_Check() {
 
 //마이페이지에서 수정 시 쓰는 메소드
 function myPage_final_Check() {
+
+	const nickCheck =document.getElementById("nickName");
 	
 	if (pw_Check() && pw_Regular_Check()  && name_Check() && eMail_Check() && tel_Check()
 		&& nickCheck.readOnly  ==  true) {
@@ -307,6 +311,10 @@ function searchPw() {
 	}
 }
 
-function test() {
-	alert("버튼 클릭 이벤트");
+function loginCheck() {
+	if (id_Check() && pw_Regular_Check()) {
+	document.getElementById("loginForm").submit();
+	}else {
+		alert("아이디 비밀번호 형식을 확인해주세요");
+	}
 }

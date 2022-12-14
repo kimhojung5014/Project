@@ -12,6 +12,11 @@
   <title>게시판</title>
 </head>
 <body>
+<script type="text/javascript">
+	function loginAlert() {
+		alert("로그인 후 글작성 가능합니다.");
+	}
+</script>
   <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -154,11 +159,11 @@
         </thead>
         <tbody>
         <c:forEach var="list" items="${arrayList}">
-
+<!-- &catagory=${list.catagory} -->
           <tr>
             <td>${list.catagory }</td>
             <td>${list.writeNum }</td>
-            <td>${list.title }</td>
+            <td><a href="inToBoard.board?writeNum=${list.writeNum }">${list.title}</a></td>
             <td>${list.writer }</td>
             <td>${list.writingTime }</td>
             <td>${list.views }</td>
@@ -185,8 +190,11 @@
         <!-- 페이지 넘버부분 끝 -->
 
         <!-- 검색창 -->
-        <table style="width: 100%; padding-left: 30%;" >
+        <table style="width: 100%;" >
           <tr>
+          	<td>
+          	 
+          	</td> 
             <td>
               <form action="">
                 <label id="labelSearch">검색 <input type="search"></label>
@@ -198,11 +206,11 @@
 	              <a class="submitbutton" href="boardwrite.jsp">글 작성</a>
             	</c:when>
             	<c:otherwise>
+            	  <button type="button" class="submitbutton" onclick="loginAlert()">글 작성</button>
             	</c:otherwise>
             </c:choose>
-              
             </td>
-          
+          </tr>
         </table>
        
       </div>

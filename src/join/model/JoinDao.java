@@ -204,7 +204,7 @@ public class JoinDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "UPDATE  JOIN SET numId ="+id +", userId = ?, pw = ?, nickName = ?, userName = ?, eMail = ?, telNumber = ?";
+		String sql = "UPDATE JOIN SET userId = ?, pw = ?, nickName = ?, userName = ?, eMail = ?, telNumber = ? where numid="+id;
 				
 		try {
 

@@ -65,7 +65,8 @@ public class JoinController extends HttpServlet {
 		
 		if (commend.equals("/insert.join")) {
 			System.out.println("insert 시작");
-			JoinDto joinDto = new JoinDto((String)request.getParameter("userId"),
+			JoinDto joinDto = new JoinDto(
+										  (String)request.getParameter("userId"),
 										  (String)request.getParameter("pw"), 
 										  (String)request.getParameter("nickName"),
 										  (String)request.getParameter("userName"),
@@ -159,13 +160,15 @@ public class JoinController extends HttpServlet {
 		//마이페이지 수정화면
 		if (commend.equals("/edit.join")) {
 			System.out.println("마이페이지 업데이트 시작");
-			JoinDto joinDto = new JoinDto((String)request.getParameter("userId"),
+			int numId = Integer.parseInt(request.getParameter("numId"));
+			JoinDto joinDto = new JoinDto(numId,
+										  (String)request.getParameter("userId"),
 										  (String)request.getParameter("pw"), 
 										  (String)request.getParameter("nickName"),
 										  (String)request.getParameter("userName"),
 										  (String)request.getParameter("eMail"),
 										  (String)request.getParameter("telNumber"));
-			int numId = Integer.parseInt(request.getParameter("numId"));
+			
 			request.setAttribute("numId", numId);
 			request.setAttribute("joinDto", joinDto);
 			editService editService = new editServiceImpl();

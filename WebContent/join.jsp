@@ -92,7 +92,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="board.jsp">커뮤니티</a>
+            <li><a href="list.board">커뮤니티</a>
             
   
           </li>
@@ -150,29 +150,7 @@
 	            </tr>
 				</c:otherwise>
 			</c:choose>
-            <tr>
-              <td class="textleft">비밀번호</td>
-              <td><input type="password" id="pw" name="pw" placeholder="8글자 이상 입력" required onkeyup="pw_Regular_Check()">
-    		   </td>
-            </tr>
-            <tr>
-            <td></td>
-            	<td>
-            	<p id="pwMsg"></p>
-            	</td>
-            </tr>
-            <tr>
-              <td class="textleft">비밀번호 확인</td>
-<!-- 					여기서부터 퍼온 거 -->
-				 <td><input type="password" name="pwCheck" id="pwCheck" placeholder="비밀번호 입력" required onkeyup="pw_Check()">
-                 </td>
-<!--                  퍼온거끝 -->
-            </tr>
-            <tr>
-            <td></td>
-            <td><p id ="pwCheckMsg"></p></td>
-            </tr>
-			<c:choose>
+						<c:choose>
 				<c:when test="${ nickName ne null }">
 				 <tr>
 	             	<td class="textleft">닉네임</td>
@@ -203,7 +181,30 @@
 	            	<td><p id ="nickNameMsg"></p></td>
 	            </tr>
 				</c:otherwise>
-			</c:choose>            
+			</c:choose>     
+            <tr>
+              <td class="textleft">비밀번호</td>
+              <td><input type="password" id="pw" name="pw" placeholder="8글자 이상 입력" required onkeyup="pw_Regular_Check()">
+    		   </td>
+            </tr>
+            <tr>
+            <td></td>
+            	<td>
+            	<p id="pwMsg"></p>
+            	</td>
+            </tr>
+            <tr>
+              <td class="textleft">비밀번호 확인</td>
+<!-- 					여기서부터 퍼온 거 -->
+				 <td><input type="password" name="pwCheck" id="pwCheck" placeholder="비밀번호 입력" required onkeyup="pw_Check()">
+                 </td>
+<!--                  퍼온거끝 -->
+            </tr>
+            <tr>
+            <td></td>
+            <td><p id ="pwCheckMsg"></p></td>
+            </tr>
+       
             <tr>
               <td class="textleft">이름</td>
               <td><input type="text" id="userName" name="userName"required onkeyup="name_Check()"></td>

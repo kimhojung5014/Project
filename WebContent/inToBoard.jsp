@@ -1,18 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/majortest.css"> 
+<meta charset="UTF-8">
+<title>게시판 내부 화면</title>
   <link rel="stylesheet" href="css/header_footer.css">
-  <title>학과 학위 추천 결과 페이지</title>
+  <link rel="stylesheet" href="css/inToBoard.css?asas"> 
 </head>
 <body>
- <!-- 헤더 부분 -->
+<script src="js/write.js?12"></script>
+   <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
       <a href="newindex.jsp" >나의 진로 추천 서비스</a>
@@ -120,44 +119,44 @@
 <!-- 네비2끝 -->
   </header>
   <!-- 헤더 끝 -->
-  <!-- 메인 부분 -->
-  <main>
-  <div id="mainStyle">
+
+<div id="mainStyle">
+
     <div id="mainContent">
+
       <div class="textarea">
-          <p class="subtitle">조건에 맞는 학과, 학위 추천 결과</p>
-          <div class="intextarea">
-
-            <p class="subsubtitle">공학 계열 중 취업률이 제일 높은 곳은 <span class="blue">컴퓨터공학과</span>입니다.</p>
-
-            <p class="subsubtitle">취업률 평균 <span class="blue">67.6%</span>입니다.</p>
-
-            <p class="subsubtitle">졸업 후 첫 직업 분야는 <span class="blue">연구, 공학 기술직 50.6%</span>이 제일 많습니다.</p>
-
-            <p class="subsubtitle">첫 직장 월평균 임금은 <span class="blue">151~200만원</span>이 <span class="blue">45.8%</span> 로 제일 많습니다.</p>
-
-            <p class="subsubtitle">첫 직장 만족도는 <span class="blue">보통 33.7%</span>이 제일 많습니다.</p>
-
-            <p class="subsubtitle">4년제 대학교, 경제적으로 힘든 상황, 시간 무관을 선택하셨기에</p>
-
-            <p class="subsubtitle"><span class="blue">한국방송통신대학교 컴퓨터 공학과</span>를 추천해드립니다.</p>
-            
-          </div>
-            <div class="oncenter" >
-              <img src="image/취업률.png" alt=""width="100%">
-              <img src="image/취업분야.png" alt="" width="100%"  >
-              <img src="image/졸업 후 상황.png" alt="" width="100%">
-              <br>
-              <button class="submitbutton"><a style="color:white ;" href="https://www.knou.ac.kr/knou/index.do?epTicket=LOG" target="_blank">방통대 사이트바로가기</a></button>
-            </div>
-
+        <form action="insert.board" method="post" id="writeForm">
+        
+		  <!--작성자, 작성일시, 댓글 미구현          -->
+        
+          <!-- 카테고리 드랍다운 -->
+          
+          <p class="submitbutton" id="category">${boardDto.catagory }</p>
+           
+          <br>
+          <!-- 제목  제목 밑에 작성자 작성일시  -->
+          <p id="title" class="title" >${boardDto.title }</p>
+          <p id="title" class="title" >${boardDto.writingTime }</p>
+          <p id="title" class="title" >${boardDto.views }</p>
+          
+          <br>
+          <p>${boardDto.writer}</p>
+          
+          <br><br>
+          <!-- 글 내용 적을 곳 -->
+         
+          <textarea name="content" id="content" cols="83" rows="30" readonly="readonly">${boardDto.content }</textarea>
+          <br>
+<!--           <input type="file"> -->
+		   <ul>
+		   	 <li>댓글만들 곳</li>
+<!-- 		   	  <li>댓글만들 곳</li> -->
+		   </ul>
+      </form>
       </div>
     </div>
+    
   </div>
-
-  </main>
-<!-- 메인  끝-->
-
   <!-- 푸터 -->
   <footer id = "footer" > 
     
@@ -171,6 +170,5 @@
     <p>서울특별시 마포구 신촌로 176 4층 402호 제작자 번호 010-5375-4131</p>
     
 </footer>
-
 </body>
 </html>

@@ -62,7 +62,9 @@
 }
 
 #login td{
-  height: 100px;
+  height: 50px;
+  width: 200px;
+  
 }
 
 #login h2{
@@ -128,10 +130,6 @@ button:hover {
   background-color:#aaa;
   font-size: 1.4rem;
 }
-/* 버튼 스타일 결과보기 다시하기 끝 */
-
-
-/* 메인 레이아웃 끝 */
 
 
 

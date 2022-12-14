@@ -9,6 +9,8 @@ public class BoardDto {
 				   content;
 	private int writeNum, views;
 	
+	public BoardDto() {}
+	
 	public BoardDto(String catagory, String title, String writer, String writingTime, int writeNum, int views, String content) {
 		
 		this.catagory = catagory;

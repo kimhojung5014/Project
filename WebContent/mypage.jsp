@@ -109,7 +109,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="board.jsp">커뮤니티</a>
+            <li><a href="list.board">커뮤니티</a>
             
   
           </li>
@@ -157,10 +157,8 @@
             </tr>
             <tr>
               <td class="textleft">비밀번호 확인</td>
-<!-- 					여기서부터 퍼온 거 -->
 				 <td><input type="text" name="pwCheck" id="pwCheck"  value="${userData.pw}" placeholder="비밀번호 재입력" required onkeyup="pw_Check()">
                  </td>
-<!--                  퍼온거끝 -->
             </tr>
             <tr>
             <td></td>

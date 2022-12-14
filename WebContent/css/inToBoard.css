@@ -29,10 +29,11 @@
 /* 공통 css */
 /* 제목 단 */
 .title {
-  font-size: 1.5rem;
+  font-size: 1.125rem;
   font-weight: bold;
   padding-left:30px ;
   border-left: solid gray;
+  border-right: solid gray; 
 }
 .h2title {
   font-size: 1.5rem;
@@ -94,14 +95,15 @@
 
 /* 결과보기 버튼 */
 .submitbutton {
-  font-size: 1.25rem;
+
   width: 100px;
-  height: 40px;
+  line-height: 40px;
   border-radius: 20px;
   color: white;
   background-color: rgb(54, 82, 168);
   border: none;
   font-weight: bold;
+  text-align: center;
 }
 
 /* 글작성 CSS */
@@ -120,4 +122,5 @@ input ,select{
 textarea {
   padding: 20px 20px;
   resize: none;
+  border: 1px dotted;
 }

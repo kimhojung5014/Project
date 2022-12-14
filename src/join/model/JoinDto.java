@@ -15,6 +15,18 @@ public class JoinDto {
 	public JoinDto() {}
 	
 	public JoinDto(String userId, String pw, String nickName, String userName, String eMail, String telNumber) {
+
+		this.userId = userId;
+		this.pw = pw;
+		this.nickName = nickName;
+		this.userName = userName;
+		this.eMail = eMail;
+		this.telNumber = telNumber;
+		
+	}
+	
+	public JoinDto(int numId ,String userId, String pw, String nickName, String userName, String eMail, String telNumber) {
+		this.numId = numId;
 		this.userId = userId;
 		this.pw = pw;
 		this.nickName = nickName;
