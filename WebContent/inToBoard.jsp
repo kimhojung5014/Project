@@ -6,11 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 내부 화면</title>
-  <link rel="stylesheet" href="css/header_footer.css">
-  <link rel="stylesheet" href="css/inToBoard.css?asas"> 
+  <link rel="stylesheet" href="css/header_footer.css?sd">
+  <link rel="stylesheet" href="css/inToBoard.css?11"> 
 </head>
 <body>
-<script src="js/write.js?12"></script>
+<script src="js/write.js?123"></script>
    <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -107,7 +107,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="list.board">커뮤니티</a>
+            <li><a href="list.do">커뮤니티</a>
             
   
           </li>
@@ -125,7 +125,6 @@
     <div id="mainContent">
 
       <div class="textarea">
-        <form action="insert.board" method="post" id="writeForm">
         
 		  <!--작성자, 작성일시, 댓글 미구현          -->
         
@@ -135,24 +134,57 @@
            
           <br>
           <!-- 제목  제목 밑에 작성자 작성일시  -->
-          <p id="title" class="title" >${boardDto.title }</p>
-          <p id="title" class="title" >${boardDto.writingTime }</p>
-          <p id="title" class="title" >${boardDto.views }</p>
-          
-          <br>
-          <p>${boardDto.writer}</p>
-          
-          <br><br>
-          <!-- 글 내용 적을 곳 -->
+          <span id="title" class="title" >${boardDto.title }</span>
          
-          <textarea name="content" id="content" cols="83" rows="30" readonly="readonly">${boardDto.content }</textarea>
-          <br>
-<!--           <input type="file"> -->
-		   <ul>
-		   	 <li>댓글만들 곳</li>
+          <ul id="titleList">
+          	<li>${boardDto.writer}</li>
+          
+          	<li>${boardDto.writingTime }</li>
+          
+          	<li><span>조회수: </span>${boardDto.views }</li>
+          </ul>
+
+          <!-- 글 내용 적을 곳 -->
+		<div class="textareaContent" >
+            <p>${boardDto.content }</p>
+        </div>        
+       	<br>
+	 	  <p class="subsubtitle">댓글</p>
+	        <div class="intextarea">
+	        	<form action="commentInsert.do" method="post" id ="conmentForm">
+	        	<input type="hidden" name="userId" value="${userData.userId }">
+	        	<input type="hidden" name="nickName" value="${userData.nickName }">
+				<!-- 글번호를 보내줘야 처리가 가능하다.  -->
+	        	<input type="hidden" name="writeNum" value="${writeNum }">
+		       	<table>
+		       		<tr>
+		       			<td>
+		       				${userData.nickName}
+		       			</td>
+		       			<td>
+		       				<textarea name="commentContent" id ="commentContent" rows="2" cols="83"></textarea>		
+		       			</td>
+		       			<td>
+		       				<button type="button" onclick = "commentInsert()">댓글달기</button>
+		       			</td>
+		       		</tr>
+		       	</table>
+		       	</form>
+		       	<form action="replyInsert.do" method="post" id ="replyInsertForm" >
+
+       		        <c:forEach var="comment" items="${commentList}">
+		        	<ul class="comment">
+		           		<li><p><b>${comment.nickName}</b> ${comment.content}</p>작성시간: ${comment.commentDate} <button type="button">답글달기</button>
+			           		<ul class="reply">
+			               		<li>ㄴ<b>작성자</b> 내용</li>
+			           		</ul>
+		          		</li>
+		        	</ul>
+		        	</c:forEach>
+
+	        	</form>
+		        </div>
 <!-- 		   	  <li>댓글만들 곳</li> -->
-		   </ul>
-      </form>
       </div>
     </div>
     

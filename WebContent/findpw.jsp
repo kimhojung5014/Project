@@ -110,7 +110,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="list.board">커뮤니티</a>
+            <li><a href="list.do">커뮤니티</a>
             
   
           </li>
@@ -130,7 +130,7 @@
 
       <p class="subtitle">비밀번호 찾기</p>
       <div class="textarea">
-          <form action="search_Pw.join" method="post" id="searchPwForm">
+          <form action="search_Pw.do" method="post" id="searchPwForm">
             <table id=search>
               <tr>
                 <td class="textleft"><p class="subsubtitle">아이디</p></td>

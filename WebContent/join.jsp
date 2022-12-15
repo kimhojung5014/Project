@@ -92,7 +92,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="list.board">커뮤니티</a>
+            <li><a href="list.do">커뮤니티</a>
             
   
           </li>
@@ -112,7 +112,7 @@
       <p class="subtitle">회원가입</p>
       
 
-        <form action="insert.join" method="post" name="joinForm" id ="joinForm">
+        <form action="insertJoin.do" method="post" name="joinForm" id ="joinForm">
         <div class="textarea">
          <table id="join"> 
               	

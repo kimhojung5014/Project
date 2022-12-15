@@ -113,7 +113,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="list.board">커뮤니티</a>
+            <li><a href="list.do">커뮤니티</a>
             
   
           </li>
@@ -159,11 +159,11 @@
         </thead>
         <tbody>
         <c:forEach var="list" items="${arrayList}">
-<!-- &catagory=${list.catagory} -->
+
           <tr>
             <td>${list.catagory }</td>
             <td>${list.writeNum }</td>
-            <td><a href="inToBoard.board?writeNum=${list.writeNum }">${list.title}</a></td>
+            <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
             <td>${list.writer }</td>
             <td>${list.writingTime }</td>
             <td>${list.views }</td>

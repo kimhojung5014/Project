@@ -68,7 +68,7 @@ function id_Check(){
 function id_overlap() {
 	if (id_Check()) {
 		const id =  document.getElementById("userId");
-		document.location.href = "idCheck.join?id="+id.value;
+		document.location.href = "idCheck.do?id="+id.value;
 		
 	}else {
 
@@ -174,7 +174,7 @@ function nickName_overlap() {
 	
 	if (nick_Check()) {
 		const nickName =  document.getElementById("nickName");
-		document.location.href = "nickNameCheck.join?nickName="+nickName.value;
+		document.location.href = "nickNameCheck.do?nickName="+nickName.value;
 
 	}else {
 		alert("닉네임 글자수를 확인해주세요.");
@@ -185,7 +185,7 @@ function nickName_MyPage() {
 	
 	if (nick_Check()) {
 		const nickName =  document.getElementById("nickName");
-		document.location.href = "nickNameCheck.join?nickName="+nickName.value+"&page=mypage";
+		document.location.href = "nickNameCheck.do?nickName="+nickName.value+"&page=mypage";
 
 	}else {
 		alert("닉네임 글자수를 확인해주세요.");

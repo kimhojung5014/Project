@@ -89,7 +89,7 @@ public class BoardDao {
 		PreparedStatement pstmt = null;
 
 		String sql = "INSERT INTO BOARD (CATAGORY,WRITENUM,TITLE,WRITER,WRITINGTIME,VIEWS,CONTENT)"
-					 + "VALUES(?, LISTSE.nextval, ?, ?, SYSDATE, 0,?)";
+					 + "VALUES(?, LISTSE.nextval, ?, ?, TO_CHAR (SYSDATE,'\"\"YYYY\"년 \"MM\"월 \"DD\"일 \"hh24\"시 \"mi\"분 '), 0,?)";
 						//조회수는 초기값 0으로 주자
 		try {
 			conn = getConnection();

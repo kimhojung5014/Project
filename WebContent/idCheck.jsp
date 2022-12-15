@@ -10,7 +10,7 @@
 <body>
 	<c:choose>
 		<c:when test="${ idCheck eq 'ok' }">
-<%-- 		<c:set var=""></c:set>		 --%>
+
 			<script type="text/javascript">
 				alert("사용가능한 아이디 입니다.")
 				document.location.href = "join.jsp";

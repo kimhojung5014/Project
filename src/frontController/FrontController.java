@@ -1,7 +1,8 @@
-package join.controller;
+package frontController;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -11,7 +12,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
+import board.model.BoardDto;
+import board.service.BoardGetService;
+import board.service.BoardGetServiceImpl;
+import board.service.BoardInsertService;
+import board.service.BoardInsertServiceImpl;
+import board.service.BoardListService;
+import board.service.BoardListServiceImpl;
+import comment.model.CommentDto;
+import comment.service.CommentInsertService;
+import comment.service.CommentInsertServiceImpl;
+import comment.service.CommentListService;
+import comment.service.CommentListServiceImpl;
 import join.model.JoinDto;
 import join.service.IdCheckServiceImpl;
 import join.service.IdCheckService;
@@ -31,11 +43,11 @@ import join.service.editServiceImpl;
 /**
  * Servlet implementation class Join_Controller
  */
-@WebServlet("*.join")
-public class JoinController extends HttpServlet {
+@WebServlet("*.do")
+public class FrontController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
-	public JoinController() {
+	public FrontController() {
 		// TODO Auto-generated constructor stub
 	}
 	/**
@@ -63,7 +75,7 @@ public class JoinController extends HttpServlet {
 		String conPath = request.getContextPath();
 		String commend = uri.substring(conPath.length());
 		
-		if (commend.equals("/insert.join")) {
+		if (commend.equals("/insertJoin.do")) {
 			System.out.println("insert 시작");
 			JoinDto joinDto = new JoinDto(
 										  (String)request.getParameter("userId"),
@@ -80,7 +92,7 @@ public class JoinController extends HttpServlet {
 			
 		}
 		//아이디 중복 체크
-		if (commend.equals("/idCheck.join")) {
+		if (commend.equals("/idCheck.do")) {
 			System.out.println("idCheck 시작");
 			System.out.println("컨트롤러에서 받는 아이디 "+request.getParameter("id"));
 			String userId =  request.getParameter("id");
@@ -102,7 +114,7 @@ public class JoinController extends HttpServlet {
 			}
 		}
 		//닉네임 중복 체크
-		if (commend.equals("/nickNameCheck.join")) {
+		if (commend.equals("/nickNameCheck.do")) {
 			System.out.println("nickNameCheck 시작");
 			System.out.println("컨트롤러에서 받는 닉네임 "+request.getParameter("nickName"));
 			String page = request.getParameter("page");
@@ -134,7 +146,7 @@ public class JoinController extends HttpServlet {
 			}
 		}
 		//로그인 
-		if (commend.equals("/login.join")) {
+		if (commend.equals("/login.do")) {
 			System.out.println("로그인 시작");
 		    String userId = request.getParameter("userId");
 			String pw = request.getParameter("pw");
@@ -158,7 +170,7 @@ public class JoinController extends HttpServlet {
 			
 		}
 		//마이페이지 수정화면
-		if (commend.equals("/edit.join")) {
+		if (commend.equals("/edit.do")) {
 			System.out.println("마이페이지 업데이트 시작");
 			int numId = Integer.parseInt(request.getParameter("numId"));
 			JoinDto joinDto = new JoinDto(numId,
@@ -177,7 +189,7 @@ public class JoinController extends HttpServlet {
 			response.sendRedirect("newindex.jsp");
 		}
 		//아이디 찾기 이름
-		if (commend.equals("/search_Id.join")) {
+		if (commend.equals("/search_Id.do")) {
 			System.out.println("아이디 찾기 시작");
 			String userName = request.getParameter("userName");
 			String eMail = request.getParameter("eMail");
@@ -208,7 +220,7 @@ public class JoinController extends HttpServlet {
 			}
 
 		}
-		if (commend.equals("/search_Pw.join")) {
+		if (commend.equals("/search_Pw.do")) {
 			System.out.println("비밀번호 찾기 시작");
 			String userId = request.getParameter("userId");
 			String eMail = request.getParameter("eMail");
@@ -239,8 +251,96 @@ public class JoinController extends HttpServlet {
 			}
 
 		}
-		
-		
+		//여기서부터 게시판 컨트롤
+		if (commend.equals("/list.do")) {
+			
+			ArrayList<BoardDto>arrayList = new ArrayList<BoardDto>();
+			BoardListService boardListService = new BoardListServiceImpl();
+			arrayList =  boardListService.execute(request, response);
+			request.setAttribute("arrayList", arrayList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("board.jsp");
+			dispatcher.forward(request, response);
+		}
+		if (commend.equals("/insertBoard.do")) {
+			String category = request.getParameter("category");
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			JoinDto joinDto = (JoinDto)request.getSession().getAttribute("userData");
+			System.out.println(category);
+			System.out.println(title);
+			System.out.println(content);
+			System.out.println(joinDto.getNickName());
+			//Dto 객체에 값 4개 담아서 전달하면 구현클래스에서 값 받아서 Dao 메소드 아규먼트에 값 넣는다.
+			BoardDto boardDto = new BoardDto();
+			boardDto.setCatagory(category);
+			boardDto.setTitle(title);
+			boardDto.setContent(content);
+			boardDto.setWriter(joinDto.getNickName());
+			request.setAttribute("boardDto", boardDto);
+			BoardInsertService boardInsertService = new BoardInsertServiceImpl();
+			boardInsertService.execute(request, response);
+			response.sendRedirect("/Project/list.do");
+			
+		}
+		if (commend.equals("/inToBoard.do")) {
+			System.out.println("inToBoard 컨트롤러");
+			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
+			
+			//글 내용 불러오는 서비스
+			request.setAttribute("writeNum", writeNum);
+			BoardGetService boardGetService = new BoardGetServiceImpl();
+			BoardDto boardDto =  boardGetService.execute(request, response);
+			request.setAttribute("boardDto", boardDto); //글 내용 셋
+			
+			//댓글 불러오는 서비스
+			request.setAttribute("writeNum", writeNum);
+			CommentListService commentListService = new CommentListServiceImpl();
+			ArrayList<CommentDto>commentList = commentListService.execute(request, response);
+			request.setAttribute("commentList", commentList); //댓글 내용 셋
+			
+			//대댓글 불러오는 서비스 
+			
+			
+			//리퀘스트에 셋한 정보들 가지고 글 내용 jsp로 forward
+			RequestDispatcher requestDispatcher = request.getRequestDispatcher("inToBoard.jsp");
+			requestDispatcher.forward(request, response);
+		}
+		//여기서부터 댓글 기능
+		if (commend.equals("/commentInsert.do")) {
+			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
+			System.out.println(request.getParameter("writeNum"));
+			String commentContent = request.getParameter("commentContent");
+			String userId = request.getParameter("userId");
+			String nickName = request.getParameter("nickName");
+			
+			request.setAttribute("writeNum", writeNum);
+			request.setAttribute("commentContent", commentContent);
+			request.setAttribute("userId", userId);
+			request.setAttribute("nickName", nickName);
+			
+			CommentInsertService commentInsertService = new CommentInsertServiceImpl();
+			commentInsertService.execute(request, response);
+			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
+			
+		}
+		// 대댓글 기능
+		if (commend.equals("/replyInsert.do")) {
+			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
+			System.out.println(request.getParameter("writeNum"));
+			String commentContent = request.getParameter("commentContent");
+			String userId = request.getParameter("userId");
+			String nickName = request.getParameter("nickName");
+			
+			request.setAttribute("writeNum", writeNum);
+			request.setAttribute("commentContent", commentContent);
+			request.setAttribute("userId", userId);
+			request.setAttribute("nickName", nickName);
+			
+			CommentInsertService commentInsertService = new CommentInsertServiceImpl();
+			commentInsertService.execute(request, response);
+			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
+			
+		}
 	}
 
 }

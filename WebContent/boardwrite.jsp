@@ -107,7 +107,7 @@
     <!-- 4번째 메뉴 끝 -->
     
     <!-- 5번째 메뉴 -->
-            <li><a href="list.board">커뮤니티</a>
+            <li><a href="list.do">커뮤니티</a>
             
   
           </li>
@@ -125,7 +125,7 @@
     <div id="mainContent">
       <p class="title">글작성하기</p>
       <div class="textarea">
-        <form action="insert.board" method="post" id="writeForm">
+        <form action="insertBoard.do" method="post" id="writeForm">
         
           <!-- 카테고리 드랍다운 -->
           <label for="category" class="subsubtitle">카테고리 <span style="color: royalblue; font-size: 0.875rem;">*반드시 1개를 선택해주세요</span></label><br>
