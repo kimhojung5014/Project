@@ -83,9 +83,7 @@
   padding: 10px ;
 }
 
-.comment{
-  padding: 10px 10px;
-}
+
 /* 댓글 제목 */
 
 
@@ -143,25 +141,21 @@ input ,select{
 	width: 100px;
     line-height: 30px;
 }
+.comment{
 
-/* 댓글 */
-.comment li {
-  display: block;
-  line-height: 30px;
-
+  border-spacing: 10px 10px;
 }
+
 /* 대댓글 */
 .reply{
   display: none;
-  padding: 10px;
-  line-height: 30px;
+
+  border-spacing: 10px 10px;
 }
-.reply li {
-  display: block;
-  line-height: 30px;
-}
+
 .reply textarea{
 	padding-left:10px;
+	font-size:1rem;
 }
 
 

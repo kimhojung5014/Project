@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>게시판 내부 화면</title>
   <link rel="stylesheet" href="css/header_footer.css?s2d">
-  <link rel="stylesheet" href="css/inToBoard.css?sddd11"> 
+  <link rel="stylesheet" href="css/inToBoard.css?sdsfsasdasdsaf1"> 
 </head>
 <body>
 <script src="js/write.js?1113"></script>
@@ -201,12 +201,16 @@
 			    <!--      			작성자 아이디 닉네임도 보내준다 -->
 			        	<input type="hidden" name="userId" value="${userData.userId }">
 	        			<input type="hidden" name="nickName" value="${userData.nickName }">
-			        	<ul class="comment">
-			           		<li><p><b>${reply.nickName}</b> ${reply.content}</p>작성시간: ${reply.commentDate}
+			        	<table class="comment">
+			           		<tr>
+			           			<th>${reply.nickName}</th> <td>${reply.content}</td>
+			           			<td>${reply.commentDate}</td>
 						<!--로그인 해야만 답글달기 버튼 활성화 -->
 			           		<c:if test="${userData ne null }">
-			           		 <button type="button" class="insertButton"  onclick="choose(${status.index})">답글달기</button>
+			           		 	<td><button type="button" class="insertButton"  onclick="choose(${status.index})">답글달기</button></td>
 							</c:if>
+							</tr>
+						</table>
 						<!-- 대댓글 작성 부분 버튼 누르면 활성화, 현재 name 배열 설정 안잡아서 맨 위에 글로 날아감 -->
 <!-- 				           		<ul class="reply"> -->
 <%-- 				               		<li ><b style="line-height: 30px">${userData.nickName}</b> <textarea name="content" id="rereplyContent" rows="2" cols="83"></textarea> --%>
@@ -215,28 +219,24 @@
 				           		<table class="reply">
 				               		<tr >
 				               			<td><b>${userData.nickName}</b></td>
-				               			<td><textarea name="content" class="rereplyContent"   required="required" rows="2" cols="83"></textarea></td>
+				               			<td><textarea name="content" class="rereplyContent"   required="required" maxlength="300" rows="2" cols="83"></textarea></td>
 <%-- 				               			<td><button type="button" onclick="rereplyInsert(${status.index})">완료</button></td> --%>
 				               			<td><button  >완료</button></td>
 				               		</tr>
 				           		</table>
 						<!-- 대댓글 반복문 페이지 번호가 같은 대댓글을 전부 불러오고 그중 댓글의 번호를 참조하는 대댓글만 불러온다. -->
 			           		 <c:forEach var ="rereply" items="${rereplyList}">
-			           		 <c:if test="${reply.commentNum == rereply.parentNum }">
-			           		 <ul>
-			           		 	<li style="padding-left: 20px">
-			           		 		<p><b>ㄴ${rereply.nickName}</b> ${rereply.content}</p>작성시간: ${rereply.commentDate}
-			           		 	</li>
-			           		 </ul>
-			           		 </c:if>
+				           		 <c:if test="${reply.commentNum == rereply.parentNum }">
+					           		 <table style="padding-left: 20px; border-spacing: 10px 10px" >
+					           		 	<tr >
+					           		 		<th>ㄴ${rereply.nickName}</th><td> ${rereply.content}</td><td> ${rereply.commentDate}</td>
+					           		 	</tr>
+					           		 </table>
+				           		 </c:if>
 			           		 </c:forEach>
-			          		</li>
-			        	</ul>
 		        	</form>
 		       </c:forEach>
-
-		        </div>
-
+	        </div>
       </div>
     </div>
     
