@@ -97,6 +97,7 @@ font-xl: 1.25rem  20px
 
 /* 결과보기 버튼 */
 .submitbutton {
+ text-align : center;
   display:block;
   font-size: 1rem;
   width: 100px;
@@ -111,6 +112,20 @@ font-xl: 1.25rem  20px
 
   color: white;
 
+}
+
+/* 검색버튼 */
+.searchbutton {
+ text-align : center;
+ display:inline-block;
+  font-size: 1rem;
+  width: 100px;
+  line-height: 30px;
+  border-radius: 20px;
+  color: white;
+  background-color:rgb(76, 111, 219);
+  border: none;
+  font-weight: bold;
 }
 
 /* 게시판 기능 CSS */
@@ -157,6 +172,10 @@ font-xl: 1.25rem  20px
   color: white;
   font-size: 1.25rem;
   border-radius: 10px;
+}
+
+.memuTable th a{
+  color: white;
 }
 /* 아래 페이지 넘버 */
 #pageNumber li{

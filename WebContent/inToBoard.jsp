@@ -199,7 +199,7 @@
 			           		 <c:if test="${reply.commentNum == rereply.parentNum }">
 			           		 <ul>
 			           		 	<li style="padding-left: 20px">
-			           		 		<p><b>${rereply.nickName}</b> ${rereply.content}</p>작성시간: ${rereply.commentDate}
+			           		 		<p><b>ㄴ${rereply.nickName}</b> ${rereply.content}</p>작성시간: ${rereply.commentDate}
 			           		 	</li>
 			           		 </ul>
 			           		 </c:if>

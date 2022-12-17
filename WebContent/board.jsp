@@ -7,16 +7,12 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/board.css?qwwq"> 
+  <link rel="stylesheet" href="css/board.css?qaaq"> 
   <link rel="stylesheet" href="css/header_footer.css">
   <title>게시판</title>
 </head>
 <body>
-<script type="text/javascript">
-	function loginAlert() {
-		alert("로그인 후 글작성 가능합니다.");
-	}
-</script>
+
   <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -158,17 +154,23 @@
          	</tr>
         </thead>
         <tbody>
-        <c:forEach var="list" items="${arrayList}">
-
-          <tr>
-            <td>${list.writeNum }</td>
-            <td>${list.category }</td>
-            <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
-            <td>${list.writer }</td>
-            <td>${list.writingTime }</td>
-            <td>${list.views }</td>
-          </tr>
-  		</c:forEach>
+        <c:choose>
+        	<c:when test="${arrayList ne null }">
+		        <c:forEach var="list" items="${arrayList}">	
+		          <tr>
+		            <td>${list.writeNum }</td>
+		            <td>${list.category }</td>
+		            <td><a href="inToBoard.do?writeNum=${list.writeNum }&views=${list.views}">${list.title}</a></td>
+		            <td>${list.writer }</td>
+		            <td>${list.writingTime }</td>
+		            <td>${list.views }</td>
+		          </tr>
+		  		</c:forEach>
+	        </c:when>
+	        <c:otherwise>
+	        	<td colspan="6"><b>작성된(찾는) 글이 없습니다.</b></td>
+	        </c:otherwise>
+  		</c:choose>
 <!--   		요기에 폴문 3개 4개 카테고리 별로 하면 될듯 -->
         </tbody>
       </table>
@@ -188,17 +190,21 @@
           <li><a href="next">10</a></li>
           <li><a href="">&rarr;</a></li>
         </ul>  
+      </div>
         <!-- 페이지 넘버부분 끝 -->
 
         <!-- 검색창 -->
-        <table style="width: 100%;" >
+        <table style="width: 100%; padding-left: 40%;" >
           <tr>
-          	<td>
-          	 
-          	</td> 
             <td>
-              <form action="">
-                <label id="labelSearch">검색 <input type="search"></label>
+              <form action="boardSearch.do" id="boardSearch">
+              	  <select name="chooseSearch">
+              	  	<option value="title" selected>제목</option>
+              	  	<option value="content">내용</option>
+              	  	<option value="writer">작성자</option>
+              	  </select>
+				  <input type="search" id="search" name="search" >
+                  <button type="button" class="searchbutton" onclick="searchCheck()">검색</button>
               </form>
             </td>
             <td>
@@ -213,14 +219,32 @@
             </td>
           </tr>
         </table>
-       
-      </div>
+  
       <br>
 
     </div>
     
   </div>
+<script type="text/javascript">
+	function loginAlert() {
+		alert("로그인 후 글작성 가능합니다.");
+	}
+	
+	function searchCheck(){
+		  const search = document.getElementById("search").value;
+		  
+		  if(search.length == 0){
+		    alert("검색어를 입력해주세요");
+		  }
+		  else if(search.length > 100){
+		    alert("검색어를 줄여주세요.");
+		  }
+		  else{
+		    document.getElementById("boardSearch").submit();   
+		  }
 
+		}
+</script>
 <!-- 메인  끝-->
 
   <!-- 푸터 -->

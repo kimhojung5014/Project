@@ -10,6 +10,8 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
 
+import org.apache.jasper.tagplugins.jstl.core.If;
+
 public class BoardDao {
 	
 	private static BoardDao instance = new BoardDao();
@@ -193,6 +195,83 @@ public class BoardDao {
 		}
 		System.out.println("카테고리리스트 불러오기 성공");
 		return categoryList;
+	}
+	
+	//게시판 내용검색 
+	public ArrayList<BoardDto>searchList(String chooseSearch,String search){
+		
+		ArrayList<BoardDto>searchList = new ArrayList<BoardDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		String sql = null;
+		if (chooseSearch.equals("title")) {
+			sql = "SELECT * FROM BOARD WHERE TITLE LIKE '%"+search+"%'";
+		}else if (chooseSearch.equals("content")) {
+			sql = "SELECT * FROM BOARD WHERE CONTENT LIKE '%"+search+"%'";
+		}else {
+			sql = "SELECT * FROM BOARD WHERE WRITER LIKE '%"+search+"%'";
+		}
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+		
+				String category = (rs.getString("category"));
+				String title = (rs.getString("title"));
+				String writer = (rs.getString("writer"));
+				String writingTime = (rs.getString("writingTime"));
+				int writeNum = (rs.getInt("writeNum"));
+				int views = (rs.getInt("views"));
+				String content = (rs.getString("content"));
+				
+				searchList.add(new BoardDto(category, title, writer, writingTime, writeNum, views,content));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("category()예외 발생");
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		System.out.println("검색리스트 불러오기 ");
+		return searchList;
+	}
+	
+	public void BoardViews(int writeNum, int views) {
+		System.out.println("조회수 업 기능");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		int view = views+1;
+		String sql =  "UPDATE board SET views =? where writeNum ="+writeNum;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, view);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("BoardViewsup()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		
+		}System.out.println("조회수 끝");
 	}
 	
 	

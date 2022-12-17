@@ -22,6 +22,10 @@ import board.service.BoardInsertService;
 import board.service.BoardInsertServiceImpl;
 import board.service.BoardListService;
 import board.service.BoardListServiceImpl;
+import board.service.BoardSearchSearvice;
+import board.service.BoardSearchServiceImpl;
+import board.service.BoardViewsPlusService;
+import board.service.BoardViewsPlusServiceImpl;
 import join.model.JoinDto;
 import join.service.IdCheckServiceImpl;
 import join.service.IdCheckService;
@@ -80,6 +84,9 @@ public class FrontController extends HttpServlet {
 		String conPath = request.getContextPath();
 		String commend = uri.substring(conPath.length());
 		
+//**************************회원가입, 로그인 처리***************************************************************************************
+		
+		//회원가입 DB Insert
 		if (commend.equals("/insertJoin.do")) {
 			System.out.println("insert 시작");
 			JoinDto joinDto = new JoinDto(
@@ -256,7 +263,9 @@ public class FrontController extends HttpServlet {
 			}
 
 		}
-		//여기서부터 게시판 컨트롤
+//********************************게시판 관련 부분*********************************************************************************
+		
+		//게시판 화면들어오면 게시글 목록 전체 출력 정렬은 글번호 최신순
 		if (commend.equals("/list.do")) {
 			
 			ArrayList<BoardDto>arrayList = new ArrayList<BoardDto>();
@@ -287,9 +296,16 @@ public class FrontController extends HttpServlet {
 			response.sendRedirect("/Project/list.do");
 			
 		}
+		//글 내용 들어가면 글, 댓글 불러오는 부분
 		if (commend.equals("/inToBoard.do")) {
 			System.out.println("inToBoard 컨트롤러");
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
+			int views = Integer.parseInt(request.getParameter("views"));
+			//조회수 업하는 서비스
+			request.setAttribute("writeNum", writeNum);
+			request.setAttribute("views", views);
+			BoardViewsPlusService boardViewsPlusService = new BoardViewsPlusServiceImpl();
+			boardViewsPlusService.execute(request, response);
 			
 			//글 내용 불러오는 서비스
 			request.setAttribute("writeNum", writeNum);
@@ -297,13 +313,13 @@ public class FrontController extends HttpServlet {
 			BoardDto boardDto =  boardGetService.execute(request, response);
 			request.setAttribute("boardDto", boardDto); //글 내용 셋
 			
-			//댓글 불러오는 서비스 
+////			//댓글 불러오는 서비스 
 			request.setAttribute("writeNum", writeNum);
 			ReplyListService replyListService = new ReplyListServiceImpl();
 			ArrayList<ReplyDto>replyList = replyListService.execute(request, response);
 			request.setAttribute("replyList", replyList);
-			
-			//대댓글 불러오는 서비스 
+////			
+////			//대댓글 불러오는 서비스 
 			request.setAttribute("writeNum", writeNum);
 			ReReplyListService reReplyListService = new ReReplyListServiceImpl();
 			ArrayList<ReplyDto>rereplyList = reReplyListService .execute(request, response);
@@ -346,6 +362,21 @@ public class FrontController extends HttpServlet {
 			dispatcher.forward(request, response);
 			
 		}
+		//게시판 검색 기능
+		if (commend.equals("/boardSearch.do")) {
+			
+			String chooseSearch = request.getParameter("chooseSearch");
+			String search = request.getParameter("search");
+			request.setAttribute("chooseSearch", chooseSearch);
+			request.setAttribute("search", search);
+			BoardSearchSearvice boardSearchSearvice = new BoardSearchServiceImpl();
+			ArrayList<BoardDto>arrayList = boardSearchSearvice.execute(request, response);
+			request.setAttribute("arrayList", arrayList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("board.jsp");
+			dispatcher.forward(request, response);
+			
+		}
+		
 
 	}
 
