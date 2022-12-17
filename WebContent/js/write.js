@@ -14,14 +14,32 @@ function writeCheck() {
 		document.getElementById('writeForm').submit();
 	}
 }
-
+function editCheck() {
+	
+	const category = document.getElementById('category');					 
+	const title = document.getElementById('title');	
+	const content = document.getElementById('content');				
+	
+	if(title.value.length >50){
+		alert("제목은 50자 안으로 입력해주세요")
+	
+	}else if (content.value.length >= 1000) {
+		alert("본문은 1000자 이내로 입력해주세요")
+		
+	}else {
+		document.getElementById('writeForm').submit();
+	}
+}
 function replyInsert() {
-	const replyContent = document.getElementById("replyContent");						
+	const replyContent = document.getElementById("replyContent").value;						
 
-	if(replyContent.value.length > 1000){
+	if(replyContent.length > 1000){
 		alert("댓글은 1000자 안으로 입력해주세요")
 	
-	}else {
+	}else if (replyContent.length == 0) {
+		alert("댓글은 내용을 입력해주세요")
+	}
+	else {
 		document.getElementById('replyForm').submit();
 	}
 }
@@ -36,13 +54,16 @@ function choose(i) {
 
 } 	
 
-function rereplyInsert() {
-	const rereplyContent = document.getElementByTagName("rereplyContent");				
-	
-	if(rereplyContent.value.length > 1000){
-		alert("댓글은 1000자 안으로 입력해주세요")
-	
-	}else {
-		document.getElementByTagName('reReplyForm').submit();
-	}
-}
+//function rereplyInsert(i) {
+//	const rereplyContent = document.getElementsByClassName("rereplyContent");				
+//	const form =     document.querySelectorAll('.reReplyForm');
+//	if(rereplyContent[i].length > 1000){
+//		alert("댓글은 1000자 안으로 입력해주세요")
+//	
+//	}else if (rereplyContent[i].length == 0) {
+//		alert("댓글은 내용을 입력해주세요")
+//	}
+//	else {
+//	form[i].submit();
+//	}
+//}

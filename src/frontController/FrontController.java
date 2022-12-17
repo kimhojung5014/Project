@@ -16,6 +16,10 @@ import javax.servlet.http.HttpSession;
 import board.model.BoardDto;
 import board.service.BoardCategoryService;
 import board.service.BoardCategoryServiceImpl;
+import board.service.BoardDeleteService;
+import board.service.BoardDeleteServiceImpl;
+import board.service.BoardEditInsertService;
+import board.service.BoardEditInsertServiceImpl;
 import board.service.BoardGetService;
 import board.service.BoardGetServiceImpl;
 import board.service.BoardInsertService;
@@ -290,6 +294,7 @@ public class FrontController extends HttpServlet {
 			boardDto.setTitle(title);
 			boardDto.setContent(content);
 			boardDto.setWriter(joinDto.getNickName());
+			boardDto.setUserId(joinDto.getUserId());
 			request.setAttribute("boardDto", boardDto);
 			BoardInsertService boardInsertService = new BoardInsertServiceImpl();
 			boardInsertService.execute(request, response);
@@ -300,10 +305,8 @@ public class FrontController extends HttpServlet {
 		if (commend.equals("/inToBoard.do")) {
 			System.out.println("inToBoard 컨트롤러");
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
-			int views = Integer.parseInt(request.getParameter("views"));
 			//조회수 업하는 서비스
 			request.setAttribute("writeNum", writeNum);
-			request.setAttribute("views", views);
 			BoardViewsPlusService boardViewsPlusService = new BoardViewsPlusServiceImpl();
 			boardViewsPlusService.execute(request, response);
 			
@@ -377,6 +380,40 @@ public class FrontController extends HttpServlet {
 			
 		}
 		
+		//게시글 삭제
+		if (commend.equals("/deleteBoard.do")) {
+			
+			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
+			request.setAttribute("writeNum", writeNum);
+			BoardDeleteService boardDeleteService = new BoardDeleteServiceImpl();
+			boardDeleteService.execute(request, response);
+			
+			response.sendRedirect("list.do");
+		}
+		
+		//게시글 수정 화면 전환
+		if (commend.equals("/boardEdit.do")) {
+			//inToBoard에서 정보 받아서 boardEdit로 넘긴다.
+			request.setAttribute("category", request.getParameter("category"));
+			request.setAttribute("title", request.getParameter("title"));
+			request.setAttribute("content", request.getParameter("content"));
+			request.setAttribute("writeNum", request.getParameter("writeNum"));
+			RequestDispatcher dispatcher = request.getRequestDispatcher("boardEdit.jsp");
+			dispatcher.forward(request, response);
+		}
+		//게시글 수정 저장
+		if (commend.equals("/boardEditInsert.do")) {
+			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
+			BoardDto boardDto = new BoardDto( request.getParameter("category"),
+											  request.getParameter("title"),
+											  writeNum,	
+											  request.getParameter("content"));
+			request.setAttribute("boardDto", boardDto);
+			BoardEditInsertService boardEditInsertService = new BoardEditInsertServiceImpl();
+			boardEditInsertService.execute(request, response);
+			response.sendRedirect("inToBoard.do?writeNum="+writeNum);
+			
+		}
 
 	}
 

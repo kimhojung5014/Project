@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/board.css?qaaq"> 
+  <link rel="stylesheet" href="css/board.css?sqss"> 
   <link rel="stylesheet" href="css/header_footer.css">
   <title>게시판</title>
 </head>
@@ -151,24 +151,42 @@
 	          <th>작성자</th>
 	          <th>작성시간</th>
 	          <th>조회수</th>
-         	</tr>
-        </thead>
-        <tbody>
+			  <th>삭제</th>
+		   </tr>
+		  </thead>
         <c:choose>
-        	<c:when test="${arrayList ne null }">
+        	<c:when test="${not empty arrayList }">
 		        <c:forEach var="list" items="${arrayList}">	
+		          <tbody>
 		          <tr>
 		            <td>${list.writeNum }</td>
 		            <td>${list.category }</td>
-		            <td><a href="inToBoard.do?writeNum=${list.writeNum }&views=${list.views}">${list.title}</a></td>
+		            <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
 		            <td>${list.writer }</td>
 		            <td>${list.writingTime }</td>
 		            <td>${list.views }</td>
+<!-- 		            세션에 있는 유저 데이터와 글 작성자가 같은 경우 삭제 버튼 -->
+		            <c:choose>
+		            	<c:when test="${userData.userId eq list.userId }">
+    						<td>
+			            	<a type="button" class="deleteButton" onclick="deleteCheck(${list.writeNum })">삭제</a>
+		            		</td>
+		            	</c:when>
+		            	<c:otherwise>
+		            	 <td>&nbsp;</td>
+		            	</c:otherwise>
+		            </c:choose>
+		         
+
+		
+		           
+		            
 		          </tr>
+		          </tbody>
 		  		</c:forEach>
 	        </c:when>
 	        <c:otherwise>
-	        	<td colspan="6"><b>작성된(찾는) 글이 없습니다.</b></td>
+	        	<td colspan="6"><b>조건에 맞는 글이 없습니다.</b></td>
 	        </c:otherwise>
   		</c:choose>
 <!--   		요기에 폴문 3개 4개 카테고리 별로 하면 될듯 -->
@@ -194,7 +212,7 @@
         <!-- 페이지 넘버부분 끝 -->
 
         <!-- 검색창 -->
-        <table style="width: 100%; padding-left: 40%;" >
+        <table style="width: 100%; padding-left: 35%;" >
           <tr>
             <td>
               <form action="boardSearch.do" id="boardSearch">
@@ -203,7 +221,7 @@
               	  	<option value="content">내용</option>
               	  	<option value="writer">작성자</option>
               	  </select>
-				  <input type="search" id="search" name="search" >
+				  <input type="search" id="search" name="search" >&nbsp;
                   <button type="button" class="searchbutton" onclick="searchCheck()">검색</button>
               </form>
             </td>
@@ -226,10 +244,12 @@
     
   </div>
 <script type="text/javascript">
+
+// 글작성 버튼 평소에는 숨김처리
 	function loginAlert() {
 		alert("로그인 후 글작성 가능합니다.");
 	}
-	
+// 	검색어 체크 펑션
 	function searchCheck(){
 		  const search = document.getElementById("search").value;
 		  
@@ -244,6 +264,14 @@
 		  }
 
 		}
+		
+// 	삭제 확인 펑션
+	function deleteCheck(writeNum) {
+		const check = confirm("정말 삭제하시겠습니까?");
+		if (check) {
+			document.location.href = "deleteBoard.do?writeNum="+writeNum;
+		}
+	}
 </script>
 <!-- 메인  끝-->
 

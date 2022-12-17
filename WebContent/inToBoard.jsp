@@ -7,10 +7,10 @@
 <meta charset="UTF-8">
 <title>게시판 내부 화면</title>
   <link rel="stylesheet" href="css/header_footer.css?s2d">
-  <link rel="stylesheet" href="css/inToBoard.css?1"> 
+  <link rel="stylesheet" href="css/inToBoard.css?sddd11"> 
 </head>
 <body>
-<script src="js/write.js?123"></script>
+<script src="js/write.js?1113"></script>
    <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -147,7 +147,20 @@
           <!-- 글 내용 적을 곳 -->
 		<div class="textareaContent" >
             <p>${boardDto.content }</p>
-        </div>        
+        </div>
+        <br>
+        <c:if test="${boardDto.userId eq userData.userId }">
+	        <div class="oncenter">
+	        <form action="boardEdit.do">
+	          <input type="hidden" name="category" value="${boardDto.category}">	
+	          <input type="hidden" name="title" value="${boardDto.title}">	
+	          <input type="hidden" name="content" value="${boardDto.content}">	
+	          <input type="hidden" name="writeNum" value="${boardDto.writeNum}">	
+	     
+	      	  <button class="editButton">수정</button>               
+	        </form>
+	        </div>
+       	</c:if>
        	<br>
 	 	  <p class="subsubtitle">댓글</p>
 	        <div class="intextarea">
@@ -160,25 +173,28 @@
 <!--      			작성자 아이디 닉네임도 보내준다 -->
 	        	<input type="hidden" name="userId" value="${userData.userId }">
 	        	<input type="hidden" name="nickName" value="${userData.nickName }">
-	        	
+	        	<!--로그인 해야만 답글달기 버튼 활성화 -->
+	        	<c:if test="${userData ne null }">
 		       	<table>
 		       		<tr>
 		       			<td>
 		       				<b>${userData.nickName}</b>
 		       			</td>
 		       			<td>
-		       				<textarea name="content" id="replyContent" rows="2" cols="83"></textarea>		
+		       				<textarea name="content" id="replyContent" rows="2" cols="83" required="required"></textarea>		
 		       			</td>
 		       			<td>
 		       				<button type="button" onclick = "replyInsert()">댓글달기</button>
 		       			</td>
 		       		</tr>
 		       	</table>
+		       	</c:if>
+		       	
 		       	</form>
 				<!--댓글 반복문 페이지번호에 있는 댓글 전부 출력  -->
     		    <c:forEach var="reply" items="${replyList}" varStatus="status">
 				<!--대댓글 인서트 폼에서 값들을 히든으로 날려보낸다. -->
-			       	<form action="replyInsert.do" method="post" id ="reReplyForm" >
+			       	<form action="replyInsert.do" method="post" class ="reReplyForm" >
 						<input type="hidden" name="writeNum" value="${writeNum }">
 				<!-- 대대댓글은 댓글의 댓글번호롤 parentNum에 넣어서 보내준다. -->
 						<input type="hidden" name="parentNum" value="${reply.commentNum }">
@@ -187,13 +203,23 @@
 	        			<input type="hidden" name="nickName" value="${userData.nickName }">
 			        	<ul class="comment">
 			           		<li><p><b>${reply.nickName}</b> ${reply.content}</p>작성시간: ${reply.commentDate}
+						<!--로그인 해야만 답글달기 버튼 활성화 -->
+			           		<c:if test="${userData ne null }">
 			           		 <button type="button" class="insertButton"  onclick="choose(${status.index})">답글달기</button>
-
+							</c:if>
 						<!-- 대댓글 작성 부분 버튼 누르면 활성화, 현재 name 배열 설정 안잡아서 맨 위에 글로 날아감 -->
-				           		<ul class="reply">
-				               		<li ><b>${userData.nickName}</b> <textarea name="content" id="rereplyContent" rows="2" cols="83"></textarea>
-				               		<button type="submit" >댓글달기</button></li>
-				           		</ul>
+<!-- 				           		<ul class="reply"> -->
+<%-- 				               		<li ><b style="line-height: 30px">${userData.nickName}</b> <textarea name="content" id="rereplyContent" rows="2" cols="83"></textarea> --%>
+<!-- 				               		<button type="submit"  style="line-height: 30px">댓글달기</button></li> -->
+<!-- 				           		</ul> -->
+				           		<table class="reply">
+				               		<tr >
+				               			<td><b>${userData.nickName}</b></td>
+				               			<td><textarea name="content" class="rereplyContent"   required="required" rows="2" cols="83"></textarea></td>
+<%-- 				               			<td><button type="button" onclick="rereplyInsert(${status.index})">완료</button></td> --%>
+				               			<td><button  >완료</button></td>
+				               		</tr>
+				           		</table>
 						<!-- 대댓글 반복문 페이지 번호가 같은 대댓글을 전부 불러오고 그중 댓글의 번호를 참조하는 대댓글만 불러온다. -->
 			           		 <c:forEach var ="rereply" items="${rereplyList}">
 			           		 <c:if test="${reply.commentNum == rereply.parentNum }">
@@ -215,7 +241,21 @@
     </div>
     
   </div>
-  
+  <script type="text/javascript">
+  function rereplyInsert(i) {
+		const rereplyContent = document.getElementsByClassName("rereplyContent");				
+		const form = document.getElementsByTagName('reReplyForm');
+		if(rereplyContent[i].length > 1000){
+			alert("댓글은 1000자 안으로 입력해주세요")
+		
+		}else if (rereplyContent[i].length == 0) {
+			alert("댓글은 내용을 입력해주세요")
+		}
+		else {
+		form[i].submit();
+		}
+	}
+  </script>
   <!-- 푸터 -->
   <footer id = "footer" > 
     

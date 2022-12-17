@@ -61,11 +61,12 @@ public class BoardDao {
 				String title = (rs.getString("title"));
 				String writer = (rs.getString("writer"));
 				String writingTime = (rs.getString("writingTime"));
+				String userId = (rs.getString("userId"));
 				int writeNum = (rs.getInt("writeNum"));
 				int views = (rs.getInt("views"));
 				String content = (rs.getString("content"));
 				
-				arrayList.add(new BoardDto(category, title, writer, writingTime, writeNum, views,content));
+				arrayList.add(new BoardDto(category, title, writer,userId ,writingTime, writeNum, views,content));
 			}
 			
 		} catch (SQLException e) {
@@ -90,8 +91,8 @@ public class BoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "INSERT INTO BOARD (CATEGORY,WRITENUM,TITLE,WRITER,WRITINGTIME,VIEWS,CONTENT)"
-					 + "VALUES(?, LISTSE.nextval, ?, ?, TO_CHAR (SYSDATE,'\"\"YYYY\"년 \"MM\"월 \"DD\"일 \"hh24\"시 \"mi\"분 \"ss\"초\"'), 0,?)";
+		String sql = "INSERT INTO BOARD (CATEGORY,TITLE,WRITER, USERID, CONTENT,VIEWS, WRITENUM, WRITINGTIME)"
+					 + "VALUES(?, ?, ?, ?, ?, 0, LISTSE.nextval,TO_CHAR (SYSDATE,'\"\"YYYY\"년 \"MM\"월 \"DD\"일 \"hh24\"시 \"mi\"분 \"ss\"초\"'))";
 						//조회수는 초기값 0으로 주자
 		try {
 			conn = getConnection();
@@ -99,7 +100,8 @@ public class BoardDao {
 			pstmt.setString(1, boardDto.getCategory());
 			pstmt.setString(2, boardDto.getTitle());
 			pstmt.setString(3, boardDto.getWriter());
-			pstmt.setString(4, boardDto.getContent()); // 조회수는 일단 0으로
+			pstmt.setString(4, boardDto.getUserId());
+			pstmt.setString(5, boardDto.getContent()); // 조회수는 일단 0으로
 			pstmt.executeUpdate();
 			System.out.println("게시판 인서트 완료");
 		} catch (SQLException e) {
@@ -133,10 +135,11 @@ public class BoardDao {
 				String category = rs.getString("category");
 				String title = rs.getString("title");
 				String writer = rs.getString("writer");
+				String userId = (rs.getString("userId"));
 				String writingTime = rs.getString("writingTime");
 				String content = rs.getString("content");
 				int views = rs. getInt("views");
-				boardDto = new BoardDto(category, title, writer, writingTime, writeNum, views, content);
+				boardDto = new BoardDto(category, title, writer,userId, writingTime, writeNum, views, content);
 				System.out.println("게시판 내부 글 불러오기 성공");
 			}
 			
@@ -174,12 +177,13 @@ public class BoardDao {
 				String category = (rs.getString("category"));
 				String title = (rs.getString("title"));
 				String writer = (rs.getString("writer"));
+				String userId = (rs.getString("userId"));
 				String writingTime = (rs.getString("writingTime"));
 				int writeNum = (rs.getInt("writeNum"));
 				int views = (rs.getInt("views"));
 				String content = (rs.getString("content"));
 				
-				categoryList.add(new BoardDto(category, title, writer, writingTime, writeNum, views,content));
+				categoryList.add(new BoardDto(category, title, writer,userId, writingTime, writeNum, views,content));
 			}
 			
 		} catch (SQLException e) {
@@ -224,12 +228,13 @@ public class BoardDao {
 				String category = (rs.getString("category"));
 				String title = (rs.getString("title"));
 				String writer = (rs.getString("writer"));
+				String userId = (rs.getString("userId"));
 				String writingTime = (rs.getString("writingTime"));
 				int writeNum = (rs.getInt("writeNum"));
 				int views = (rs.getInt("views"));
 				String content = (rs.getString("content"));
 				
-				searchList.add(new BoardDto(category, title, writer, writingTime, writeNum, views,content));
+				searchList.add(new BoardDto(category, title, writer, userId,writingTime, writeNum, views,content));
 			}
 			
 		} catch (SQLException e) {
@@ -247,17 +252,16 @@ public class BoardDao {
 		return searchList;
 	}
 	
-	public void BoardViews(int writeNum, int views) {
+	public void boardViews(int writeNum) {
 		System.out.println("조회수 업 기능");
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		int view = views+1;
-		String sql =  "UPDATE board SET views =? where writeNum ="+writeNum;
+	
+		String sql =  "UPDATE board SET views =views+1 where writeNum ="+writeNum;
 		
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, view);
 			pstmt.executeUpdate();
 			
 		} catch (SQLException e) {
@@ -274,5 +278,58 @@ public class BoardDao {
 		}System.out.println("조회수 끝");
 	}
 	
+	public void boardDelete(int writeNum) {
+		System.out.println("글 삭제 실행 삭제할 글 번호: "+ writeNum);
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "DELETE BOARD WHERE WRITENUM = "+writeNum;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("boardDelete()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		
+		}System.out.println("삭제 끝");
+	}
 	
+	public void boardEdit(BoardDto boardDto) {
+		System.out.println("수정할 글 번호: "+boardDto.getWriteNum());
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE BOARD SET CATEGORY = ?, TITLE = ?, CONTENT = ? WHERE WRITENUM = "+boardDto.getWriteNum();
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, boardDto.getCategory());
+			pstmt.setString(2, boardDto.getTitle());
+			pstmt.setString(3, boardDto.getContent());
+			pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			System.out.println("boardEditInsert()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		
+		}System.out.println("게시글 수정 끝");
+	}
 }

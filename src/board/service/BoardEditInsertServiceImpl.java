@@ -4,18 +4,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import board.model.BoardDao;
+import board.model.BoardDto;
 
-public class BoardViewsPlusServiceImpl implements BoardViewsPlusService{
+public class BoardEditInsertServiceImpl implements BoardEditInsertService{
 	BoardDao boardDao;
-	
-	public BoardViewsPlusServiceImpl() {
+	public BoardEditInsertServiceImpl() {
 		boardDao = BoardDao.getInstance();
 	}
-	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		boardDao.boardViews((int)request.getAttribute("writeNum"));
-		
+		boardDao.boardEdit((BoardDto)request.getAttribute("boardDto"));
 	}
 
 }

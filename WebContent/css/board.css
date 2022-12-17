@@ -128,6 +128,18 @@ font-xl: 1.25rem  20px
   font-weight: bold;
 }
 
+/* 삭제버튼 */
+.deleteButton {
+	display : inline-block;
+	border: none;
+	background: red;
+	color: white;
+	font-size: 1rem;
+	border-radius: 20px;
+	font-weight: bold;
+	width: 100px;
+    line-height: 30px;
+}
 /* 게시판 기능 CSS */
 
 /* 게시판 틀 테이블 */
@@ -151,6 +163,7 @@ font-xl: 1.25rem  20px
  height: 50px;
  border-bottom-style: solid;
  border-bottom-color: rgb(235, 235, 235);
+
 }
 
 /* 테이블에서 제목 왼쪽 정렬 일단 생략하자 */
@@ -187,3 +200,5 @@ font-xl: 1.25rem  20px
 #labelSearch {
   font-size: 1.125rem;
 }
+
+

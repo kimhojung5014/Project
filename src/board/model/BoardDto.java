@@ -5,21 +5,39 @@ public class BoardDto {
 	private String category,
 				   title,
 				   writer,
+				   userId,
 				   writingTime,
 				   content;
 	private int writeNum, views;
 	
 	public BoardDto() {}
 	
-	public BoardDto(String category, String title, String writer, String writingTime, int writeNum, int views, String content) {
+	public BoardDto(String category, String title, int writeNum, String content) {
+		
+		this.category = category;
+		this.title = title;
+		this.writeNum = writeNum;
+		this.content = content;
+	}
+	
+	public BoardDto(String category, String title, String writer,String userId, String writingTime, int writeNum, int views, String content) {
 		
 		this.category = category;
 		this.title = title;
 		this.writer = writer;
+		this.userId = userId;
 		this.writingTime = writingTime;
 		this.writeNum = writeNum;
 		this.views = views;
 		this.content = content;
+	}
+
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getContent() {

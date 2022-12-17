@@ -5,17 +5,13 @@ import javax.servlet.http.HttpServletResponse;
 
 import board.model.BoardDao;
 
-public class BoardViewsPlusServiceImpl implements BoardViewsPlusService{
+public class BoardDeleteServiceImpl implements BoardDeleteService{
 	BoardDao boardDao;
-	
-	public BoardViewsPlusServiceImpl() {
+	public BoardDeleteServiceImpl() {
 		boardDao = BoardDao.getInstance();
 	}
-	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		boardDao.boardViews((int)request.getAttribute("writeNum"));
-		
+		boardDao.boardDelete((int)request.getAttribute("writeNum"));
 	}
-
 }
