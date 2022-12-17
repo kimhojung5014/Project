@@ -7,7 +7,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="css/board.css?qww"> 
+  <link rel="stylesheet" href="css/board.css?qwwq"> 
   <link rel="stylesheet" href="css/header_footer.css">
   <title>게시판</title>
 </head>
@@ -138,9 +138,9 @@
       <table class="memuTable">
         <tr>
           <th>공지사항</th>
-          <th>직업정보</th>
-          <th>학과정보</th>
-          <th>고민상담</th>
+          <th><a href="category.do?category=직업정보">직업정보</a></th>
+          <th><a href="category.do?category=학과정보">학과정보</a></th>
+          <th><a href="category.do?category=고민상담">고민상담</a></th>
         </tr>
       </table>
       <!-- 상단 메뉴 카테고리 끝 -->
@@ -162,14 +162,14 @@
 
           <tr>
             <td>${list.writeNum }</td>
-            <td>${list.catagory }</td>
+            <td>${list.category }</td>
             <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
             <td>${list.writer }</td>
             <td>${list.writingTime }</td>
             <td>${list.views }</td>
           </tr>
   		</c:forEach>
-  		요기에 폴문 3개 4개 카테고리 별로 하면 될듯
+<!--   		요기에 폴문 3개 4개 카테고리 별로 하면 될듯 -->
         </tbody>
       </table>
       <!-- 게시판 끝 -->

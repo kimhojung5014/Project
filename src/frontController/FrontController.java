@@ -14,6 +14,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import board.model.BoardDto;
+import board.service.BoardCategoryService;
+import board.service.BoardCategoryServiceImpl;
 import board.service.BoardGetService;
 import board.service.BoardGetServiceImpl;
 import board.service.BoardInsertService;
@@ -275,7 +277,7 @@ public class FrontController extends HttpServlet {
 			System.out.println(joinDto.getNickName());
 			//Dto 객체에 값 4개 담아서 전달하면 구현클래스에서 값 받아서 Dao 메소드 아규먼트에 값 넣는다.
 			BoardDto boardDto = new BoardDto();
-			boardDto.setCatagory(category);
+			boardDto.setCategory(category);
 			boardDto.setTitle(title);
 			boardDto.setContent(content);
 			boardDto.setWriter(joinDto.getNickName());
@@ -314,7 +316,7 @@ public class FrontController extends HttpServlet {
 
 		// 댓글 삽입
 		if (commend.equals("/replyInsert.do")) {
-			System.out.println("댓글 컨트럴러");
+			System.out.println("댓글 컨트롤러");
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
 			int parentNum = Integer.parseInt(request.getParameter("parentNum"));
 			String userId = request.getParameter("userId");
@@ -328,6 +330,20 @@ public class FrontController extends HttpServlet {
 			ReplyInsertService replyInsertService = new ReplyInsertServiceImpl();
 			replyInsertService.execute(request, response);
 			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
+			
+		}
+		
+		//카테고리 분류 
+		if (commend.equals("/category.do")) {
+			System.out.println("카테고리 분류");
+			String category = (String)request.getParameter("category");
+			System.out.println("파라메터: "+category);
+			request.setAttribute("category", category);
+			BoardCategoryService boardCategoryService = new BoardCategoryServiceImpl();
+			ArrayList<BoardDto>arrayList = boardCategoryService.execute(request, response);
+			request.setAttribute("arrayList", arrayList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("board.jsp");
+			dispatcher.forward(request, response);
 			
 		}
 

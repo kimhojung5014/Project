@@ -2,7 +2,7 @@ package board.model;
 
 public class BoardDto {
 	
-	private String catagory,
+	private String category,
 				   title,
 				   writer,
 				   writingTime,
@@ -11,9 +11,9 @@ public class BoardDto {
 	
 	public BoardDto() {}
 	
-	public BoardDto(String catagory, String title, String writer, String writingTime, int writeNum, int views, String content) {
+	public BoardDto(String category, String title, String writer, String writingTime, int writeNum, int views, String content) {
 		
-		this.catagory = catagory;
+		this.category = category;
 		this.title = title;
 		this.writer = writer;
 		this.writingTime = writingTime;
@@ -30,12 +30,14 @@ public class BoardDto {
 		this.content = content;
 	}
 
-	public String getCatagory() {
-		return catagory;
+
+
+	public String getCategory() {
+		return category;
 	}
 
-	public void setCatagory(String catagory) {
-		this.catagory = catagory;
+	public void setCategory(String category) {
+		this.category = category;
 	}
 
 	public String getTitle() {

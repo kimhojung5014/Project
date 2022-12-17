@@ -130,7 +130,7 @@
         
           <!-- 카테고리 드랍다운 -->
           
-          <p class="submitbutton" id="category">${boardDto.catagory }</p>
+          <p class="submitbutton" id="category">${boardDto.category }</p>
            
           <br>
           <!-- 제목  제목 밑에 작성자 작성일시  -->

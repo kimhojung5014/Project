@@ -138,9 +138,10 @@ font-xl: 1.25rem  20px
  border-bottom-color: rgb(235, 235, 235);
 }
 
-#board td:nth-child(3),td:nth-child(4){
-  text-align: left;
-}
+/* 테이블에서 제목 왼쪽 정렬 일단 생략하자 */
+/* #board td:nth-child(3){ */
+/*   text-align: left; */
+/* } */
 
 /* 상단 카테고리 바 */
 .memuTable {

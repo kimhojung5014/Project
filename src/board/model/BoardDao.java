@@ -55,7 +55,7 @@ public class BoardDao {
 			
 			while (rs.next()) {
 		
-				String catagory = (rs.getString("catagory"));
+				String category = (rs.getString("category"));
 				String title = (rs.getString("title"));
 				String writer = (rs.getString("writer"));
 				String writingTime = (rs.getString("writingTime"));
@@ -63,7 +63,7 @@ public class BoardDao {
 				int views = (rs.getInt("views"));
 				String content = (rs.getString("content"));
 				
-				arrayList.add(new BoardDto(catagory, title, writer, writingTime, writeNum, views,content));
+				arrayList.add(new BoardDto(category, title, writer, writingTime, writeNum, views,content));
 			}
 			
 		} catch (SQLException e) {
@@ -88,13 +88,13 @@ public class BoardDao {
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 
-		String sql = "INSERT INTO BOARD (CATAGORY,WRITENUM,TITLE,WRITER,WRITINGTIME,VIEWS,CONTENT)"
+		String sql = "INSERT INTO BOARD (CATEGORY,WRITENUM,TITLE,WRITER,WRITINGTIME,VIEWS,CONTENT)"
 					 + "VALUES(?, LISTSE.nextval, ?, ?, TO_CHAR (SYSDATE,'\"\"YYYY\"년 \"MM\"월 \"DD\"일 \"hh24\"시 \"mi\"분 \"ss\"초\"'), 0,?)";
 						//조회수는 초기값 0으로 주자
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, boardDto.getCatagory());
+			pstmt.setString(1, boardDto.getCategory());
 			pstmt.setString(2, boardDto.getTitle());
 			pstmt.setString(3, boardDto.getWriter());
 			pstmt.setString(4, boardDto.getContent()); // 조회수는 일단 0으로
@@ -113,7 +113,7 @@ public class BoardDao {
 		
 		}
 	}
-	
+	//게시글 1개의 데이터를 가져온다.
 	public BoardDto getBoard(int writeNum) {
 		System.out.println("getBoard 시작");
 		Connection conn = null;
@@ -128,13 +128,13 @@ public class BoardDao {
 			rs = pstmt.executeQuery();
 			
 			if (rs.next()) {
-				String catagory = rs.getString("catagory");
+				String category = rs.getString("category");
 				String title = rs.getString("title");
 				String writer = rs.getString("writer");
 				String writingTime = rs.getString("writingTime");
 				String content = rs.getString("content");
 				int views = rs. getInt("views");
-				boardDto = new BoardDto(catagory, title, writer, writingTime, writeNum, views, content);
+				boardDto = new BoardDto(category, title, writer, writingTime, writeNum, views, content);
 				System.out.println("게시판 내부 글 불러오기 성공");
 			}
 			
@@ -152,4 +152,48 @@ public class BoardDao {
 		}
 		return boardDto;
 	}
+	//카테고리 선택시 선택한 카테고리의 글만 출력
+	public ArrayList<BoardDto>category(String categoryName){
+		
+		ArrayList<BoardDto>categoryList = new ArrayList<BoardDto>();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement("SELECT * FROM BOARD WHERE category = ? ORDER BY WRITENUM DESC");
+			pstmt.setString(1, categoryName);
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+		
+				String category = (rs.getString("category"));
+				String title = (rs.getString("title"));
+				String writer = (rs.getString("writer"));
+				String writingTime = (rs.getString("writingTime"));
+				int writeNum = (rs.getInt("writeNum"));
+				int views = (rs.getInt("views"));
+				String content = (rs.getString("content"));
+				
+				categoryList.add(new BoardDto(category, title, writer, writingTime, writeNum, views,content));
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("category()예외 발생");
+			e.printStackTrace();
+		}finally {
+			try {
+				rs.close();
+				pstmt.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		System.out.println("카테고리리스트 불러오기 성공");
+		return categoryList;
+	}
+	
+	
 }
