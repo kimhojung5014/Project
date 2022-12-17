@@ -100,7 +100,6 @@
 
 /* 결과보기 버튼 */
 .submitbutton {
-
   width: 100px;
   line-height: 40px;
   border-radius: 20px;
@@ -139,11 +138,20 @@ input ,select{
 
 }
 /* 대댓글 */
-.reply li{
-  display: block;
+.reply{
+  display: none;
   padding: 10px;
   line-height: 30px;
 }
+.reply li {
+  display: block;
+  line-height: 30px;
+}
+.reply textarea{
+	padding-left:10px;
+}
+
+
 /*텍스트 에어리어 고정 */
 textarea {
 

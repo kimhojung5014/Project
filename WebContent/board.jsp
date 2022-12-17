@@ -149,8 +149,8 @@
       <table id="board">
         <thead>
         	<tr>
-	          <th>카테고리</th>
 	          <th>번호</th>
+	          <th>카테고리</th>
 	          <th>제목</th>
 	          <th>작성자</th>
 	          <th>작성시간</th>
@@ -161,14 +161,15 @@
         <c:forEach var="list" items="${arrayList}">
 
           <tr>
-            <td>${list.catagory }</td>
             <td>${list.writeNum }</td>
+            <td>${list.catagory }</td>
             <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
             <td>${list.writer }</td>
             <td>${list.writingTime }</td>
             <td>${list.views }</td>
           </tr>
   		</c:forEach>
+  		요기에 폴문 3개 4개 카테고리 별로 하면 될듯
         </tbody>
       </table>
       <!-- 게시판 끝 -->

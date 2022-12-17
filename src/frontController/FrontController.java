@@ -39,6 +39,11 @@ import join.service.SearchPwService;
 import join.service.SearchPwServiceImpl;
 import join.service.editService;
 import join.service.editServiceImpl;
+import reply.model.ReplyDto;
+import reply.service.ReplyInsertService;
+import reply.service.ReplyInsertServiceImpl;
+import reply.service.ReplyListService;
+import reply.service.ReplyListServiceImpl;
 
 /**
  * Servlet implementation class Join_Controller
@@ -299,20 +304,23 @@ public class FrontController extends HttpServlet {
 			request.setAttribute("commentList", commentList); //댓글 내용 셋
 			
 			//대댓글 불러오는 서비스 
-			
+			request.setAttribute("writeNum", writeNum);
+			ReplyListService replyListService = new ReplyListServiceImpl();
+			ArrayList<ReplyDto>reCommentList = replyListService.execute(request, response);
+			request.setAttribute("reCommentList", reCommentList); //댓글 내용 셋
 			
 			//리퀘스트에 셋한 정보들 가지고 글 내용 jsp로 forward
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("inToBoard.jsp");
 			requestDispatcher.forward(request, response);
 		}
-		//여기서부터 댓글 기능
+		//여기서부터 댓글 삽입
 		if (commend.equals("/commentInsert.do")) {
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
 			System.out.println(request.getParameter("writeNum"));
 			String commentContent = request.getParameter("commentContent");
 			String userId = request.getParameter("userId");
 			String nickName = request.getParameter("nickName");
-			
+			//개체 넘기는 걸로 변환 예정
 			request.setAttribute("writeNum", writeNum);
 			request.setAttribute("commentContent", commentContent);
 			request.setAttribute("userId", userId);
@@ -323,24 +331,31 @@ public class FrontController extends HttpServlet {
 			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
 			
 		}
-		// 대댓글 기능
+		// 대댓글 삽입
 		if (commend.equals("/replyInsert.do")) {
+			System.out.println("대댓글 컨트럴러");
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
-			System.out.println(request.getParameter("writeNum"));
-			String commentContent = request.getParameter("commentContent");
+			int commentNum = Integer.parseInt(request.getParameter("commentNum"));
+			String replyContent = request.getParameter("replyContent");
 			String userId = request.getParameter("userId");
 			String nickName = request.getParameter("nickName");
-			
+			//개체 넘기는 걸로 변환 예정
 			request.setAttribute("writeNum", writeNum);
-			request.setAttribute("commentContent", commentContent);
+			request.setAttribute("commentNum", commentNum);
+			request.setAttribute("replyContent", replyContent);
 			request.setAttribute("userId", userId);
 			request.setAttribute("nickName", nickName);
 			
-			CommentInsertService commentInsertService = new CommentInsertServiceImpl();
-			commentInsertService.execute(request, response);
+			ReplyInsertService replyInsertService = new ReplyInsertServiceImpl();
+			replyInsertService.execute(request, response);
 			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
 			
 		}
+		//대댓글 출력 기능
+//		if (commend.equals("/replyList.do")) {
+//			System.out.println("대댓글 리스트");
+//			
+//		}
 	}
 
 }

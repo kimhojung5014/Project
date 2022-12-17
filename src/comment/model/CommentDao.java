@@ -80,7 +80,9 @@ public class CommentDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; 
 		//
-		String sql =  "SELECT NICKNAME , CONTENT, COMMENTDATE, COMMENTNUM FROM REPLY WHERE WRITENUM =?";
+		String sql =  "SELECT NICKNAME , CONTENT, COMMENTDATE, COMMENTNUM "
+					+ "FROM REPLY WHERE WRITENUM =? "
+					+ "ORDER by COMMENTNUM DESC"; // 댓글은 나중에 작성한 글이 제일 위에 오래된 건 뒤에 나오게한다. 대댓글과 반대 기능
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -99,7 +101,6 @@ public class CommentDao {
 			e.printStackTrace();
 		}finally {
 			try {
-				System.out.println("댓글 저장 완료");
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {

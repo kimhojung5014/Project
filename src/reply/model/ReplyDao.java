@@ -16,7 +16,7 @@ public class ReplyDao {
 	
 	private ReplyDao() {}
 	
-	public ReplyDao getInstance() {
+	public static ReplyDao getInstance() {
 		return instance;
 	}
 	
@@ -40,31 +40,33 @@ public class ReplyDao {
 		return connection;
 	}
 	
-	public void replyInsert(int writeNum, int commentNum,String commentContent, String userId, String nickName) {
+	public void replyInsert(int writeNum, int commentNum,String replyContent, String userId, String nickName) {
 		System.out.println("대댓글 인서트 메소드");
 		System.out.println("해당 글 번호 "+writeNum);
 		System.out.println("상위 댓글 번호 "+commentNum );
 		System.out.println("유저id "+userId);
 		System.out.println("닉네임 "+nickName);
-		System.out.println("댓글 내용 "+commentContent);
+		System.out.println("댓글 내용 "+replyContent);
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		String sql = "INSERT INTO REREPLY(writeNum,commentnum,userId, nickname,content,commentDate)" + 
-					"values(?,ReComentNum.nextval,?,?,?,TO_CHAR(SYSDATE,'YYYY\"년\" MM\"월 \"DD\"일 \"hh24\"시 \"mi\"분 '))";
+					"values(?,?,?,?,?,TO_CHAR(SYSDATE,'YYYY\"년\" MM\"월 \"DD\"일 \"hh24\"시 \"mi\"분 '))";
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, writeNum);
-			pstmt.setString(2, userId);
-			pstmt.setString(3, nickName);
-			pstmt.setString(4, commentContent);
+			pstmt.setInt(2, commentNum);
+			pstmt.setString(3, userId);
+			pstmt.setString(4, nickName);
+			pstmt.setString(5, replyContent);
 			pstmt.executeUpdate();
+			System.out.println("대댓글 저장 완료");
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			try {
-				System.out.println("대댓글 저장 완료");
+				
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
@@ -81,7 +83,9 @@ public class ReplyDao {
 		PreparedStatement pstmt = null;
 		ResultSet rs = null; 
 		//
-		String sql =  "SELECT NICKNAME , CONTENT, COMMENTDATE, COMMENTNUM FROM REREPLY WHERE WRITENUM =?";
+		String sql =  "SELECT NICKNAME , CONTENT, COMMENTDATE, COMMENTNUM "
+					+ "FROM REREPLY WHERE WRITENUM =? "
+					+ "ORDER by COMMENTDATE"; // 대댓글은 먼저 작성 한 순서대로 보이게 한다. 댓글과 반대
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);

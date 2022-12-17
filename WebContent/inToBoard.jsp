@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>게시판 내부 화면</title>
   <link rel="stylesheet" href="css/header_footer.css?sd">
-  <link rel="stylesheet" href="css/inToBoard.css?11"> 
+  <link rel="stylesheet" href="css/inToBoard.css?1"> 
 </head>
 <body>
 <script src="js/write.js?123"></script>
@@ -151,6 +151,7 @@
        	<br>
 	 	  <p class="subsubtitle">댓글</p>
 	        <div class="intextarea">
+<!-- 	        댓글 인서트 폼 -->
 	        	<form action="commentInsert.do" method="post" id ="conmentForm">
 	        	<input type="hidden" name="userId" value="${userData.userId }">
 	        	<input type="hidden" name="nickName" value="${userData.nickName }">
@@ -159,7 +160,7 @@
 		       	<table>
 		       		<tr>
 		       			<td>
-		       				${userData.nickName}
+		       				<b>${userData.nickName}</b>
 		       			</td>
 		       			<td>
 		       				<textarea name="commentContent" id ="commentContent" rows="2" cols="83"></textarea>		
@@ -170,25 +171,45 @@
 		       		</tr>
 		       	</table>
 		       	</form>
-		       	<form action="replyInsert.do" method="post" id ="replyInsertForm" >
+				<!--댓글 반복문 페이지번호에 있는 댓글 전부 출력  -->
+    		    <c:forEach var="comment" items="${commentList}" varStatus="status">
+				<!--대댓글 인서트 폼에서 값들을 히든으로 날려보낸다. -->
+			       	<form action="replyInsert.do" method="post" name ="replyInsertForm" >
+						<input type="hidden" name="writeNum" value="${writeNum }">
+						<input type="hidden" name="commentNum" value="${comment.commentNum }">
+			        	<input type="hidden" name="userId" value="${userData.userId }">
+	        			<input type="hidden" name="nickName" value="${userData.nickName }">
+			        	<ul class="comment">
+			           		<li><p><b>${comment.nickName}</b> ${comment.content}</p>작성시간: ${comment.commentDate}
+			           		 <button type="button" class="insertButton"  onclick="choose(${status.index})">답글달기</button>
 
-       		        <c:forEach var="comment" items="${commentList}">
-		        	<ul class="comment">
-		           		<li><p><b>${comment.nickName}</b> ${comment.content}</p>작성시간: ${comment.commentDate} <button type="button">답글달기</button>
-			           		<ul class="reply">
-			               		<li>ㄴ<b>작성자</b> 내용</li>
-			           		</ul>
-		          		</li>
-		        	</ul>
-		        	</c:forEach>
+						<!-- 대댓글 작성 부분 버튼 누르면 활성화, 현재 name 배열 설정 안잡아서 맨 위에 글로 날아감 -->
+				           		<ul class="reply">
+				               		<li ><b>${userData.nickName}</b> <textarea name="replyContent" id ="replyContent" rows="2" cols="83"></textarea>
+				               		<button type="submit" >댓글달기</button></li>
+				           		</ul>
+						<!-- 대댓글 반복문 페이지 번호가 같은 대댓글을 전부 불러오고 그중 댓글의 번호를 참조하는 대댓글만 불러온다. -->
+			           		 <c:forEach var ="reComment" items="${reCommentList}">
+			           		 <c:if test="${comment.commentNum == reComment.commentNum }">
+			           		 <ul>
+			           		 	<li style="padding-left: 20px">
+			           		 		<p><b>${reComment.nickName}</b> ${reComment.content}</p>작성시간: ${reComment.commentDate}
+			           		 	</li>
+			           		 </ul>
+			           		 </c:if>
+			           		 </c:forEach>
+			          		</li>
+			        	</ul>
+		        	</form>
+		       </c:forEach>
 
-	        	</form>
 		        </div>
-<!-- 		   	  <li>댓글만들 곳</li> -->
+
       </div>
     </div>
     
   </div>
+  
   <!-- 푸터 -->
   <footer id = "footer" > 
     
