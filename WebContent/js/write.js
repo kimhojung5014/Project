@@ -15,14 +15,14 @@ function writeCheck() {
 	}
 }
 
-function commentInsert() {
-	const commentContent = document.getElementById('commentContent');					
+function replyInsert() {
+	const replyContent = document.getElementById("replyContent");						
 
-	if(commentContent.value.length > 1000){
+	if(replyContent.value.length > 1000){
 		alert("댓글은 1000자 안으로 입력해주세요")
 	
 	}else {
-		document.getElementById('conmentForm').submit();
+		document.getElementById('replyForm').submit();
 	}
 }
 
@@ -36,13 +36,13 @@ function choose(i) {
 
 } 	
 
-function replyInsert() {
-	const replyContent = document.getElementById('replyContent');					
+function rereplyInsert() {
+	const rereplyContent = document.getElementByTagName("rereplyContent");				
 	
-	if(replyContent.value.length > 1000){
+	if(rereplyContent.value.length > 1000){
 		alert("댓글은 1000자 안으로 입력해주세요")
 	
 	}else {
-		document.getElementByTagName('replyInsertForm').submit();
+		document.getElementByTagName('reReplyForm').submit();
 	}
 }

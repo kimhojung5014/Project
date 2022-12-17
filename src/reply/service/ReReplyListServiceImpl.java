@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 import reply.model.ReplyDao;
 import reply.model.ReplyDto;
 
-public class ReplyListServiceImpl implements ReplyListService{
+public class ReReplyListServiceImpl implements ReReplyListService{
 	ReplyDao replyDao;
-	public ReplyListServiceImpl() {
+	public ReReplyListServiceImpl() {
 		replyDao = ReplyDao.getInstance();
 	}
 	@Override
 	public ArrayList<ReplyDto> execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		return replyDao.replyList((int)request.getAttribute("writeNum"));
+		return replyDao.reReplyList((int)request.getAttribute("writeNum"));
 	}
 }

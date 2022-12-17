@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>게시판 내부 화면</title>
-  <link rel="stylesheet" href="css/header_footer.css?sd">
+  <link rel="stylesheet" href="css/header_footer.css?s2d">
   <link rel="stylesheet" href="css/inToBoard.css?1"> 
 </head>
 <body>
@@ -152,48 +152,54 @@
 	 	  <p class="subsubtitle">댓글</p>
 	        <div class="intextarea">
 <!-- 	        댓글 인서트 폼 -->
-	        	<form action="commentInsert.do" method="post" id ="conmentForm">
-	        	<input type="hidden" name="userId" value="${userData.userId }">
-	        	<input type="hidden" name="nickName" value="${userData.nickName }">
+	        	<form action="replyInsert.do" method="post" id ="replyForm">
 				<!-- 글번호를 보내줘야 처리가 가능하다.  -->
 	        	<input type="hidden" name="writeNum" value="${writeNum }">
+<!-- 	        	일단 댓글은 부모 외래키가 없으니 기본값 0보내기 -->
+     			<input type="hidden" name="parentNum" value="0">
+<!--      			작성자 아이디 닉네임도 보내준다 -->
+	        	<input type="hidden" name="userId" value="${userData.userId }">
+	        	<input type="hidden" name="nickName" value="${userData.nickName }">
+	        	
 		       	<table>
 		       		<tr>
 		       			<td>
 		       				<b>${userData.nickName}</b>
 		       			</td>
 		       			<td>
-		       				<textarea name="commentContent" id ="commentContent" rows="2" cols="83"></textarea>		
+		       				<textarea name="content" id="replyContent" rows="2" cols="83"></textarea>		
 		       			</td>
 		       			<td>
-		       				<button type="button" onclick = "commentInsert()">댓글달기</button>
+		       				<button type="button" onclick = "replyInsert()">댓글달기</button>
 		       			</td>
 		       		</tr>
 		       	</table>
 		       	</form>
 				<!--댓글 반복문 페이지번호에 있는 댓글 전부 출력  -->
-    		    <c:forEach var="comment" items="${commentList}" varStatus="status">
+    		    <c:forEach var="reply" items="${replyList}" varStatus="status">
 				<!--대댓글 인서트 폼에서 값들을 히든으로 날려보낸다. -->
-			       	<form action="replyInsert.do" method="post" name ="replyInsertForm" >
+			       	<form action="replyInsert.do" method="post" id ="reReplyForm" >
 						<input type="hidden" name="writeNum" value="${writeNum }">
-						<input type="hidden" name="commentNum" value="${comment.commentNum }">
+				<!-- 대대댓글은 댓글의 댓글번호롤 parentNum에 넣어서 보내준다. -->
+						<input type="hidden" name="parentNum" value="${reply.commentNum }">
+			    <!--      			작성자 아이디 닉네임도 보내준다 -->
 			        	<input type="hidden" name="userId" value="${userData.userId }">
 	        			<input type="hidden" name="nickName" value="${userData.nickName }">
 			        	<ul class="comment">
-			           		<li><p><b>${comment.nickName}</b> ${comment.content}</p>작성시간: ${comment.commentDate}
+			           		<li><p><b>${reply.nickName}</b> ${reply.content}</p>작성시간: ${reply.commentDate}
 			           		 <button type="button" class="insertButton"  onclick="choose(${status.index})">답글달기</button>
 
 						<!-- 대댓글 작성 부분 버튼 누르면 활성화, 현재 name 배열 설정 안잡아서 맨 위에 글로 날아감 -->
 				           		<ul class="reply">
-				               		<li ><b>${userData.nickName}</b> <textarea name="replyContent" id ="replyContent" rows="2" cols="83"></textarea>
+				               		<li ><b>${userData.nickName}</b> <textarea name="content" id="rereplyContent" rows="2" cols="83"></textarea>
 				               		<button type="submit" >댓글달기</button></li>
 				           		</ul>
 						<!-- 대댓글 반복문 페이지 번호가 같은 대댓글을 전부 불러오고 그중 댓글의 번호를 참조하는 대댓글만 불러온다. -->
-			           		 <c:forEach var ="reComment" items="${reCommentList}">
-			           		 <c:if test="${comment.commentNum == reComment.commentNum }">
+			           		 <c:forEach var ="rereply" items="${rereplyList}">
+			           		 <c:if test="${reply.commentNum == rereply.parentNum }">
 			           		 <ul>
 			           		 	<li style="padding-left: 20px">
-			           		 		<p><b>${reComment.nickName}</b> ${reComment.content}</p>작성시간: ${reComment.commentDate}
+			           		 		<p><b>${rereply.nickName}</b> ${rereply.content}</p>작성시간: ${rereply.commentDate}
 			           		 	</li>
 			           		 </ul>
 			           		 </c:if>

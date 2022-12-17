@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import reply.model.ReplyDao;
+import reply.model.ReplyDto;
 
 public class ReplyInsertServiceImpl implements ReplyInsertService{
 	ReplyDao replyDao;
@@ -13,10 +14,6 @@ public class ReplyInsertServiceImpl implements ReplyInsertService{
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
 	
-		replyDao.replyInsert((int)request.getAttribute("writeNum"),
-							 (int)request.getAttribute("commentNum"),
-							 (String)request.getAttribute("replyContent"),
-							 (String)request.getAttribute("userId"),
-							 (String)request.getAttribute("nickName"));
+		replyDao.replyInsert((ReplyDto)request.getAttribute("replyDto"));
 	}
 }
