@@ -194,13 +194,11 @@
 				<!--댓글 반복문 페이지번호에 있는 댓글 전부 출력  -->
     		    <c:forEach var="reply" items="${replyList}" varStatus="status">
 				<!--대댓글 인서트 폼에서 값들을 히든으로 날려보낸다. -->
-			       	<form action="replyInsert.do" method="post" class ="reReplyForm" >
-						<input type="hidden" name="writeNum" value="${writeNum }">
-				<!-- 대대댓글은 댓글의 댓글번호롤 parentNum에 넣어서 보내준다. -->
-						<input type="hidden" name="parentNum" value="${reply.commentNum }">
-			    <!--      			작성자 아이디 닉네임도 보내준다 -->
-			        	<input type="hidden" name="userId" value="${userData.userId }">
-	        			<input type="hidden" name="nickName" value="${userData.nickName }">
+				
+				
+
+			    
+			    
 			        	<table class="comment">
 			           		<tr>
 			           			<th>${reply.nickName}</th> 
@@ -221,13 +219,18 @@
 		           		<table class="reply">
 		               		<tr >
 		               			<td><b>${userData.nickName}</b></td>
-		               			<td><textarea name="content" class="rereplyContent"   required="required" maxlength="300" rows="2" cols="83"></textarea></td>
-<!-- 				               				글자수 체크 메소드 실행시 폼 서밋을 js 에서 못하는 경우가 생겨서 일단 maxlength로 글자 제한 검 -->
-				              			<td><button type="button" onclick="rereplyInsert(${status.index})">완료</button></td>
-<!-- 		               			<td><button  >완료</button></td> -->
+		               			<td>
+						       		<form action="replyInsert.do" method="post" NAME ="rereplyForm" >
+										<!-- 대대댓글은 댓글의 댓글번호롤 parentNum에 넣어서 보내준다. -->
+										<input type="hidden" name="parentNum" value="${reply.commentNum }">
+			               				<textarea name="content" class="rereplyContent"   required="required" maxlength="300" rows="2" cols="83"></textarea>
+										<!-- 글자수 체크 메소드 실행시 폼 서밋을 js 에서 못하는 경우가 생겨서 일단 maxlength로 글자 제한 검 -->
+					              		<button type="button" onclick="rereplyInsert(${status.index})">완료</button>
+		           					</form>
+		           				</td>
+						<!-- <td><button  >완료</button></td> -->
 		               		</tr>
 		           		</table>
-		           		</form>
 						<!-- 대댓글 반복문 페이지 번호가 같은 대댓글을 전부 불러오고 그중 댓글의 번호를 참조하는 대댓글만 불러온다. -->
 	           		 <c:forEach var ="rereply" items="${rereplyList}" varStatus="status2">
 		           		 <c:if test="${reply.commentNum == rereply.parentNum }">
@@ -248,7 +251,7 @@
     </div>
     
   </div>
-  <script src="js/write.js?12"></script>
+  <script src="js/write.js?1234"></script>
 
   <!-- 푸터 -->
   <footer id = "footer" > 

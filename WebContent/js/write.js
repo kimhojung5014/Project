@@ -66,18 +66,18 @@ function chooseEdit(index) {
 		  } 
 	}
 }
-//댓글 삭제
-function chooseDelete(index) {
-	  
-	  const chooseDelete = document.getElementsByClassName("reply");
-	  reply[index].style.display ="block"
-
-}
+//댓글 삭제 일단 보류 지금은 펑션 안쓰고 바로 전환되게 해놓음
+//function chooseDelete(index) {
+//	  
+//	  const chooseDelete = document.getElementsByClassName("reply");
+//	  reply[index].style.display ="block"
+//
+//}
 
 //이건 지금 작동안해서 따로 빼놓음 대댓글 체크 메소드
 function rereplyInsert(i) {
 	const rereplyContent = document.getElementsByClassName("rereplyContent");				
-	const form = document.getElementsByTagName('reReplyForm');
+	const form = document.getElementsByTagName('rereplyForm');
 	if(rereplyContent[i].length > 1000){
 		alert("댓글은 1000자 안으로 입력해주세요")
 	
@@ -85,6 +85,6 @@ function rereplyInsert(i) {
 		alert("댓글은 내용을 입력해주세요")
 	}
 	else {
-	form[i].submit();
+		form(i).submit();
 	}
 }

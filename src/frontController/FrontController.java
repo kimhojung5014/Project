@@ -342,8 +342,8 @@ public class FrontController extends HttpServlet {
 			System.out.println("댓글 컨트롤러");
 			int writeNum = (int)request.getSession().getAttribute("writeNum");
 			int parentNum = Integer.parseInt(request.getParameter("parentNum"));
-			String userId = request.getParameter("userId"); //요건 그냥 세션으로 받아도 될거 같다
-			String nickName = request.getParameter("nickName");//요건 그냥 세션으로 받아도 될거 같다
+			String userId = (String)request.getSession().getAttribute("userId"); //요건 그냥 세션으로 받아도 될거 같다
+			String nickName = (String)request.getSession().getAttribute("nickName");//요건 그냥 세션으로 받아도 될거 같다
 			String content = request.getParameter("content");
 			
 			ReplyDto replyDto = new ReplyDto(writeNum, parentNum, parentNum, userId, nickName, content);
