@@ -30,7 +30,7 @@
 
           <p class="subtitle">나의 진로 추천 사이트 로그인</p>
       	 <br>
-          <form action="login.do" id="loginForm">
+          <form action="login.do" id="loginForm" method="post">
             <table id="login">
               <tr>
                 <td class="textleft"><p>아이디</p></td>

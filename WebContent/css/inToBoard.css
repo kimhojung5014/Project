@@ -141,6 +141,20 @@ input ,select{
 	width: 100px;
     line-height: 30px;
 }
+/* 삭제버튼 */
+.deleteButton {
+	display : inline-block;
+	border: none;
+	background: red;
+	color: white;
+	font-size: 1rem;
+	border-radius: 20px;
+	font-weight: bold;
+	width: 100px;
+    line-height: 30px;
+    text-align: center;
+}
+
 .comment{
 
   border-spacing: 10px 10px;

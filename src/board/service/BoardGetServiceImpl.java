@@ -17,7 +17,7 @@ public class BoardGetServiceImpl implements BoardGetService{
 	@Override
 	public BoardDto execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		return boardDao.getBoard((int)request.getAttribute("writeNum"));
+		return boardDao.getBoard((int)request.getSession().getAttribute("writeNum"));
 	}
 	
 	

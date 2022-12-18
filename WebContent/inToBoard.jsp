@@ -7,10 +7,10 @@
 <meta charset="UTF-8">
 <title>게시판 내부 화면</title>
   <link rel="stylesheet" href="css/header_footer.css?s2d">
-  <link rel="stylesheet" href="css/inToBoard.css?sdsfsasdasdsaf1"> 
+  <link rel="stylesheet" href="css/inToBoard.css?sdssaf1"> 
 </head>
 <body>
-<script src="js/write.js?1113"></script>
+
    <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -203,59 +203,53 @@
 	        			<input type="hidden" name="nickName" value="${userData.nickName }">
 			        	<table class="comment">
 			           		<tr>
-			           			<th>${reply.nickName}</th> <td>${reply.content}</td>
+			           			<th>${reply.nickName}</th> 
+<!-- 			           			글 속성을 input readonly로 해서 값 불러오고 수정시 readonly 풀며 될 듯 -->
+			           			<td><input type="text" name="replyContent" readonly="readonly" value="${reply.content}"></td>
 			           			<td>${reply.commentDate}</td>
 						<!--로그인 해야만 답글달기 버튼 활성화 -->
 			           		<c:if test="${userData ne null }">
 			           		 	<td><button type="button" class="insertButton"  onclick="choose(${status.index})">답글달기</button></td>
 							</c:if>
+							<c:if test="${userData.userId  eq  reply.userId}">
+								<td><input type="button" class="editButton" name="replyEdit" onclick="chooseEdit(${status.index})" value="수정"></td>
+								<td><a class="deleteButton" href="replyDelete.do?commentNum=${reply.commentNum}">삭제</a></td>
+							</c:if>
 							</tr>
 						</table>
 						<!-- 대댓글 작성 부분 버튼 누르면 활성화, 현재 name 배열 설정 안잡아서 맨 위에 글로 날아감 -->
-<!-- 				           		<ul class="reply"> -->
-<%-- 				               		<li ><b style="line-height: 30px">${userData.nickName}</b> <textarea name="content" id="rereplyContent" rows="2" cols="83"></textarea> --%>
-<!-- 				               		<button type="submit"  style="line-height: 30px">댓글달기</button></li> -->
-<!-- 				           		</ul> -->
-				           		<table class="reply">
-				               		<tr >
-				               			<td><b>${userData.nickName}</b></td>
-				               			<td><textarea name="content" class="rereplyContent"   required="required" maxlength="300" rows="2" cols="83"></textarea></td>
-<%-- 				               			<td><button type="button" onclick="rereplyInsert(${status.index})">완료</button></td> --%>
-				               			<td><button  >완료</button></td>
-				               		</tr>
-				           		</table>
+		           		<table class="reply">
+		               		<tr >
+		               			<td><b>${userData.nickName}</b></td>
+		               			<td><textarea name="content" class="rereplyContent"   required="required" maxlength="300" rows="2" cols="83"></textarea></td>
+<!-- 				               				글자수 체크 메소드 실행시 폼 서밋을 js 에서 못하는 경우가 생겨서 일단 maxlength로 글자 제한 검 -->
+				              			<td><button type="button" onclick="rereplyInsert(${status.index})">완료</button></td>
+<!-- 		               			<td><button  >완료</button></td> -->
+		               		</tr>
+		           		</table>
+		           		</form>
 						<!-- 대댓글 반복문 페이지 번호가 같은 대댓글을 전부 불러오고 그중 댓글의 번호를 참조하는 대댓글만 불러온다. -->
-			           		 <c:forEach var ="rereply" items="${rereplyList}">
-				           		 <c:if test="${reply.commentNum == rereply.parentNum }">
-					           		 <table style="padding-left: 20px; border-spacing: 10px 10px" >
-					           		 	<tr >
-					           		 		<th>ㄴ${rereply.nickName}</th><td> ${rereply.content}</td><td> ${rereply.commentDate}</td>
-					           		 	</tr>
-					           		 </table>
-				           		 </c:if>
-			           		 </c:forEach>
-		        	</form>
+	           		 <c:forEach var ="rereply" items="${rereplyList}" varStatus="status2">
+		           		 <c:if test="${reply.commentNum == rereply.parentNum }">
+			           		 <table style="padding-left: 20px; border-spacing: 10px 10px" >
+			           		 	<tr >
+			           		 		<th>ㄴ${rereply.nickName}</th><td> ${rereply.content}</td><td> ${rereply.commentDate}</td>
+									<c:if test="${userData.userId  eq  rereply.userId}">
+										<td><input type="button" class="editButton" name="replyEdit" onclick="chooseEdit(${status2.index})" value="수정"></td>
+										<td><a class="deleteButton" href="replyDelete.do?commentNum=${rereply.commentNum}&writeNum=${writeNum}">삭제</a></td>
+									</c:if>
+			           		 	</tr>
+			           		 </table>
+		           		 </c:if>
+	           		 </c:forEach>
 		       </c:forEach>
 	        </div>
       </div>
     </div>
     
   </div>
-  <script type="text/javascript">
-  function rereplyInsert(i) {
-		const rereplyContent = document.getElementsByClassName("rereplyContent");				
-		const form = document.getElementsByTagName('reReplyForm');
-		if(rereplyContent[i].length > 1000){
-			alert("댓글은 1000자 안으로 입력해주세요")
-		
-		}else if (rereplyContent[i].length == 0) {
-			alert("댓글은 내용을 입력해주세요")
-		}
-		else {
-		form[i].submit();
-		}
-	}
-  </script>
+  <script src="js/write.js?12"></script>
+
   <!-- 푸터 -->
   <footer id = "footer" > 
     

@@ -48,6 +48,8 @@ import join.service.editServiceImpl;
 import reply.model.ReplyDto;
 import reply.service.ReReplyListService;
 import reply.service.ReReplyListServiceImpl;
+import reply.service.ReplyDeleteService;
+import reply.service.ReplyDeleteServiceImpl;
 import reply.service.ReplyInsertService;
 import reply.service.ReplyInsertServiceImpl;
 import reply.service.ReplyListService;
@@ -304,31 +306,33 @@ public class FrontController extends HttpServlet {
 		//글 내용 들어가면 글, 댓글 불러오는 부분
 		if (commend.equals("/inToBoard.do")) {
 			System.out.println("inToBoard 컨트롤러");
+			//페이지 들어올 때 파라메터로 넘긴 페이지 번호 받고
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
+			
+			//세션에 페이지 번호  띄워서 다른 서비스 들에서 사용할 수 있게
+			request.getSession().setAttribute("writeNum", writeNum);;
+			
 			//조회수 업하는 서비스
 			request.setAttribute("writeNum", writeNum);
 			BoardViewsPlusService boardViewsPlusService = new BoardViewsPlusServiceImpl();
 			boardViewsPlusService.execute(request, response);
 			
 			//글 내용 불러오는 서비스
-			request.setAttribute("writeNum", writeNum);
 			BoardGetService boardGetService = new BoardGetServiceImpl();
 			BoardDto boardDto =  boardGetService.execute(request, response);
 			request.setAttribute("boardDto", boardDto); //글 내용 셋
 			
-////			//댓글 불러오는 서비스 
-			request.setAttribute("writeNum", writeNum);
+			//댓글 불러오는 서비스 
 			ReplyListService replyListService = new ReplyListServiceImpl();
 			ArrayList<ReplyDto>replyList = replyListService.execute(request, response);
 			request.setAttribute("replyList", replyList);
-////			
-////			//대댓글 불러오는 서비스 
-			request.setAttribute("writeNum", writeNum);
+		
+			//대댓글 불러오는 서비스 
 			ReReplyListService reReplyListService = new ReReplyListServiceImpl();
 			ArrayList<ReplyDto>rereplyList = reReplyListService .execute(request, response);
 			request.setAttribute("rereplyList", rereplyList); 
 			
-			//리퀘스트에 셋한 정보들 가지고 글 내용 jsp로 forward
+			//리퀘스트에 set한 정보들 가지고 글 내용 jsp로 forward
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("inToBoard.jsp");
 			requestDispatcher.forward(request, response);
 		}
@@ -336,10 +340,10 @@ public class FrontController extends HttpServlet {
 		// 댓글 삽입
 		if (commend.equals("/replyInsert.do")) {
 			System.out.println("댓글 컨트롤러");
-			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
+			int writeNum = (int)request.getSession().getAttribute("writeNum");
 			int parentNum = Integer.parseInt(request.getParameter("parentNum"));
-			String userId = request.getParameter("userId");
-			String nickName = request.getParameter("nickName");
+			String userId = request.getParameter("userId"); //요건 그냥 세션으로 받아도 될거 같다
+			String nickName = request.getParameter("nickName");//요건 그냥 세션으로 받아도 될거 같다
 			String content = request.getParameter("content");
 			
 			ReplyDto replyDto = new ReplyDto(writeNum, parentNum, parentNum, userId, nickName, content);
@@ -348,6 +352,21 @@ public class FrontController extends HttpServlet {
 			
 			ReplyInsertService replyInsertService = new ReplyInsertServiceImpl();
 			replyInsertService.execute(request, response);
+			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
+		}
+		//댓글 수정 일단 보류
+		if (commend.equals("/replyEdit.do")) {
+			String replyContent = request.getParameter("replyContent");
+			System.out.println(replyContent);
+		}
+		
+		//댓글 삭제
+		if (commend.equals("/replyDelete.do")) {
+			int writeNum = (int)request.getSession().getAttribute("writeNum");
+			int commentNum = Integer.parseInt(request.getParameter("commentNum"));
+			request.setAttribute("commentNum", commentNum);
+			ReplyDeleteService replyDeleteService = new ReplyDeleteServiceImpl();
+			replyDeleteService.execute(request, response);
 			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
 			
 		}

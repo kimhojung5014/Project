@@ -21,16 +21,19 @@ public class ReplyDto {
 		this.parentNum = parentNum;
 	}
 	//댓글 불러오기때 사용
-	public ReplyDto(int commentNum, String nickName, String content, String commentDate) {
+	public ReplyDto(int commentNum, String userId, String nickName, String content, String commentDate) {
 		this.commentNum = commentNum;
+		this.userId = userId;
 		this.nickName = nickName;
 		this.content = content;
 		this.commentDate = commentDate;
 	}
 	//대대댓글 불러오기시 사용
-	public ReplyDto( String nickName, int parentNum, String content, String commentDate) {
+	public ReplyDto( String nickName, String userId, int parentNum, int commentNum , String content, String commentDate ) {
 		this.nickName = nickName;
+		this.userId = userId;
 		this.parentNum = parentNum;
+		this.commentNum = commentNum;
 		this.content = content;
 		this.commentDate = commentDate;
 	}

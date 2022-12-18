@@ -16,6 +16,6 @@ public class ReplyListServiceImpl implements ReplyListService{
 	@Override
 	public ArrayList<ReplyDto> execute(HttpServletRequest request, HttpServletResponse response) {
 		
-		return replyDao.replyList((int)request.getAttribute("writeNum"));
+		return replyDao.replyList((int)request.getSession().getAttribute("writeNum"));
 	}
 }
