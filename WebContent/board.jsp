@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -134,6 +135,8 @@
       <br>
       <table class="memuTable">
         <tr>
+          <th style="background: red;"><a href="test.do" style="background: red;">더미 삽입! </a>
+          <th style="background: red;"><a href="testdelete.do" style="background: red;">전체 삭제! </a>
           <th>공지사항</th>
           <th><a href="category.do?category=직업정보">직업정보</a></th>
           <th><a href="category.do?category=학과정보">학과정보</a></th>
@@ -157,32 +160,40 @@
 		  </thead>
         <c:choose>
         	<c:when test="${not empty arrayList }">
-        	
-
-			<c:choose>
-				<c:when test="${fn:length(arrayList) < 10} ">
-					<c:set var="pageAll" value="1" scope="page"></c:set>
-				</c:when>
-
-				<c:when test="${fn:length(arrayList) % '10' ne '0'} ">
-					<c:set var="pageAll" value="${fn:length(arrayList) / '10' + '1'}" scope="page"></c:set>	
-				</c:when>
-
-				<c:otherwise>
-					<c:set var="pageAll" value="${fn:length(arrayList) / '10'}" scope="page"></c:set>	
-				</c:otherwise>
-			</c:choose>
-
-		        <c:forEach var="list" items="${arrayList}" varStatus="status"  >
+       			<fmt:parseNumber var="pagediv" value="${fn:length(arrayList) / 10}" integerOnly="true"/> 
+       			<fmt:parseNumber var="pageremain" value="${fn:length(arrayList) % 10}" integerOnly="true"/> 
+       			
+				<c:choose>				
+					<c:when test="${pagediv < 1 }">
+						<c:set var="pages" value="1" scope="page"/>
+					</c:when>
+					<c:when test="${pageremain eq 0 }">
+						<c:set var="pages" value="${pagediv }" scope="page"/>
+					</c:when>
+					<c:otherwise>
+						<c:set var="pages" value="${pagediv + 1 }" scope="page"/>
+					</c:otherwise>
+				</c:choose>
+				
+				<c:if test="${min eq null && max eq null }">
+					<c:set var="min" value="0"></c:set>
+					<c:set var="max" value="9"></c:set>
+				</c:if>
+				
+				
+				
+		        <c:forEach var="list" items="${arrayList}" varStatus="status" begin="${min }" end="${max }">
 			          <tbody>
 			          <tr>
 
-			            <td>${list.writeNum } ${fn:length(arrayList)}</td>
-			            <td>${list.category }글개수${status.index }</td>
+			            <td>${list.writeNum }총 페이지 개수 ${pages }</td>
+			            <td>${list.category } 글개수${status.index }</td>
 			            <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
 			            <td>${list.writer }</td>
 			            <td>${list.writingTime }</td>
 			            <td>${list.views }</td>
+			            
+			            
 						<c:choose>
 			            	<c:when test="${userData.userId eq list.userId }">
 	    						<td>
@@ -210,19 +221,37 @@
       <!-- 게시판 끝 -->
       <!-- 아래 페이지 넘버 부분 -->
       <div class="oncenter">
-        <ul id="pageNumber">
-          <li><a href="pre">&larr;</a></li>
-          <li><a href="job.html">1</a></li>
-          <li><a href="job2">2</a></li>
-          <li><a href="job3">3</a></li>
-          <li><a href="job4">4</a></li>
-          <li><a href="job5">5</a></li>
-          <li>.</li>
-          <li>.</li>
-          <li>.</li>
-          <li><a href="next">10</a></li>
-          <li><a href="">&rarr;</a></li>
-        </ul>  
+          <c:forEach var="pageea"  begin="1" end="${pages }" varStatus="status">
+          <c:choose>
+          	<c:when test="${pageea eq 1}">
+          		<c:set var="min" value="0"/>
+          		<c:set var="max" value="9"/>
+          	</c:when>
+          	<c:otherwise>
+          		<c:set var="min" value="${pageea * 10 -10}"/>
+          		<c:set var="max" value="${pageea * 10 -1}"/>
+          	</c:otherwise>
+          </c:choose>
+          
+          	
+          	<form style="display: inline-block;" action="list.do" method="post">
+          		<input type="hidden" name="min" value="${min }">
+          		<input type="hidden" name="max" value="${max }">
+          		<c:if test="${status.index <= 5 }">
+
+          			<input type="submit" style="border: none; background: white;" value="${pageea }">
+
+          		</c:if>
+          		
+          		<c:if test="${status.last && status.index > 5}">
+
+          			<input type="submit" style="border: none; background: white;" value="${pageea }">
+
+          		</c:if>
+          
+          	</form>
+          	
+          </c:forEach>
       </div>
         <!-- 페이지 넘버부분 끝 -->
 

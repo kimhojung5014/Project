@@ -12,7 +12,7 @@
   <title>로그인 페이지</title>
 </head>
 <body>
-<script src="js/Join_Check.js"></script>
+<script src="js/Join_Check.js?123"></script>
   <!-- 헤더 부분 -->
 
   <!-- 헤더 끝 -->
@@ -42,7 +42,7 @@
                <tr>
 	            	<td></td>
 	            	<td>
-	            		<p id="idMsg"></p>
+	            		<p></p>
 	            	</td>
 	            	
 	            </tr>
@@ -53,7 +53,7 @@
 	            <tr>
 	            <td></td>
 	            	<td>
-	            	<p id="pwMsg"></p>
+	            	<p ></p>
 	            	</td>
 	            </tr>
               <tr>

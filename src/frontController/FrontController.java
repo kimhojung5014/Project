@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import board.model.BoardDao;
 import board.model.BoardDto;
 import board.service.BoardCategoryService;
 import board.service.BoardCategoryServiceImpl;
@@ -92,6 +93,21 @@ public class FrontController extends HttpServlet {
 		String conPath = request.getContextPath();
 		String commend = uri.substring(conPath.length());
 		
+		//**************************//게시판 더미 데이터 10개 넣기, 삭제 나중에 지우기***************************************************************************************
+	
+		
+		if (commend.equals("/test.do")) {
+			BoardDao boardDao = BoardDao.getInstance();
+			boardDao.insertTest();
+			response.sendRedirect("list.do");
+		}
+		if (commend.equals("/testdelete.do")) {
+			BoardDao boardDao = BoardDao.getInstance();
+			boardDao.deleteTest();
+			response.sendRedirect("list.do");
+		}
+		//**************************//게시판 더미 데이터 넣기, 삭제 나중에 지우기***************************************************************************************
+
 //**************************회원가입, 로그인 처리***************************************************************************************
 		
 		//회원가입 DB Insert
@@ -274,6 +290,11 @@ public class FrontController extends HttpServlet {
 		//게시판 화면들어오면 게시글 목록 전체 출력 정렬은 글번호 최신순
 		if (commend.equals("/list.do")) {
 			
+			if (request.getParameter("min") != null && request.getParameter("max") != null) {
+				request.setAttribute("min", request.getParameter("min"));
+				request.setAttribute("max", request.getParameter("max"));
+			}
+			
 			ArrayList<BoardDto>arrayList = new ArrayList<BoardDto>();
 			BoardListService boardListService = new BoardListServiceImpl();
 			arrayList =  boardListService.execute(request, response);
@@ -300,7 +321,7 @@ public class FrontController extends HttpServlet {
 			request.setAttribute("boardDto", boardDto);
 			BoardInsertService boardInsertService = new BoardInsertServiceImpl();
 			boardInsertService.execute(request, response);
-			response.sendRedirect("/Project/list.do");
+			response.sendRedirect("list.do");
 			
 		}
 		//글 내용 들어가면 글, 댓글 불러오는 부분
@@ -354,7 +375,7 @@ public class FrontController extends HttpServlet {
 			replyInsertService.execute(request, response);
 			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
 		}
-		//댓글 수정 일단 보류
+		//댓글 수정
 		if (commend.equals("/replyEdit.do")) {
 			int writeNum = (int)request.getSession().getAttribute("writeNum");
 
@@ -370,7 +391,7 @@ public class FrontController extends HttpServlet {
 
 			ReplyEditService replyEditService = new ReplyEditServiceImpl();
 			replyEditService.execute(request, response);
-			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
+			response.sendRedirect("inToBoard.do?writeNum="+writeNum);
 		}
 		
 		//댓글 삭제
@@ -380,7 +401,7 @@ public class FrontController extends HttpServlet {
 			request.setAttribute("commentNum", commentNum);
 			ReplyDeleteService replyDeleteService = new ReplyDeleteServiceImpl();
 			replyDeleteService.execute(request, response);
-			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
+			response.sendRedirect("inToBoard.do?writeNum="+writeNum);
 			
 		}
 		

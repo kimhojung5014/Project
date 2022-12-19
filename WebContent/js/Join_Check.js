@@ -59,7 +59,7 @@ function id_Check(){
 			return true;
 	  }else{
 		  	idMsg.style.color = wrongColor;
-			idMsg.innerHTML = "첫글자는 영어로 하고 , 2 ~ 20 글자 특수문자 제외 입력";
+			idMsg.innerHTML = "첫글자는 영어로 하고 , 5 ~ 20 글자 특수문자 제외 입력";
 			return false;
 			
 	  }
@@ -312,9 +312,13 @@ function searchPw() {
 }
 
 function loginCheck() {
-	if (id_Check() && pw_Regular_Check()) {
-	document.getElementById("loginForm").submit();
-	}else {
-		alert("아이디 비밀번호 형식을 확인해주세요");
+	
+	let id = document.getElementById("userId").value.length;
+	let pw = document.getElementById("pw").value.length;
+	
+	if (id == 0 || pw == 0 || id > 20 || pw >15 ) {
+		alert("아이디 비밀번호를 확인해주세요.");
+	} else {
+		document.getElementById("loginForm").submit();
 	}
 }

@@ -21,6 +21,69 @@ public class BoardDao {
 	public static BoardDao getInstance() {
 		return instance;
 	}
+//********************게시판 더미 데이터 넣기 메소드******************************************************************/
+	public void insertTest() {
+		
+		System.out.println("게시판 더미 데이터 시작");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "INSERT INTO BOARD (CATEGORY,TITLE,WRITER, USERID, CONTENT,VIEWS, WRITENUM, WRITINGTIME)"
+					 + "VALUES('직업정보', 'test', 'test','gytrt0130' ,'test' , 0, LISTSE.nextval,TO_CHAR (SYSDATE,'\"\"YYYY\"년 \"MM\"월 \"DD\"일 \"hh24\"시 \"mi\"분 \"ss\"초\"'))";
+						//조회수는 초기값 0으로 주자
+		try {
+			conn = getConnection();
+			for (int i = 0; i < 10; i++) {
+				pstmt = conn.prepareStatement(sql);
+				pstmt.executeUpdate();
+			}
+		
+			
+			System.out.println("게시판 더미 데이터 넣기 완료");
+		} catch (SQLException e) {
+			System.out.println("insertList()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		
+		}
+	}
+	public void deleteTest() {
+		
+		System.out.println("게시판 더미 데이터 시작");
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		String sql = "DELETE BOARD ";
+						//조회수는 초기값 0으로 주자
+		try {
+			conn = getConnection();
+
+				pstmt = conn.prepareStatement(sql);
+				pstmt.executeUpdate();
+				
+			System.out.println("게시판 더미 데이터 넣기 완료");
+		} catch (SQLException e) {
+			System.out.println("insertList()예외 발생");
+			e.printStackTrace();
+		} finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		
+		}
+	}
+//********************게시판 더미 데이터 넣기, 삭제 메소드******************************************************************/
+
+	
 	
 	//커넥션 연결 메소드
 	public Connection getConnection() {
@@ -117,6 +180,8 @@ public class BoardDao {
 		
 		}
 	}
+
+
 	//게시글 1개의 데이터를 가져온다.
 	public BoardDto getBoard(int writeNum) {
 		System.out.println("getBoard 시작");
