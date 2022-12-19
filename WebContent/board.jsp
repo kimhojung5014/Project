@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -156,40 +157,54 @@
 		  </thead>
         <c:choose>
         	<c:when test="${not empty arrayList }">
-		        <c:forEach var="list" items="${arrayList}">	
-		          <tbody>
-		          <tr>
-		            <td>${list.writeNum }</td>
-		            <td>${list.category }</td>
-		            <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
-		            <td>${list.writer }</td>
-		            <td>${list.writingTime }</td>
-		            <td>${list.views }</td>
-<!-- 		            세션에 있는 유저 데이터와 글 작성자가 같은 경우 삭제 버튼 -->
-		            <c:choose>
-		            	<c:when test="${userData.userId eq list.userId }">
-    						<td>
-			            	<a type="button" class="deleteButton" onclick="deleteCheck(${list.writeNum })">삭제</a>
-		            		</td>
-		            	</c:when>
-		            	<c:otherwise>
-		            	 <td>&nbsp;</td>
-		            	</c:otherwise>
-		            </c:choose>
-		         
+        	
 
-		
-		           
-		            
-		          </tr>
-		          </tbody>
+			<c:choose>
+				<c:when test="${fn:length(arrayList) < 10} ">
+					<c:set var="pageAll" value="1" scope="page"></c:set>
+				</c:when>
+
+				<c:when test="${fn:length(arrayList) % '10' ne '0'} ">
+					<c:set var="pageAll" value="${fn:length(arrayList) / '10' + '1'}" scope="page"></c:set>	
+				</c:when>
+
+				<c:otherwise>
+					<c:set var="pageAll" value="${fn:length(arrayList) / '10'}" scope="page"></c:set>	
+				</c:otherwise>
+			</c:choose>
+
+		        <c:forEach var="list" items="${arrayList}" varStatus="status"  >
+			          <tbody>
+			          <tr>
+
+			            <td>${list.writeNum } ${fn:length(arrayList)}</td>
+			            <td>${list.category }글개수${status.index }</td>
+			            <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
+			            <td>${list.writer }</td>
+			            <td>${list.writingTime }</td>
+			            <td>${list.views }</td>
+						<c:choose>
+			            	<c:when test="${userData.userId eq list.userId }">
+	    						<td>
+				            		<a type="button" class="deleteButton" onclick="deleteCheck(${list.writeNum })">삭제</a>
+			            		</td>
+			            	</c:when>
+			            	<c:otherwise>
+			            	 <td>&nbsp;</td>
+			            	</c:otherwise>
+			            </c:choose>
+					
+			          </tr>
+			          </tbody>
+
 		  		</c:forEach>
+		  		
 	        </c:when>
 	        <c:otherwise>
 	        	<td colspan="6"><b>조건에 맞는 글이 없습니다.</b></td>
 	        </c:otherwise>
   		</c:choose>
-<!--   		요기에 폴문 3개 4개 카테고리 별로 하면 될듯 -->
+
         </tbody>
       </table>
       <!-- 게시판 끝 -->

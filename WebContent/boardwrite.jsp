@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/boardwrite.css"> 
 </head>
 <body>
-<script src="js/write.js?12"></script>
+<script src="js/write.js?123s2"></script>
    <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -137,11 +137,11 @@
           <br><br>
           <!-- 제목 -->
           <label for="title" class="subsubtitle">제목</label><br>
-          <input type="text" id="title" name="title" placeholder="제목을 입력해주세요.">
+          <input type="text" id="title" name="title" placeholder="제목을 입력해주세요." required="required">
           <br><br>
           <!-- 글 내용 적을 곳 -->
           <p class="subsubtitle">본문</p>
-          <textarea name="content" id="content" cols="83" rows="30"></textarea>
+          <textarea name="content" id="content" cols="83" rows="30" required="required"></textarea>
           <br>
 <!--           <input type="file"> -->
           <div class="oncenter">										

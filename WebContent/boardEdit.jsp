@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="css/boardwrite.css"> 
 </head>
 <body>
-<script src="js/write.js?12"></script>
+<script src="js/write.js?sdfdsf"></script>
    <!-- 헤더 부분 -->
   <header id="headerstyle">
     <div id="titleHome">
@@ -161,7 +161,7 @@
 <!--           <input type="file"> -->
           <div class="oncenter">										
 <!--           												버튼에서 유효성 검사 후 insertList.list로 보내야한다. -->
-            <button type="button" class="submitbutton" onclick="editCheck()">등록</button>
+            <button type="button" class="submitbutton" onclick="writeCheck()">등록</button>
           </div>
       </form>
       </div>

@@ -1,35 +1,20 @@
 function writeCheck() {
+						 
+	let title = document.getElementById('title');	
+	let content = document.getElementById('content');				
+
+	if(title.value.length  >50 || title.value ==""){
+		alert("제목은 50자 안으로 입력해주세요");
+		return
 	
-	const category = document.getElementById('category');					 
-	const title = document.getElementById('title');	
-	const content = document.getElementById('content');				
-	
-	if(title.value.length >50){
-		alert("제목은 50자 안으로 입력해주세요")
-	
-	}else if (content.value.length >= 1000) {
+	}else if (content.value.length >= 1000 || content.value == "") {
 		alert("본문은 1000자 이내로 입력해주세요")
-		
+		return
 	}else {
 		document.getElementById('writeForm').submit();
 	}
 }
-function editCheck() {
-	
-	const category = document.getElementById('category');					 
-	const title = document.getElementById('title');	
-	const content = document.getElementById('content');				
-	
-	if(title.value.length >50){
-		alert("제목은 50자 안으로 입력해주세요")
-	
-	}else if (content.value.length >= 1000) {
-		alert("본문은 1000자 이내로 입력해주세요")
-		
-	}else {
-		document.getElementById('writeForm').submit();
-	}
-}
+
 function replyInsert() {
 	const replyContent = document.getElementById("replyContent").value;						
 

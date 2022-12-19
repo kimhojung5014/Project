@@ -402,6 +402,9 @@ public class FrontController extends HttpServlet {
 			
 			String chooseSearch = request.getParameter("chooseSearch");
 			String search = request.getParameter("search");
+			
+			System.out.println("검색주제"+chooseSearch);
+			System.out.println("검색어"+search);
 			request.setAttribute("chooseSearch", chooseSearch);
 			request.setAttribute("search", search);
 			BoardSearchSearvice boardSearchSearvice = new BoardSearchServiceImpl();
