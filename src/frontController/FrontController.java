@@ -50,6 +50,8 @@ import reply.service.ReReplyListService;
 import reply.service.ReReplyListServiceImpl;
 import reply.service.ReplyDeleteService;
 import reply.service.ReplyDeleteServiceImpl;
+import reply.service.ReplyEditService;
+import reply.service.ReplyEditServiceImpl;
 import reply.service.ReplyInsertService;
 import reply.service.ReplyInsertServiceImpl;
 import reply.service.ReplyListService;
@@ -313,7 +315,7 @@ public class FrontController extends HttpServlet {
 			request.getSession().setAttribute("writeNum", writeNum);;
 			
 			//조회수 업하는 서비스
-			request.setAttribute("writeNum", writeNum);
+
 			BoardViewsPlusService boardViewsPlusService = new BoardViewsPlusServiceImpl();
 			boardViewsPlusService.execute(request, response);
 			
@@ -342,8 +344,8 @@ public class FrontController extends HttpServlet {
 			System.out.println("댓글 컨트롤러");
 			int writeNum = (int)request.getSession().getAttribute("writeNum");
 			int parentNum = Integer.parseInt(request.getParameter("parentNum"));
-			String userId = (String)request.getSession().getAttribute("userId"); //요건 그냥 세션으로 받아도 될거 같다
-			String nickName = (String)request.getSession().getAttribute("nickName");//요건 그냥 세션으로 받아도 될거 같다
+			String userId = request.getParameter("userId"); //요건 그냥 세션으로 받아도 될거 같다
+			String nickName = request.getParameter("nickName");//요건 그냥 세션으로 받아도 될거 같다
 			String content = request.getParameter("content");
 			
 			ReplyDto replyDto = new ReplyDto(writeNum, parentNum, parentNum, userId, nickName, content);
@@ -356,8 +358,21 @@ public class FrontController extends HttpServlet {
 		}
 		//댓글 수정 일단 보류
 		if (commend.equals("/replyEdit.do")) {
+			int writeNum = (int)request.getSession().getAttribute("writeNum");
+
+			int commentNum = Integer.parseInt(request.getParameter("commentNum"));
 			String replyContent = request.getParameter("replyContent");
+			
+			System.out.println(writeNum);
+			System.out.println(commentNum);
 			System.out.println(replyContent);
+			
+			request.setAttribute("commentNum", commentNum);
+			request.setAttribute("replyContent", replyContent);
+
+			ReplyEditService replyEditService = new ReplyEditServiceImpl();
+			replyEditService.execute(request, response);
+			response.sendRedirect("/Project/inToBoard.do?writeNum="+writeNum);
 		}
 		
 		//댓글 삭제

@@ -69,7 +69,7 @@ public class ReplyDao {
 			}
 		}
 	}
-	
+	//댓글 전체 부르기
 	public ArrayList<ReplyDto> replyList(int writeNum) {
 		
 		ArrayList<ReplyDto>replyList = new ArrayList<ReplyDto>();
@@ -171,7 +171,6 @@ public class ReplyDao {
 			e.printStackTrace();
 		}finally {
 			try {
-				
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
@@ -179,6 +178,31 @@ public class ReplyDao {
 			}
 		}
 		System.out.println("댓글 삭제 완료");
+	}
 	
+	public void replyEdit(int num, String content) {
+		System.out.println("댓글 수정");
+		Connection conn  = null;
+		PreparedStatement pstmt = null;
+		
+		String sql = "UPDATE REPLY SET content = ? WHERE commentnum = ?";
+		
+		try {
+			conn = getConnection();
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, content);
+			pstmt.setInt(2, num);
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			try {
+				pstmt.close();
+				conn.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
+		}
+		System.out.println("댓글 수정 완료");
 	}
 }

@@ -54,15 +54,34 @@ function choose(index) {
 
 }
 // 댓글 수정
-function chooseEdit(index) {
+function replyEdit(i,commentNum) {
 	  
-	  const replyEdit =  document.getElementsByTagName("replyEdit"); // 버튼 배열로 받아온다.
-	  const replyContent =  document.getElementsByTagName("replyContent"); //수정할 댓글의 인덱스필요
-	  if ( replyContent[index].readOnly) {
-		  replyContent[index].readOnly = false;//리드 온리 풀어서 값 바꿀수 있게
+	  let replyEdit =  document.getElementsByName("replyEdit"); // 버튼 배열로 받아온다.
+	  let replyContent =  document.getElementsByName("replyContent"); //수정할 댓글의 인덱스필요
+	  if ( replyContent[i].readOnly) {
+		  replyContent[i].readOnly = false;//리드 온리 풀어서 값 바꿀수 있게
+		  replyContent[i].focus();
+		  replyEdit[i].style.backgroundColor = "blue";
+		  replyEdit[i].style.border = "solid";
 		  replyEdit[i].value = '완료';
-		  replyEdit[index].onclick = function() {
-			  document.location.href = "replyEdit.do?replyContent ="+replyContent[index].value;
+		  replyEdit[i].onclick = function() {
+			  document.location.href = "replyEdit.do?replyContent="+replyContent[i].value+"&commentNum="+commentNum;
+		  } 
+	}
+}
+
+function rereplyEdit(i,commentNum) {
+	  
+	  let rereplyEdit =  document.getElementsByName("rereplyEdit"); // 버튼 배열로 받아온다.
+	  let rereplyContent =  document.getElementsByName("rereplyContent"); //수정할 댓글의 인덱스필요
+	  if ( replyContent[i].readOnly) {
+		  replyContent[i].readOnly = false;//리드 온리 풀어서 값 바꿀수 있게
+		  replyContent[i].focus();
+		  rereplyEdit[i].style.backgroundColor = "blue";
+		  rereplyEdit[i].style.border = "solid";
+		  rereplyEdit[i].value = '완료';
+		  rereplyEdit[i].onclick = function() {
+			  document.location.href = "replyEdit.do?replyContent ="+rereplyContent[i].value+"&commentNum="+commentNum;
 		  } 
 	}
 }
@@ -76,15 +95,19 @@ function chooseEdit(index) {
 
 //이건 지금 작동안해서 따로 빼놓음 대댓글 체크 메소드
 function rereplyInsert(i) {
-	const rereplyContent = document.getElementsByClassName("rereplyContent");				
-	const form = document.getElementsByTagName('rereplyForm');
-	if(rereplyContent[i].length > 1000){
-		alert("댓글은 1000자 안으로 입력해주세요")
+	let recontent =	document.getElementsByClassName("recontent");				
+	let replyform = document.getElementsByName("rereplyForm");
 	
-	}else if (rereplyContent[i].length == 0) {
-		alert("댓글은 내용을 입력해주세요")
-	}
-	else {
-		form(i).submit();
+		 
+		if(recontent[i].value.length > 1000){
+			alert("댓글은 1000자 안으로 입력해주세요")
+			return
+		
+		}else if (recontent[i].value.length == 0) {
+			alert("댓글은 내용을 입력해주세요")
+			return
+		}else  {
+			replyform[i].submit();
+			
 	}
 }

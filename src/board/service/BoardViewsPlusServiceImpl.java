@@ -14,7 +14,7 @@ public class BoardViewsPlusServiceImpl implements BoardViewsPlusService{
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) {
-		boardDao.boardViews((int)request.getAttribute("writeNum"));
+		boardDao.boardViews((int)request.getSession().getAttribute("writeNum"));
 		
 	}
 
