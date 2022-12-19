@@ -7,7 +7,7 @@
 <meta charset="UTF-8">
 <title>게시판 내부 화면</title>
   <link rel="stylesheet" href="css/header_footer.css?s2d">
-  <link rel="stylesheet" href="css/inToBoard.css?sdssaf1"> 
+  <link rel="stylesheet" href="css/inToBoard.css?s1"> 
 </head>
 <body>
 
@@ -238,7 +238,7 @@
 			           		 	<tr >
 			           		 		<th>ㄴ${rereply.nickName}</th><td><input style="border: none;" type="text" name="rereplyContent" readonly="readonly" value="${rereply.content}"></td><td> ${rereply.commentDate}</td>
 									<c:if test="${userData.userId  eq  rereply.userId}">
-										<td><input type="button" class="editButton" name="rereplyEdit" onclick="rereplyEdit(${status2.index},${rereply.commentNum })" value="수정"></td>
+										<td><input style="text-align: center;" type="button" class="editButton" name="rereplyEdit" onclick="rereplyEdit(${status2.index},${rereply.commentNum })" value="수정"></td>
 										<td><a class="deleteButton" href="replyDelete.do?commentNum=${rereply.commentNum}&writeNum=${writeNum}">삭제</a></td>
 									</c:if>
 			           		 	</tr>
@@ -251,7 +251,7 @@
     </div>
     
   </div>
-  <script src="js/write.js?1"></script>
+  <script src="js/write.js?12"></script>
 
   <!-- 푸터 -->
   <footer id = "footer" > 

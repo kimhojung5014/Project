@@ -183,9 +183,7 @@ public class FrontController extends HttpServlet {
 			}else {
 				System.out.println("정보없음");
 				//out 객체 사용하지 말고 서블릿에서 뷰를 구현하면 안된다. 요건 따로 창 만들기
-				out.println("<html><head><title>확인창</title>");
-				out.println("<script>alert('아이디 비밀번호를 확인해주세요');history.go(-1);</script>");
-				out.println("</head><body</body><html>");
+				response.sendRedirect("loginfalse.jsp");
 			}
 			
 		}

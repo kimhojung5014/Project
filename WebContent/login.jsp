@@ -35,7 +35,7 @@
               <tr>
                 <td class="textleft"><p>아이디</p></td>
                 
-                <td><input type="text" id="userId" name="userId" placeholder="아이디 입력" autofocus onkeyup="id_Check()"></td>
+                <td><input type="text" id="userId" name="userId" placeholder="아이디 입력" autofocus ></td>
                 
                 <td rowspan="3"><button class="button" type="button" onclick="loginCheck()">로그인</button></td>
               </tr>
@@ -48,7 +48,7 @@
 	            </tr>
               <tr>
                 <td class="textleft"><p>비밀번호</p></td>
-                <td><input type="password" id="pw" name="pw" placeholder="비밀번호 입력"  onkeyup="pw_Regular_Check()"></td>
+                <td><input type="password" id="pw" name="pw" placeholder="비밀번호 입력"  ></td>
               </tr>
 	            <tr>
 	            <td></td>

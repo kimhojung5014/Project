@@ -123,7 +123,7 @@
 <div id="mainStyle">
 
     <div id="mainContent">
-      <p class="title">글작성하기</p>
+      <p class="title">글 수정하기</p>
       <div class="textarea">
         <form action="boardEditInsert.do" method="post" id="writeForm">
         <input type="hidden" name="writeNum" value="${writeNum }">
