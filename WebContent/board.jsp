@@ -176,8 +176,8 @@
 				</c:choose>
 				
 				<c:if test="${min eq null && max eq null }">
-					<c:set var="min" value="0"></c:set>
-					<c:set var="max" value="9"></c:set>
+					<c:set var="min" value="0"/>
+					<c:set var="max" value="9"/>
 				</c:if>
 				
 				
@@ -219,6 +219,7 @@
         </tbody>
       </table>
       <!-- 게시판 끝 -->
+      <br>
       <!-- 아래 페이지 넘버 부분 -->
       <div class="oncenter">
           <c:forEach var="pageea"  begin="1" end="${pages }" varStatus="status">
@@ -237,15 +238,16 @@
           	<form style="display: inline-block;" action="list.do" method="post">
           		<input type="hidden" name="min" value="${min }">
           		<input type="hidden" name="max" value="${max }">
+          		
           		<c:if test="${status.index <= 5 }">
 
-          			<input type="submit" style="border: none; background: white;" value="${pageea }">
+          			<input type="submit" style="border: none; background: white; font-size: 1rem;" value="${pageea }">
 
           		</c:if>
           		
           		<c:if test="${status.last && status.index > 5}">
 
-          			<input type="submit" style="border: none; background: white;" value="${pageea }">
+          			<input type="submit" style="border: none; background: white; font-size: 1rem;" value="${pageea }">
 
           		</c:if>
           
@@ -254,7 +256,7 @@
           </c:forEach>
       </div>
         <!-- 페이지 넘버부분 끝 -->
-
+		<br>
         <!-- 검색창 -->
         <table style="width: 100%; padding-left: 35%;" >
           <tr>

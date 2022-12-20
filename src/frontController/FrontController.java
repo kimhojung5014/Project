@@ -88,7 +88,6 @@ public class FrontController extends HttpServlet {
 		
 		request.setCharacterEncoding("utf-8");
 		response.setContentType("text/html; charset=utf-8");
-		PrintWriter out = response.getWriter();
 		String uri = request.getRequestURI();
 		String conPath = request.getContextPath();
 		String commend = uri.substring(conPath.length());
