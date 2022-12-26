@@ -1,6 +1,7 @@
 package board.model;
 
 import java.sql.Connection;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import javax.sql.DataSource;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
 
+
 public class BoardDao {
 	
 	private static BoardDao instance = new BoardDao();
@@ -21,6 +23,7 @@ public class BoardDao {
 	public static BoardDao getInstance() {
 		return instance;
 	}
+
 //********************게시판 더미 데이터 넣기 메소드******************************************************************/
 	public void insertTest() {
 		
@@ -139,6 +142,7 @@ public class BoardDao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
@@ -258,6 +262,7 @@ public class BoardDao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
@@ -309,6 +314,7 @@ public class BoardDao {
 			try {
 				rs.close();
 				pstmt.close();
+				conn.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}

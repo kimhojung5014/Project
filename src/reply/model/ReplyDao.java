@@ -79,49 +79,8 @@ public class ReplyDao {
 		ResultSet rs = null; 
 		//
 		String sql =  "SELECT NICKNAME , CONTENT, COMMENTDATE, COMMENTNUM, PARENTNUM, USERID "
-					+ "FROM REPLY WHERE WRITENUM =? AND PARENTNUM = 0"
-					+ "ORDER by COMMENTDATE DESC"; // 댓글은 최신 순서대로 보이게 한다.
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(sql);
-			pstmt.setInt(1, writeNum);
-			rs = pstmt.executeQuery();
-			
-			while (rs.next()) {
-				int commentNum = rs.getInt("commentNum"); 
-				String nickName = rs.getString("nickname");
-				String content = rs.getString("content");
-				String commentDate = rs.getString("commentdate");
-				String userId = rs.getString("userId");
-				replyDto = new ReplyDto(commentNum, userId ,nickName, content, commentDate);
-				replyList.add(replyDto);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}finally {
-			try {
-				
-				pstmt.close();
-				conn.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-		}
-		System.out.println("댓글 불러오기 작동");
-		return replyList;
-	}
-	//대댓글 불러오기
-	public ArrayList<ReplyDto> reReplyList(int writeNum) {
-		
-		ArrayList<ReplyDto>rereplyList = new ArrayList<ReplyDto>();
-		ReplyDto replyDto = null;
-		Connection conn = null;
-		PreparedStatement pstmt = null;
-		ResultSet rs = null; 
-		//
-		String sql =  "SELECT NICKNAME , CONTENT, COMMENTDATE, COMMENTNUM, PARENTNUM, USERID "
-					+ "FROM REPLY WHERE WRITENUM =? AND PARENTNUM != 0"
-					+ "ORDER by COMMENTDATE "; // 댓글은 최신 순서대로 보이게 한다.
+					+ "FROM REPLY WHERE WRITENUM =?"
+					+ "ORDER by COMMENTDATE ASC"; // 댓글은 최신 순서대로 보이게 한다.
 		try {
 			conn = getConnection();
 			pstmt = conn.prepareStatement(sql);
@@ -136,32 +95,33 @@ public class ReplyDao {
 				int commentNum = rs.getInt("commentNum"); 
 				String userId = rs.getString("USERID");
 				replyDto = new ReplyDto( nickName, userId ,parentNum, commentNum, content, commentDate);
-				rereplyList.add(replyDto);
+				
+				replyList.add(replyDto);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {
 			try {
-				
+				rs.close();
 				pstmt.close();
 				conn.close();
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		}
-		System.out.println("대댓글 불러오기");
-		return rereplyList;
+		System.out.println("댓글 불러오기 작동");
+		return replyList;
 	}
-	
+
 	//댓글, 대댓글 삭제
 	
 	public void replyDelete(int commentNum) {
 		System.out.println("댓글 삭제 시작");
 		Connection conn  = null;
 		PreparedStatement pstmt = null;
-		
-//		String sql = "DELETE reply WHERE COMMENTNUM ="+commentNum; 요거하면 밑에 대댓글들이 버려지니 보류
-		String sql = "UPDATE reply SET content = '삭제된 댓글 입니다.' WHERE commentnum="+commentNum; // 삭제하진 말고 내용만 삭제되었다고 변경하기
+	
+		String sql = "DELETE reply WHERE COMMENTNUM ="+commentNum; //요거하면 밑에 대댓글들이 버려지니 보류
+//		String sql = "UㅊDATE reply SET content = '삭제된 댓글 입니다.' WHERE commentnum="+commentNum; // 삭제하진 말고 내용만 삭제되었다고 변경하기
 		
 		try {
 			conn = getConnection();

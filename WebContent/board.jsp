@@ -186,8 +186,8 @@
 			          <tbody>
 			          <tr>
 
-			            <td>${list.writeNum }총 페이지 개수 ${pages }</td>
-			            <td>${list.category } 글개수${status.index }</td>
+			            <td>${list.writeNum }</td>
+			            <td>${list.category } </td>
 			            <td><a href="inToBoard.do?writeNum=${list.writeNum }">${list.title}</a></td>
 			            <td>${list.writer }</td>
 			            <td>${list.writingTime }</td>
@@ -235,23 +235,26 @@
           </c:choose>
           
           	
+         <c:if test="${status.index <= 5 }">
           	<form style="display: inline-block;" action="list.do" method="post">
           		<input type="hidden" name="min" value="${min }">
           		<input type="hidden" name="max" value="${max }">
           		
-          		<c:if test="${status.index <= 5 }">
 
           			<input type="submit" style="border: none; background: white; font-size: 1rem;" value="${pageea }">
 
-          		</c:if>
-          		
-          		<c:if test="${status.last && status.index > 5}">
-
+          	</form>
+          </c:if>
+          	
+         <c:if test="${status.last && status.index > 5}">
+          	<form style="display: inline-block;" action="list.do" method="post">
+				
+					<span>...</span>
           			<input type="submit" style="border: none; background: white; font-size: 1rem;" value="${pageea }">
 
-          		</c:if>
           
           	</form>
+          </c:if>
           	
           </c:forEach>
       </div>

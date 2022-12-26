@@ -194,8 +194,7 @@
 				<!--댓글 반복문 페이지번호에 있는 댓글 전부 출력  -->
     		    <c:forEach var="reply" items="${replyList}" varStatus="status">
 				<!--대댓글 인서트 폼에서 값들을 히든으로 날려보낸다. -->
-			    
-			    
+						<c:if test="${reply.parentNum eq 0 }">			    
 			        	<table class="comment">
 			           		<tr>
 			           			<th>${reply.nickName}</th> 
@@ -212,6 +211,7 @@
 							</c:if>
 							</tr>
 						</table>
+						</c:if>
 						<!-- 대댓글 작성 부분 버튼 누르면 활성화, 현재 name 배열 설정 안잡아서 맨 위에 글로 날아감 -->
 		           		<table class="reply">
 		               		<tr >
@@ -228,18 +228,17 @@
 					              		<button type="button" onclick="rereplyInsert(${status.index})">완료</button>
 		           					</form>
 		           				</td>
-						<!-- <td><button  >완료</button></td> -->
 		               		</tr>
 		           		</table>
 						<!-- 대댓글 반복문 페이지 번호가 같은 대댓글을 전부 불러오고 그중 댓글의 번호를 참조하는 대댓글만 불러온다. -->
-	           		 <c:forEach var ="rereply" items="${rereplyList}" varStatus="status2">
+	           		 <c:forEach var ="rereply" items="${replyList}" varStatus="status2">
 		           		 <c:if test="${reply.commentNum == rereply.parentNum }">
 			           		 <table style="padding-left: 20px; border-spacing: 10px 10px" >
 			           		 	<tr >
 			           		 		<th>ㄴ${rereply.nickName}</th><td><input style="border: none;" type="text" name="rereplyContent" readonly="readonly" value="${rereply.content}"></td><td> ${rereply.commentDate}</td>
 									<c:if test="${userData.userId  eq  rereply.userId}">
 										<td><input style="text-align: center;" type="button" class="editButton" name="rereplyEdit" onclick="rereplyEdit(${status2.index},${rereply.commentNum })" value="수정"></td>
-										<td><a class="deleteButton" href="replyDelete.do?commentNum=${rereply.commentNum}&writeNum=${writeNum}">삭제</a></td>
+										<td><a class="deleteButton" href="replyDelete.do?commentNum=${rereply.commentNum}">삭제</a></td>
 									</c:if>
 			           		 	</tr>
 			           		 </table>

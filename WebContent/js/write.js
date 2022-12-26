@@ -29,6 +29,22 @@ function replyInsert() {
 	}
 }
 
+function rereplyInsert(i) {
+	let recontent =	document.getElementsByClassName("recontent");				
+	let replyform = document.getElementsByName("rereplyForm");
+	
+		if(recontent[i].value.length > 1000){
+			alert("댓글은 1000자 안으로 입력해주세요")
+			return
+		
+		}else if (recontent[i].value.length == 0) {
+			alert("댓글은 내용을 입력해주세요")
+			return
+		}else  {
+			replyform[i].submit();
+			
+	}
+}
 //답글 달기 누르면 아래 생김
 function choose(i) {
 	  
@@ -95,20 +111,11 @@ function rereplyEdit(i,commentNum) {
 //}
 
 //이건 지금 작동안해서 따로 빼놓음 대댓글 체크 메소드
-function rereplyInsert(i) {
-	let recontent =	document.getElementsByClassName("recontent");				
-	let replyform = document.getElementsByName("rereplyForm");
+
+
+
+function show() {
+	const reply = document.getElementById("#click_reply2")
+	reply.readOnly = false;
 	
-		 
-		if(recontent[i].value.length > 1000){
-			alert("댓글은 1000자 안으로 입력해주세요")
-			return
-		
-		}else if (recontent[i].value.length == 0) {
-			alert("댓글은 내용을 입력해주세요")
-			return
-		}else  {
-			replyform[i].submit();
-			
-	}
 }

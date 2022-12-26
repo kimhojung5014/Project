@@ -83,6 +83,10 @@ font-xl: 1.25rem  20px
   padding: 50px 50px;
 
 }
+
+.intextarea{
+  padding: 30px 50px;
+}
 /*  */
 #kindOfJob{
   height: 40px;
@@ -113,8 +117,8 @@ font-xl: 1.25rem  20px
 
 /* 여기서부턴 아래 쪽 직업 정보 출력 css */
 .rowLine {
-  height: 130px;
-
+  height:auto;
+  padding-top:10px;
 }
 /* 표에서 직업이름 행  */
 .listHeadLine{
@@ -125,12 +129,12 @@ font-xl: 1.25rem  20px
 /* 직업 줄에서 직업 이름 공백  */
 .listJobName {
   display: inline-block;
-  width:550px;
+  width:500px;
 }
 /* 직업 칸에서  연봉, 발전 가능성 , 고용평등*/
 .listJobEtc {
   display: inline-block;
-  width: 120px; 
+  width: 150px; 
 }
 .listJobEtcColor {
   color: rgb(76, 111, 219);
@@ -138,9 +142,9 @@ font-xl: 1.25rem  20px
 
 /* 직업에서 아래칸 설명 부분 */
 .listJobExplain {
-  height: 70px;
+
   line-height: 20px;
-  padding: 5px 20px 0px ;
+  padding: 10px 20px;
 }
 /* 직업 정보 css 끝 */
 

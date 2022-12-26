@@ -2,6 +2,7 @@ package frontController;
 
 import java.io.IOException;
 
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -31,6 +32,12 @@ import board.service.BoardSearchSearvice;
 import board.service.BoardSearchServiceImpl;
 import board.service.BoardViewsPlusService;
 import board.service.BoardViewsPlusServiceImpl;
+import jobDetail.model.JobDetailDto;
+import jobDetail.service.JobDetailService;
+import jobDetail.service.JobDetailServiceImpl;
+import jobList.model.JobListDto;
+import jobList.service.JobListService;
+import jobList.service.JobListServiceImpl;
 import join.model.JoinDto;
 import join.service.IdCheckServiceImpl;
 import join.service.IdCheckService;
@@ -47,8 +54,6 @@ import join.service.SearchPwServiceImpl;
 import join.service.editService;
 import join.service.editServiceImpl;
 import reply.model.ReplyDto;
-import reply.service.ReReplyListService;
-import reply.service.ReReplyListServiceImpl;
 import reply.service.ReplyDeleteService;
 import reply.service.ReplyDeleteServiceImpl;
 import reply.service.ReplyEditService;
@@ -330,10 +335,9 @@ public class FrontController extends HttpServlet {
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
 			
 			//세션에 페이지 번호  띄워서 다른 서비스 들에서 사용할 수 있게
-			request.getSession().setAttribute("writeNum", writeNum);;
+			request.getSession().setAttribute("writeNum", writeNum);
 			
 			//조회수 업하는 서비스
-
 			BoardViewsPlusService boardViewsPlusService = new BoardViewsPlusServiceImpl();
 			boardViewsPlusService.execute(request, response);
 			
@@ -347,11 +351,6 @@ public class FrontController extends HttpServlet {
 			ArrayList<ReplyDto>replyList = replyListService.execute(request, response);
 			request.setAttribute("replyList", replyList);
 		
-			//대댓글 불러오는 서비스 
-			ReReplyListService reReplyListService = new ReReplyListServiceImpl();
-			ArrayList<ReplyDto>rereplyList = reReplyListService .execute(request, response);
-			request.setAttribute("rereplyList", rereplyList); 
-			
 			//리퀘스트에 set한 정보들 가지고 글 내용 jsp로 forward
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("inToBoard.jsp");
 			requestDispatcher.forward(request, response);
@@ -362,6 +361,7 @@ public class FrontController extends HttpServlet {
 			System.out.println("댓글 컨트롤러");
 			int writeNum = (int)request.getSession().getAttribute("writeNum");
 			int parentNum = Integer.parseInt(request.getParameter("parentNum"));
+			
 			String userId = request.getParameter("userId"); //요건 그냥 세션으로 받아도 될거 같다
 			String nickName = request.getParameter("nickName");//요건 그냥 세션으로 받아도 될거 같다
 			String content = request.getParameter("content");
@@ -380,10 +380,6 @@ public class FrontController extends HttpServlet {
 
 			int commentNum = Integer.parseInt(request.getParameter("commentNum"));
 			String replyContent = request.getParameter("replyContent");
-			
-			System.out.println(writeNum);
-			System.out.println(commentNum);
-			System.out.println(replyContent);
 			
 			request.setAttribute("commentNum", commentNum);
 			request.setAttribute("replyContent", replyContent);
@@ -467,6 +463,37 @@ public class FrontController extends HttpServlet {
 			BoardEditInsertService boardEditInsertService = new BoardEditInsertServiceImpl();
 			boardEditInsertService.execute(request, response);
 			response.sendRedirect("inToBoard.do?writeNum="+writeNum);
+			
+		}
+//********************************직업 관련 부분******************************************************************************************
+		//직업 정보 리스트 출력
+		if (commend.equals("/jobList.do")) {
+			System.out.println("joblist.do");
+			JobListService jobListService = new JobListServiceImpl();
+			ArrayList<JobListDto>jobList = jobListService.execute(request, response);
+			request.setAttribute("jobList", jobList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("job.jsp");
+			dispatcher.forward(request, response);
+		}
+		//직업 정보 상세 출력
+		if (commend.equals("/jobDetail.do")) {
+			
+			String job = request.getParameter("job");
+			System.out.println(job);
+			request.setAttribute("job", job);
+			
+			JobDetailService jobDetailService = new JobDetailServiceImpl();
+			JobDetailDto jobData =  jobDetailService.execute(request, response);
+		
+			request.setAttribute("jobData", jobData);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jobdetail.jsp");
+			dispatcher.forward(request, response);
+		}
+		if (commend.equals("/jobRecommend.do")) {
+			String ability = request.getParameter("ability");
+			String kindOfJob = request.getParameter("kindOfJob");
+			String possibility = request.getParameter("possibility");
+			
 			
 		}
 
