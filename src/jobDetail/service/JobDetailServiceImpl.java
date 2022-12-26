@@ -18,6 +18,7 @@ public class JobDetailServiceImpl implements JobDetailService{
 	@Override
 	public JobDetailDto execute(HttpServletRequest request, HttpServletResponse response) {
 		return jobDetailDao.getJobdetailData((String)request.getAttribute("job"));
+		
 	}
 
 }

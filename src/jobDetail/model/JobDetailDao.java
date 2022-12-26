@@ -1,13 +1,17 @@
 package jobDetail.model;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.sql.DataSource;
+
+import jobList.model.JobListDto;
 
 public class JobDetailDao {
 	
@@ -96,4 +100,6 @@ public class JobDetailDao {
 		System.out.println("잡 상세 정보 불러오기 완료");
 		return jobDetailDto;
 	}
+	
+
 }

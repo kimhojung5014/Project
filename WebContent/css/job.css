@@ -136,6 +136,10 @@ font-xl: 1.25rem  20px
   display: inline-block;
   width: 150px; 
 }
+.listJobEtc2 {
+  display: inline-block;
+  width: 400px; 
+}
 .listJobEtcColor {
   color: rgb(76, 111, 219);
 }

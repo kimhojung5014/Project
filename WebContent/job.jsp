@@ -228,7 +228,7 @@
 	            <option value="농생명산업 관련직">농생명산업 관련직</option>
 	          </select>
               <br><br>
-          	  <p class="subsubtitle">1.본인이 자신있는 장점을 1개 선택해주세요. 
+          	  <p class="subsubtitle">2.본인이 자신있는 장점을 1개 선택해주세요.</p>
           	  <br>
           		<label><input name="ability" type="radio" value="신체운동">신체운동</label>
           		<label><input name="ability" type="radio" value="손재능">손재능</label>
@@ -246,22 +246,22 @@
 	          <br>
 	          <ul class="jobAptitude">
 	            <li>
-	              <input type="radio" name="possibility" value="rewardValue"> 보상
+	              <input type="radio" name="possibility" value="REWARDVALUE"> 보상
 	            </li>
 	            <li>
-	              <input type="radio" name="possibility" value="employmentsecurityvalue"> 고용안정률
+	              <input type="radio" name="possibility" value="EMPLOYMENTSECURITYVALUE"> 고용안정률
 	            </li>
 	            <li>
-	              <input type="radio"name="possibility" value="developmentPossibilityValue"> 발전가능성
+	              <input type="radio"name="possibility" value="DEVELOPMENTPOSSIBILITYVALUE"> 발전가능성
 	            </li>
 	            <li>
-	              <input type="radio" name="possibility" value="workingConditionsValue"> 근무여건
+	              <input type="radio" name="possibility" value="WORKINGCONDITIONSVALUE"> 근무여건
 	            </li>
 	            <li>
-	              <input type="radio" name="possibility" value="professionalValue"> 직업전문성
+	              <input type="radio" name="possibility" value="PROFESSIONALVALUE"> 직업전문성
 	            </li>
 	            <li>
-	              <input type="radio" name="possibility" value="EQUALEMPLOYMENTValue"> 평등한 고용
+	              <input type="radio" name="possibility" value="EQUALEMPLOYMENTVALUE"> 평등한 고용
 	            </li>
 	          </ul>
          </div>

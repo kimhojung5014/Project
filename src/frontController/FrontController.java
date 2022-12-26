@@ -35,6 +35,8 @@ import board.service.BoardViewsPlusServiceImpl;
 import jobDetail.model.JobDetailDto;
 import jobDetail.service.JobDetailService;
 import jobDetail.service.JobDetailServiceImpl;
+import jobDetail.service.JobRecommendService;
+import jobDetail.service.JobRecommendServiceImpl;
 import jobList.model.JobListDto;
 import jobList.service.JobListService;
 import jobList.service.JobListServiceImpl;
@@ -493,8 +495,18 @@ public class FrontController extends HttpServlet {
 			String ability = request.getParameter("ability");
 			String kindOfJob = request.getParameter("kindOfJob");
 			String possibility = request.getParameter("possibility");
+			System.out.println(ability);
+			System.out.println(kindOfJob);
+			System.out.println(possibility);
+			request.setAttribute("ability",ability);
+			request.setAttribute("kindOfJob",kindOfJob);
+			request.setAttribute("possibility",possibility);
 			
-			
+			JobRecommendService jobRecommendService = new JobRecommendServiceImpl();
+			ArrayList<JobDetailDto>jobList = jobRecommendService.execute(request, response);
+			request.setAttribute("jobList", jobList);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("jobresult.jsp");
+			dispatcher.forward(request, response);
 		}
 
 	}
