@@ -57,7 +57,7 @@
 
         <ul class="main1" >
     <!-- 1번째 메뉴 -->
-            <li><a href="job.jsp">직업 추천</a></li>
+            <li><a href="jobList.do">직업 추천</a></li>
     <!-- 1번째 메뉴 끝 -->
 
     <!-- 2번째 메뉴 시작 -->

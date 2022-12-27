@@ -22,7 +22,7 @@ import jobList.model.JobListDto;
 public class JobDetailData2 {
 
 public static void main(String[] args) throws IOException, ParseException {
-		
+		//학과 정보 끌어와서 업데이트했던 용도
 		ArrayList<JobListDto>list =  JobDao.getInstance().getJobList();
 		String num;
 		for (int i = 0; i < list.size(); i++) {

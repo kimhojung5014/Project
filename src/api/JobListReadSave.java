@@ -77,58 +77,47 @@ public class JobListReadSave {
 		try {
 			
 			
-			for (int i = 0; i < content.size(); i++) {
 				pstmt = con.prepareStatement(sql);
+			for (int i = 0; i <= content.size(); i++) {
 				
-				JSONObject key = (JSONObject)content.get(i);
 				
+				JSONObject key = (JSONObject)content.get(300);
+				String a = (String) key.get("job");
+			
 				pstmt.setString(1,(String) key.get("job") );
-				System.out.println(i+"job");
 				pstmt.setString(2,(String) key.get("jobdicSeq") );
-				System.out.println(i+"jobdicSeq");
 				pstmt.setString(3,(String) key.get("profession") );
-				System.out.println(i+"profession");
 				pstmt.setString(4,(String) key.get("similarJob") );
-				System.out.println(i+"similarJob");
 				pstmt.setString(5,(String) key.get("summary") );
-				System.out.println(i+"similarJob");
 				pstmt.setString(6, (String) key.get("equalemployment"));
-				System.out.println(i+"equalemployment");
 				pstmt.setString(7,(String) key.get("possibility") );
-				System.out.println(i+"possibility");
 				pstmt.setString(8,(String) key.get("prospect") );
-				System.out.println(i+"prospect");
 				pstmt.setString(9,(String) key.get("salery") );
-				System.out.println(i+"salery");
 				pstmt.setString(10,(String) key.get("job_code") );
-				System.out.println(i+"job_code");
 				pstmt.setString(11,(String) key.get("job_ctg_code") );
-				System.out.println(i+"job_ctg_code");
 				pstmt.setString(12,(String) key.get("aptd_type_code") );
-				System.out.println(i+"aptd_type_code");
 				pstmt.executeUpdate();
-				System.out.println(i+"번완료");
+			
 			}
-		
 			
 			System.out.println("게시판 더미 데이터 넣기 완료");
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println("insertList()예외 발생");
 			e.printStackTrace();
 		} finally {
 			try {
-				pstmt.close();
-				con.close();
+			
 			} catch (Exception e2) {
 				e2.printStackTrace();
 			}
 		
 		}
 		///////
-
+		
 		conn.disconnect();
 
 	}
 
+	
 
 }

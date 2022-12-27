@@ -57,7 +57,7 @@
 
         <ul class="main1" >
     <!-- 1번째 메뉴 -->
-            <li><a href="job.jsp">직업 추천</a></li>
+            <li><a href="jobList.do">직업 추천</a></li>
     <!-- 1번째 메뉴 끝 -->
 
     <!-- 2번째 메뉴 시작 -->
@@ -227,7 +227,7 @@
             <div class="oncenter">
               <!-- 링크 a는 임시보 해놈 form처리해줄 jsp가 없으니 -->
               <br>
-              <button type="submit" class="submitbutton"><a href="majortest.html" style="color:white ;">결과보기</a></button>
+              <button type="submit" class="submitbutton"><a href="majortest.jsp" style="color:white ;">결과보기</a></button>
             </div>
           </form>
         </div>
