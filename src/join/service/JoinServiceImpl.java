@@ -14,7 +14,7 @@ public class JoinServiceImpl implements JoinService{
 		joinDao = JoinDao.getInstance();
 	}
 	@Override
-	public void excute(HttpServletRequest request, HttpServletResponse response) {
+	public void execute(HttpServletRequest request, HttpServletResponse response) {
 		joinDao.insertJoin((JoinDto)request.getAttribute("joinData"));
 		
 	}

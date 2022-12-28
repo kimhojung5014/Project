@@ -135,6 +135,12 @@
           <p >직업 정보</p>
         </div>
         <br>
+        <c:if test="${fn:length(jobList) eq 0}">
+        	<script type="text/javascript">
+        		alert("조건에 맞는 결과가 없습니다. 조건을 변경해 시도해주세요.");
+        		history.back(1);
+        	</script>
+        </c:if>
         <!-- 데이터 끌어와서 리스트로 보여주는 화면 나중에 JSP로 직접 입력 말고 데이터 끌고오자 -->
         <ul>
           <!-- 직업 1줄 시작-->

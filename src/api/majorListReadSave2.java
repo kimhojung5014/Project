@@ -106,7 +106,7 @@ public static void main(String[] args) throws IOException, ParseException {
 					for (int j = 0; j < relate_subjectList.size(); j++) {
 						JSONObject relate_subject = (JSONObject)relate_subjectList.get(j);
 						subject_descriptionTmp += (String) relate_subject.get("subject_description");
-						subject_nameTmp += (String) relate_subject.get("subject_name");
+						subject_nameTmp += (String) relate_subject.get("subject_name") +",";
 					
 
 					}
@@ -123,7 +123,7 @@ public static void main(String[] args) throws IOException, ParseException {
 					for (int j = 0; j < career_actList.size(); j++) {
 						JSONObject career_act = (JSONObject)career_actList.get(j);
 						act_name = (String)career_act.get("act_name");
-						act_description = (String)career_act.get("act_description");
+						act_description = (String)career_act.get("act_description")+",";
 					}
 //					act_name clob, -- 진로탐색활동 이름
 					pstmt.setString(8, act_name);
@@ -148,7 +148,7 @@ public static void main(String[] args) throws IOException, ParseException {
 					for (int j = 0; j < enter_fieldList.size(); j++) {
 						JSONObject enter_field = (JSONObject)enter_fieldList.get(j);
 						gradeuate += (String)enter_field.get("gradeuate");
-						description += (String)enter_field.get("description");
+						description += (String)enter_field.get("description")+",";
 					}
 //					gradeuate clob, -- 기업 및 산업체
 					pstmt.setString(14, gradeuate);
@@ -162,8 +162,8 @@ public static void main(String[] args) throws IOException, ParseException {
 					String SBJECT_SUMRY = "";
 					for (int j = 0; j < main_subjectList.size(); j++) {
 						JSONObject main_subject = (JSONObject)main_subjectList.get(j);
-						SBJECT_NM += (String)main_subject.get("SBJECT_NM");
-						SBJECT_SUMRY += (String)main_subject.get("SBJECT_SUMRY");
+						SBJECT_NM += (String)main_subject.get("SBJECT_NM")+",";
+						SBJECT_SUMRY += (String)main_subject.get("SBJECT_SUMRY")+",";
 					}
 //					SBJECT_NM clob, -- 대학 주 교과목
 					pstmt.setString(16, SBJECT_NM);
@@ -179,11 +179,11 @@ public static void main(String[] args) throws IOException, ParseException {
 					String schoolName = "";
 					for (int j = 0; j < universityList.size(); j++) {
 						JSONObject university = (JSONObject)universityList.get(j);
-						area += (String)university.get("area");
-						schoolURL += (String)university.get("schoolURL");
-						campus_nm += (String)university.get("campus_nm");
-						majorName += (String)university.get("majorName");
-						schoolName += (String)university.get("schoolName");
+						area += (String)university.get("area")+",";
+						schoolURL += (String)university.get("schoolURL")+",";
+						campus_nm += (String)university.get("campus_nm")+",";
+						majorName += (String)university.get("majorName")+",";
+						schoolName += (String)university.get("schoolName")+",";
 					}
 //					area clob, -- 학교 위치
 					pstmt.setString(18, area);

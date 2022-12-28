@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -126,67 +127,52 @@
   <div id="mainStyle">
     <div id="mainContent">
       <div class="textarea">
-      <p class="title">대학교: <span style="color:rgb(54, 82, 168);">컴퓨터공학과</span></p>
+      <p class="title">대학교: <span style="color:rgb(54, 82, 168);">${majorDto.major}</span></p>
       <br>
       <p class="subtitle">학과 정보</p>
         <div class="intextarea">
           <p class="subsubtitle">학과 개요</p>
           <div class="inintextarea">
           <p>
-            어느날 갑자기 지구상의 모든 컴퓨터가 사라진다면 모든 것이 정지될지도 모릅니다. 컴퓨터공학은 IT와 정보통신 기술을 기반으로 정보화 시대를 이끄는 첨단 공학 분야라 할 수 있습니다. 모든 산업 분야에 컴퓨터 공학 기술은 깊은 관련이 있습니다. 컴퓨터 공학은 컴퓨터 시스템, 프로그래밍 기법, 알고리즘 설계, 응용소프트웨어 개발, 정보화사업 관리방법론 등 다양한 이론과 실습을 통해 유능한 인재를 키우는데 목표를 두고 있는 학과입니다.
+          	-${majorDto.summary}
           </p>
           </div>  
 
           <p class="subsubtitle">학과 특성</p>
           <div class="inintextarea">
           <p>
-            컴퓨터 공학과 관련된 IT와 정보기술 들이 빠르게 발전하고 있습니다. 빅데이터, 클라우드 컴퓨팅, 5G인터넷, 사물인터넷, 인공지능, 블록체인 기술, 핀테크, 무인자동차 등은 모두 컴퓨터 공학과 깊은 관련이 있습니다. 앞으로도 컴퓨터 공학 분야의 산업과 기술은 계속 확대 될 것으로 전망됩니다.
+            -${majorDto.property}
           </p>
           </div>
 
           <p class="subsubtitle">흥미와 적성</p>
           <div class="inintextarea">
           <p>
-            컴퓨터나 인터넷 웹서핑을 좋아하고 IT분야, IT기술과 컴퓨터를 이용한 새로운 제품 등에 관심이 많은 사람에게 유리합니다. 컴퓨터 소프트웨어를 개발하기 위해서는 프로그래밍 개발 언어를 배워야 하는데 이에 필요한 논리적인 사고능력과 개발 언어와 소스를 이해할 수 있는 지식이 필요합니다.
+          	-${majorDto.interest }
           </p>
           </div>
 
           <p class="subsubtitle">관련 고교 교과목</p>
           <ul class="jobExplainList">
+            <c:forEach var="subject_name" items="${fn:split(majorDto.subject_name,'') }">
+<%--             <c:forEach var="subject_name" items="${fn:split(majorDto.subject_description,',') }"> --%>
             <li>
-              <p class="texttitle">공통과목</p>
-              수학, 과학, 기술ㆍ가정
+
+            
+
+              <p class="texttitle">${subject_name}</p>
+<%--               ${subject_description} --%>
             </li>
-            <li>
-              <p class="texttitle">진로선택과목</p>
-              수학교과 : 수학ⅠㆍⅡ, 미적분, 확률과 통계<br>
-              과학교과 : 물리학Ⅰ, 화학Ⅰ<br>
-              기술ㆍ가정교과 : 기술ㆍ가정, 정보
-            </li>
-            <li>
-              <p class="texttitle">전문교과Ⅰ</p>
-              심화수학ⅠㆍⅡ, 고급 수학ⅠㆍⅡ, 고급 물리학, 물리학 실험, 고급 화학, 화학 실험, 정보과학, 융합과학탐구, 과학과제 연구
-            </li>
-            <li>
-              <p class="texttitle">전문교과Ⅱ
-              </p>
-              디지털 논리 회로, 프로그래밍, 자료구조, 사물 인터넷 서비스 기획, 로봇 지능 개발
-            </li>
+<%--              </c:forEach> --%>
+            </c:forEach>
           </ul>
           <p class="subsubtitle">진로 탐색 활동</p>
           <ul class="jobExplainList">
+          <c:forEach var="subject_name" items="${fn:split(majorDto.subject_description,',') }"> 
             <li>
               컴퓨터부품확인 - 컴퓨터 본체를 열어 각종 부품을 직접 확인해 보고 컴퓨터의 구성 및 구조에 대해 이해할 수 있다.
             </li>
-            <li>
-              웹진구독 - 컴퓨터나 IT분야에 대한 웹진이나 잡지를 구독하고 관심 내용을 읽어보는 활동을 통해 컴퓨터 공학 및 관련 기술에 대한 지식을 쌓을 수 있습니다.
-            </li>
-            <li>
-              뉴스구독 - 전자신문 웹사이트 방문, IT관련 기사검색을 통해 뉴스를 읽고 컴퓨터와 IT 분야에 대한 최신 동향 파악 및 새로운 기술에 대해 빠르게 정보를 얻을 수 있습니다.
-            </li>
-            <li>
-              동영상시청 - IT 컴퓨터, 클라우드컴퓨팅 빅데이터, 인공지능, 5G, 사물인터넷 등 관련된 영상 시청을 통해 지식을 얻을 수 있습니다.
-            </li>
+           </c:forEach>
           </ul>
           <p class="subsubtitle">대학 주요 교과목</p>
           <ul class="jobExplainList">

@@ -55,6 +55,11 @@ import join.service.SearchPwService;
 import join.service.SearchPwServiceImpl;
 import join.service.editService;
 import join.service.editServiceImpl;
+import major.model.MajorDto;
+import major.service.MajorDetailService;
+import major.service.MajorDetailServiceImpl;
+import major.service.MajorListService;
+import major.service.MajorListServiceImpl;
 import reply.model.ReplyDto;
 import reply.service.ReplyDeleteService;
 import reply.service.ReplyDeleteServiceImpl;
@@ -129,7 +134,7 @@ public class FrontController extends HttpServlet {
 	
 			request.setAttribute("joinData", joinDto);
 			JoinService joinService = new JoinServiceImpl();
-			joinService.excute(request, response);
+			joinService.execute(request, response);
 			response.sendRedirect("login.jsp");
 			
 		}
@@ -230,13 +235,11 @@ public class FrontController extends HttpServlet {
 		}
 		//아이디 찾기 이름
 		if (commend.equals("/search_Id.do")) {
-			System.out.println("아이디 찾기 시작");
+
 			String userName = request.getParameter("userName");
 			String eMail = request.getParameter("eMail");
 			String telNumber =request.getParameter("telNumber");
-			System.out.println("userName="+userName);
-			System.out.println("eMail="+eMail);
-			System.out.println("tel="+telNumber);
+
 			if(telNumber.equals("")) {
 				System.out.println("컨트롤러 이메일 세팅");
 				request.setAttribute("userName", userName);
@@ -261,13 +264,11 @@ public class FrontController extends HttpServlet {
 
 		}
 		if (commend.equals("/search_Pw.do")) {
-			System.out.println("비밀번호 찾기 시작");
+
 			String userId = request.getParameter("userId");
 			String eMail = request.getParameter("eMail");
 			String telNumber =request.getParameter("telNumber");
-			System.out.println("id="+userId);
-			System.out.println("eMail="+eMail);
-			System.out.println("tel="+telNumber);
+
 			if(telNumber.equals("")) {
 				System.out.println("컨트롤러 이메일로 찾기");
 				request.setAttribute("userId", userId);
@@ -313,10 +314,6 @@ public class FrontController extends HttpServlet {
 			String title = request.getParameter("title");
 			String content = request.getParameter("content");
 			JoinDto joinDto = (JoinDto)request.getSession().getAttribute("userData");
-			System.out.println(category);
-			System.out.println(title);
-			System.out.println(content);
-			System.out.println(joinDto.getNickName());
 			//Dto 객체에 값 4개 담아서 전달하면 구현클래스에서 값 받아서 Dao 메소드 아규먼트에 값 넣는다.
 			BoardDto boardDto = new BoardDto();
 			boardDto.setCategory(category);
@@ -360,7 +357,7 @@ public class FrontController extends HttpServlet {
 
 		// 댓글 삽입
 		if (commend.equals("/replyInsert.do")) {
-			System.out.println("댓글 컨트롤러");
+			System.out.println("댓글 삽입");
 			int writeNum = (int)request.getSession().getAttribute("writeNum");
 			int parentNum = Integer.parseInt(request.getParameter("parentNum"));
 			
@@ -378,6 +375,8 @@ public class FrontController extends HttpServlet {
 		}
 		//댓글 수정
 		if (commend.equals("/replyEdit.do")) {
+			
+			System.out.println("댓글 수정");
 			int writeNum = (int)request.getSession().getAttribute("writeNum");
 
 			int commentNum = Integer.parseInt(request.getParameter("commentNum"));
@@ -393,6 +392,7 @@ public class FrontController extends HttpServlet {
 		
 		//댓글 삭제
 		if (commend.equals("/replyDelete.do")) {
+			System.out.println("댓글 삭제");
 			int writeNum = (int)request.getSession().getAttribute("writeNum");
 			int commentNum = Integer.parseInt(request.getParameter("commentNum"));
 			request.setAttribute("commentNum", commentNum);
@@ -404,9 +404,8 @@ public class FrontController extends HttpServlet {
 		
 		//카테고리 분류 
 		if (commend.equals("/category.do")) {
-			System.out.println("카테고리 분류");
+			System.out.println("카테고리 기능");
 			String category = (String)request.getParameter("category");
-			System.out.println("파라메터: "+category);
 			request.setAttribute("category", category);
 			BoardCategoryService boardCategoryService = new BoardCategoryServiceImpl();
 			ArrayList<BoardDto>arrayList = boardCategoryService.execute(request, response);
@@ -417,12 +416,11 @@ public class FrontController extends HttpServlet {
 		}
 		//게시판 검색 기능
 		if (commend.equals("/boardSearch.do")) {
-			
+			System.out.println("검색 기능 ");
 			String chooseSearch = request.getParameter("chooseSearch");
 			String search = request.getParameter("search");
 			
-			System.out.println("검색주제"+chooseSearch);
-			System.out.println("검색어"+search);
+
 			request.setAttribute("chooseSearch", chooseSearch);
 			request.setAttribute("search", search);
 			BoardSearchSearvice boardSearchSearvice = new BoardSearchServiceImpl();
@@ -435,7 +433,7 @@ public class FrontController extends HttpServlet {
 		
 		//게시글 삭제
 		if (commend.equals("/deleteBoard.do")) {
-			
+			System.out.println("게시글 삭제");
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
 			request.setAttribute("writeNum", writeNum);
 			BoardDeleteService boardDeleteService = new BoardDeleteServiceImpl();
@@ -447,6 +445,7 @@ public class FrontController extends HttpServlet {
 		//게시글 수정 화면 전환
 		if (commend.equals("/boardEdit.do")) {
 			//inToBoard에서 정보 받아서 boardEdit로 넘긴다.
+			System.out.println("게시글 수정");
 			request.setAttribute("category", request.getParameter("category"));
 			request.setAttribute("title", request.getParameter("title"));
 			request.setAttribute("content", request.getParameter("content"));
@@ -456,6 +455,7 @@ public class FrontController extends HttpServlet {
 		}
 		//게시글 수정 저장
 		if (commend.equals("/boardEditInsert.do")) {
+			System.out.println("게시글 수정 후 삽입");
 			int writeNum = Integer.parseInt(request.getParameter("writeNum"));
 			BoardDto boardDto = new BoardDto( request.getParameter("category"),
 											  request.getParameter("title"),
@@ -479,9 +479,8 @@ public class FrontController extends HttpServlet {
 		}
 		//직업 정보 상세 출력
 		if (commend.equals("/jobDetail.do")) {
-			
+			System.out.println("직업 상세 정보");
 			String job = request.getParameter("job");
-			System.out.println(job);
 			request.setAttribute("job", job);
 			
 			JobDetailService jobDetailService = new JobDetailServiceImpl();
@@ -491,13 +490,13 @@ public class FrontController extends HttpServlet {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jobdetail.jsp");
 			dispatcher.forward(request, response);
 		}
+		//직업 추천
 		if (commend.equals("/jobRecommend.do")) {
+			System.out.println("직업 추천 기능");
 			String ability = request.getParameter("ability");
 			String kindOfJob = request.getParameter("kindOfJob");
 			String possibility = request.getParameter("possibility");
-			System.out.println(ability);
-			System.out.println(kindOfJob);
-			System.out.println(possibility);
+
 			request.setAttribute("ability",ability);
 			request.setAttribute("kindOfJob",kindOfJob);
 			request.setAttribute("possibility",possibility);
@@ -507,6 +506,28 @@ public class FrontController extends HttpServlet {
 			request.setAttribute("jobList", jobList);
 			RequestDispatcher dispatcher = request.getRequestDispatcher("jobresult.jsp");
 			dispatcher.forward(request, response);
+		}
+//********************************학과 관련 부분******************************************************************************************
+		
+		//학과 리스트 불러오기
+		if (commend.equals("/major.do")) {
+			System.out.println("학과리스트");
+			MajorListService majorListService = new MajorListServiceImpl();
+			ArrayList<MajorDto>majorList = majorListService.execute(request, response);
+			request.setAttribute("majorList", majorList);
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("major.jsp");
+			dispatcher.forward(request, response);
+		}
+		if (commend.equals("/majorDetail.do")) {
+			System.out.println("학과 상세");
+			request.setAttribute("major", request.getParameter("major"));
+			MajorDetailService majorDetailService = new MajorDetailServiceImpl();
+			MajorDto majorDto = majorDetailService.execute(request, response);
+			request.setAttribute("majorDto", majorDto);
+			RequestDispatcher dispatcher = request.getRequestDispatcher("majordetail.jsp");
+			dispatcher.forward(request, response);
+			
 		}
 
 	}

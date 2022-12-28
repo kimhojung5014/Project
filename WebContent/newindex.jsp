@@ -63,7 +63,7 @@
     <!-- 1번째 메뉴 끝 -->
 
     <!-- 2번째 메뉴 시작 -->
-            <li><a id="main1_2" href="major.jsp" >학과 추천</a>   
+            <li><a id="main1_2" href="major.do" >학과 추천</a>   
              
             </li>
     <!-- 2번째 메뉴 끝 -->
